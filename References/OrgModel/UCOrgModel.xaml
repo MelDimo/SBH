@@ -7,6 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <TreeView Grid.Row="0" Grid.Column="0">
             
+        </TreeView>
+        <DockPanel Grid.Row="0" Grid.Column="1">
+            
+        </DockPanel>
     </Grid>
 </UserControl>
