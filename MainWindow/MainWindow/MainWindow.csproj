@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5A11D7C8-EFF9-45A0-B682-28F609447951}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>MainWindow</RootNamespace>
+    <RootNamespace>com.sbh.gui.mainwindow</RootNamespace>
     <AssemblyName>MainWindow</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -32,6 +32,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>com.sbh.gui.mainwindow.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

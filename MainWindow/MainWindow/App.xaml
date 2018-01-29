@@ -1,7 +1,7 @@
-﻿<Application x:Class="MainWindow.App"
+﻿<Application x:Class="com.sbh.gui.mainwindow.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MainWindow"
+             xmlns:local="clr-namespace:com.sbh.gui.mainwindow"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
