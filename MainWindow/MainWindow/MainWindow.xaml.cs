@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +22,8 @@ namespace com.sbh.gui.mainwindow
     /// </summary>
     public partial class MainWindow : Window
     {
+        CancellationTokenSource cts;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -30,10 +33,15 @@ namespace com.sbh.gui.mainwindow
         {
             tblockOutput.Text += "Starting async download\n";
 
+            cts = new CancellationTokenSource();
+            cts.CancelAfter(5000);
+
             await DoDownloadAsync();
+
 
             tblockOutput.Text += "Async download started\n";
         }
+
 
         private async Task DoDownloadAsync()
         {
