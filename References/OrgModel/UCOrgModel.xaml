@@ -15,14 +15,26 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         
-        <TreeView Grid.Row="0" Grid.Column="0" Background="AntiqueWhite">
+        <TreeView Name="treeViewOrg" Grid.Row="0" Grid.Column="0" FontSize="15" Margin="3,5,3,3"
+                  ItemsSource="{Binding Organization}">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="True"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Path=Organization, UpdateSourceTrigger=PropertyChanged}">
-                    <TextBlock Text="{Binding Path=Organization.name}"/>
+                <HierarchicalDataTemplate ItemsSource="{Binding Path=Branch}">
+                    <TextBlock Text="{Binding name}"/>
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Path=Unit}">
+                            <TextBlock Text="{Binding name}"/>
+                        </HierarchicalDataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-        <DockPanel Grid.Row="0" Grid.Column="1" Background="AliceBlue">
+
+        <DockPanel Name="dpItemInfo" Grid.Row="0" Grid.Column="1" LastChildFill="True" Margin="3,5,3,3">
             
         </DockPanel>
     </Grid>

@@ -20,11 +20,42 @@ namespace com.sbh.gui.references.orgmodel
     /// </summary>
     public partial class UCOrgModel : UserControl
     {
+        ViewModel.UCOrgModelViewModel mUCOrgModelViewModel;
+
+        View.ViewOrganization viewOrganization;
+
+
         public UCOrgModel()
         {
             InitializeComponent();
 
-            DataContext = new ViewModel.UCOrgModelViewModel();
+            mUCOrgModelViewModel = new ViewModel.UCOrgModelViewModel();
+
+            DataContext = mUCOrgModelViewModel;
+
+            viewOrganization = new View.ViewOrganization(mUCOrgModelViewModel);
+
+            treeViewOrg.SelectedItemChanged += TreeViewOrg_SelectedItemChanged;
+
+        }
+
+        private void TreeViewOrg_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            dpItemInfo.Children.Clear();
+
+            switch (e.NewValue.GetType().Name)
+            {
+                case "Unit":
+                    break;
+
+                case "Branch":
+                    break;
+
+                case "Organization":
+                    mUCOrgModelViewModel.CurrOrganization = e.NewValue as Model.Organization;
+                    dpItemInfo.Children.Add(viewOrganization);
+                    break;
+            }
         }
     }
 }
