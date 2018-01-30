@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace com.sbh.gui.references.orgmodel.Model
 {
@@ -13,6 +14,7 @@ namespace com.sbh.gui.references.orgmodel.Model
         public int id { get; set; }
         public string name { get; set; }
         public int refStatus { get; set; }
+        [XmlElement("ArrayOfBranch", typeof(ObservableCollection<Branch>))]
         public ObservableCollection<Branch> Branch { get; set; }
 
     }

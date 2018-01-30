@@ -18,11 +18,14 @@ namespace com.sbh.gui.references.orgmodel.ViewModel
 
         public ObservableCollection<Model.Organization> Organization
         {
-            get { return _organization; }
+            get
+            {
+                return _organization;
+            }
             set
             {
                 _organization = value;
-                OnPropertyChanged("Organization");
+                
             }
         }
 
@@ -56,8 +59,10 @@ namespace com.sbh.gui.references.orgmodel.ViewModel
                     XmlReader reader = command.ExecuteXmlReader();
                     while (reader.Read())
                     {
-                        Organization = Suppurt.XMLToObject<ObservableCollection<Model.Organization>>(reader.ReadOuterXml());
+                        _organization = Suppurt.XMLToObject<ObservableCollection<Model.Organization>>(reader.ReadOuterXml());
                     }
+
+                    OnPropertyChanged("Organization");
                 }
             }
         }

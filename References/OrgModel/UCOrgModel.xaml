@@ -15,10 +15,14 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         
-        <TreeView Grid.Row="0" Grid.Column="0">
-            
+        <TreeView Grid.Row="0" Grid.Column="0" Background="AntiqueWhite">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Path=Organization, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock Text="{Binding Path=Organization.name}"/>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
         </TreeView>
-        <DockPanel Grid.Row="0" Grid.Column="1">
+        <DockPanel Grid.Row="0" Grid.Column="1" Background="AliceBlue">
             
         </DockPanel>
     </Grid>
