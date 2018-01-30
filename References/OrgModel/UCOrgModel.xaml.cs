@@ -23,6 +23,13 @@ namespace com.sbh.gui.references.orgmodel
         public UCOrgModel()
         {
             InitializeComponent();
+
+            Loaded += UCOrgModel_Loaded;
+        }
+
+        private void UCOrgModel_Loaded(object sender, RoutedEventArgs e)
+        {
+            DataContext = new ViewModel.UCOrgModelViewModel();
         }
     }
 }

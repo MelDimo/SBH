@@ -12,6 +12,6 @@ namespace com.sbh.gui.references.orgmodel.Model
         public int id { get; set; }
         public string name { get; set; }
         public int refStatus { get; set; }
-        public ObservableCollection<Unit> Units { get; set; }
+        public ObservableCollection<Unit> Unit { get; set; }
     }
 }

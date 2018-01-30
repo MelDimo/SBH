@@ -13,7 +13,7 @@ namespace com.sbh.gui.references.orgmodel.Model
         public int id { get; set; }
         public string name { get; set; }
         public int refStatus { get; set; }
-        public ObservableCollection<Branch> Branches { get; set; }
+        public ObservableCollection<Branch> Branch { get; set; }
 
     }
 }
