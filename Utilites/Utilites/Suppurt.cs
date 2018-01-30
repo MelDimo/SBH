@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace com.sbs.dll.utilites
+namespace com.sbh.dll.utilites
 {
     public class Suppurt
     {

@@ -7,7 +7,7 @@
     <ProjectGuid>{1D3576CC-36C7-46F8-B939-8A85A38297C6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>com.sbs.dll.utilites</RootNamespace>
+    <RootNamespace>com.sbh.dll.utilites</RootNamespace>
     <AssemblyName>Utilites</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
