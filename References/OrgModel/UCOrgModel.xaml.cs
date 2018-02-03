@@ -33,7 +33,7 @@ namespace com.sbh.gui.references.orgmodel
 
             DataContext = mUCOrgModelViewModel;
 
-            viewOrganization = new View.ViewOrganization(mUCOrgModelViewModel);
+            viewOrganization = new View.ViewOrganization();
 
             treeViewOrg.SelectedItemChanged += TreeViewOrg_SelectedItemChanged;
 

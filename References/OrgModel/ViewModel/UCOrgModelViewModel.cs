@@ -19,7 +19,10 @@ namespace com.sbh.gui.references.orgmodel.ViewModel
         public Model.Organization CurrOrganization
         {
             get { return _currOrganization; }
-            set { _currOrganization = value; }
+            set {
+                _currOrganization = value;
+                OnPropertyChanged("CurrOrganization");
+            }
         }
 
         private Model.Branch _currBranch;

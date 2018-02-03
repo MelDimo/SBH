@@ -14,9 +14,9 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
+
         <TreeView Name="treeViewOrg" Grid.Row="0" Grid.Column="0" FontSize="15" Margin="3,5,3,3"
-                  ItemsSource="{Binding Organization}">
+                ItemsSource="{Binding Organization}">
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsExpanded" Value="True"/>
@@ -24,7 +24,7 @@
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Path=Branch}">
-                    <TextBlock Text="{Binding name}"/>
+                    <TextBlock Text="{Binding name}" DockPanel.Dock="Left"/>
                     <HierarchicalDataTemplate.ItemTemplate>
                         <HierarchicalDataTemplate ItemsSource="{Binding Path=Unit}">
                             <TextBlock Text="{Binding name}"/>

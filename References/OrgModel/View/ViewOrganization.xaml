@@ -17,18 +17,18 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Наменование" VerticalAlignment="Center" Margin="0,0,3,0"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding name, Mode=OneWay}"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CurrOrganization.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Статус" VerticalAlignment="Center" Margin="0,0,3,0"/>
         <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="0,3,0,3">
             <TextBlock Name="tbRefStatus" TextAlignment="Center">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding refStatus, Mode=OneWay}" Value="1">
+                            <DataTrigger Binding="{Binding CurrOrganization.refStatus, Mode=OneWay}" Value="1">
                                 <Setter Property="Foreground" Value="Green"/>
                                 <Setter Property="Text" Value="Активно"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding refStatus, Mode=OneWay}" Value="2">
+                            <DataTrigger Binding="{Binding CurrOrganization.refStatus, Mode=OneWay}" Value="2">
                                 <Setter Property="Foreground" Value="Gray"/>
                                 <Setter Property="Text" Value="Не активно"/>
                             </DataTrigger>

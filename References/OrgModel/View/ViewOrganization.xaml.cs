@@ -20,31 +20,26 @@ namespace com.sbh.gui.references.orgmodel.View
     /// </summary>
     public partial class ViewOrganization : UserControl
     {
-        ViewModel.UCOrgModelViewModel mUCOrgModelViewModel;
 
-        public ViewOrganization(ViewModel.UCOrgModelViewModel pUCOrgModelViewModel)
+        public ViewOrganization()
         {
-            mUCOrgModelViewModel = pUCOrgModelViewModel;
-
             InitializeComponent();
-
-            DataContext = mUCOrgModelViewModel.CurrOrganization;
 
             tbRefStatus.MouseUp += TbRefStatus_MouseUp;
         }
 
         private void TbRefStatus_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            switch (mUCOrgModelViewModel.CurrOrganization.refStatus)
-            {
-                case 1:
-                    mUCOrgModelViewModel.CurrOrganization.refStatus = 2;
-                    break;
+            //switch (mUCOrgModelViewModel.CurrOrganization.refStatus)
+            //{
+            //    case 1:
+            //        mUCOrgModelViewModel.CurrOrganization.refStatus = 2;
+            //        break;
 
-                case 2:
-                    mUCOrgModelViewModel.CurrOrganization.refStatus = 1;
-                    break;
-            }
+            //    case 2:
+            //        mUCOrgModelViewModel.CurrOrganization.refStatus = 1;
+            //        break;
+            //}
         }
     }
 }

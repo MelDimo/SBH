@@ -20,7 +20,10 @@ namespace com.sbh.gui.references.orgmodel.Model
         public string name
         {
             get { return _name; }
-            set { _name = value; }
+            set
+            {
+                _name = value;
+            }
         }
 
         private int _refStatus;
@@ -33,7 +36,6 @@ namespace com.sbh.gui.references.orgmodel.Model
             set
             {
                 _refStatus = value;
-                OnPropertyChanged("refStatus");
             }
         }
 
