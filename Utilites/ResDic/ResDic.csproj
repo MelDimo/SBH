@@ -4,9 +4,9 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F02532A6-C622-4747-82FA-3BCC7288FFD4}</ProjectGuid>
+    <ProjectGuid>{C4CE94D7-7A4E-4BAF-AAB3-1F1D33EA34C2}</ProjectGuid>
     <OutputType>library</OutputType>
-    <RootNamespace>com.sbh.dll.rdictionary</RootNamespace>
+    <RootNamespace>com.sbh.dll.resdictionary</RootNamespace>
     <AssemblyName>ResDic</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -47,19 +47,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="DictionaryImage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="CustomControl1.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -83,7 +70,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Icons\" />
+    <Content Include="ImgDictionary.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
