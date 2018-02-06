@@ -168,7 +168,7 @@ namespace com.sbh.gui.references.orgmodel.Model
                     XmlReader reader = command.ExecuteXmlReader();
                     while (reader.Read())
                     {
-                        result = Suppurt.XMLToObject<ObservableCollection<Organization>>(reader.ReadOuterXml());
+                        result = Support.XMLToObject<ObservableCollection<Organization>>(reader.ReadOuterXml());
                     }
                     //OnPropertyChanged("Organization");
                 }

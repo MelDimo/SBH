@@ -9,11 +9,10 @@ using System.Xml.Serialization;
 
 namespace com.sbh.dll.utilites
 {
-    public class Suppurt
+    public class Support
     {
         public static T XMLToObject<T>(string xml)
         {
-
             var serializer = new XmlSerializer(typeof(T));
 
             using (var textReader = new StringReader(xml))
