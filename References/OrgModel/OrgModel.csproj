@@ -53,22 +53,40 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ViewModel\UCOrgModelViewModel.cs" />
-    <Compile Include="View\ViewOrganization.xaml.cs">
-      <DependentUpon>ViewOrganization.xaml</DependentUpon>
+    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="ViewModel\BranchViewModel.cs" />
+    <Compile Include="ViewModel\OrganizationViewModel.cs" />
+    <Compile Include="ViewModel\UCOrgViewModel.cs" />
+    <Compile Include="ViewModel\UnitViewModel.cs" />
+    <Compile Include="View\BranchView.xaml.cs">
+      <DependentUpon>BranchView.xaml</DependentUpon>
     </Compile>
-    <Page Include="UCOrgModel.xaml">
+    <Compile Include="View\OrganizationView.xaml.cs">
+      <DependentUpon>OrganizationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UnitView.xaml.cs">
+      <DependentUpon>UnitView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="UCOrgView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Model\Branch.cs" />
     <Compile Include="Model\Organization.cs" />
     <Compile Include="Model\Unit.cs" />
-    <Compile Include="UCOrgModel.xaml.cs">
-      <DependentUpon>UCOrgModel.xaml</DependentUpon>
+    <Compile Include="UCOrgView.xaml.cs">
+      <DependentUpon>UCOrgView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\ViewOrganization.xaml">
+    <Page Include="View\BranchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OrganizationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UnitView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
