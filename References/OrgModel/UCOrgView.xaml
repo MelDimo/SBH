@@ -14,6 +14,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/ResDic;component/ImgDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ResDic;component/ConverterDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         
@@ -39,7 +40,9 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Path=Branch}" >
                     <DockPanel LastChildFill="True">
-                        <Button Margin="15,0,0,0" DockPanel.Dock="Right" Content="Add"
+                        <ContentControl Content="{ StaticResource imgOrg}" DockPanel.Dock="Left" Height="24" Margin="0,3,7,3"/>
+                        <Button Margin="15,0,0,0" DockPanel.Dock="Right" Width="24"
+                                Content="{DynamicResource imgAdd}"
                                 Command="{Binding Path=AddBranchCommand}"
                                 Visibility="{Binding isSelected, Converter={StaticResource VisibilityConverter}}"/>
                         <TextBlock VerticalAlignment="Center" DockPanel.Dock="Left" 
@@ -48,7 +51,9 @@
                     <HierarchicalDataTemplate.ItemTemplate>
                         <HierarchicalDataTemplate ItemsSource="{Binding Path=Unit}">
                             <DockPanel LastChildFill="True">
-                                <Button Margin="15,0,0,0" DockPanel.Dock="Right" Content="Add" 
+                                <ContentControl Content="{ StaticResource imgBranch}" DockPanel.Dock="Left" Height="24" Margin="0,3,7,3"/>
+                                <Button Margin="15,0,0,0" DockPanel.Dock="Right" Width="24"
+                                        Content="{DynamicResource imgAdd}"
                                         Command="{Binding Path=AddUnitCommand}"
                                         Visibility="{Binding isSelected, Converter={StaticResource VisibilityConverter}}"/>
                                 <TextBlock VerticalAlignment="Center" DockPanel.Dock="Left" 
@@ -56,13 +61,15 @@
                             </DockPanel>
                             <HierarchicalDataTemplate.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock VerticalAlignment="Center" DockPanel.Dock="Left" 
+                                    <DockPanel LastChildFill="True">
+                                        <ContentControl Content="{StaticResource imgUnit}" DockPanel.Dock="Left" Height="24" Margin="0,3,7,3"/>
+                                        <TextBlock VerticalAlignment="Center" DockPanel.Dock="Left" 
                                                Text="{Binding Path=name}"/>
+                                    </DockPanel>
                                 </DataTemplate>
                             </HierarchicalDataTemplate.ItemTemplate>
                         </HierarchicalDataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
-                    
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
