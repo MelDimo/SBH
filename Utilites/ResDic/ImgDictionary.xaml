@@ -1,12 +1,14 @@
-﻿<!--
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+<!--            Description
     Ресурсом является Metro Studio 5
     imgOrg -    Building-WF
     imgBranch - House-06-WF
     imgUnit -   Shop-WF
     imgAdd -    Plus-WF
 -->
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
     <Viewbox x:Shared="False" x:Key="imgOrg">
         <Grid>
             <Grid Width="24" Height="24" Visibility="Collapsed" />
@@ -22,6 +24,7 @@
             </Path>
         </Grid>
     </Viewbox>
+    
     <Viewbox x:Shared="False" x:Key="imgBranch">
         <Grid>
             <Grid Width="24" Height="24" Visibility="Collapsed" />
@@ -37,6 +40,7 @@
             </Path>
         </Grid>
     </Viewbox>
+    
     <Viewbox x:Shared="False" x:Key="imgUnit">
         <Grid>
             <Grid Width="24" Height="24" Visibility="Collapsed" />
@@ -52,6 +56,7 @@
             </Path>
         </Grid>
     </Viewbox>
+    
     <Viewbox x:Shared="false" x:Key="imgAdd">
         <Grid>
             <Grid Name="backgroundGrid" Width="24" Height="24" Visibility="Collapsed" />
