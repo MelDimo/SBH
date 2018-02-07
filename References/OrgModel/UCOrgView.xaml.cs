@@ -30,26 +30,6 @@ namespace com.sbh.gui.references.orgmodel
         {
             ViewModel.UCOrgViewModel viewModel = DataContext as ViewModel.UCOrgViewModel;
             viewModel.SelectObject(e.NewValue);
-
         }
-
-        //private void TreeViewOrg_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        //{
-        //    dpItemInfo.Children.Clear();
-
-        //    switch (e.NewValue.GetType().Name)
-        //    {
-        //        case "Unit":
-        //            break;
-
-        //        case "Branch":
-        //            break;
-
-        //        case "Organization":
-        //            mUCOrgModelViewModel.CurrOrganization = e.NewValue as Model.Organization;
-        //            dpItemInfo.Children.Add(viewOrganization);
-        //            break;
-        //    }
-        //}
     }
 }

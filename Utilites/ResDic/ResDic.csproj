@@ -70,10 +70,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ImgDictionary.xaml">
+    <Page Include="ImgDictionary.xaml">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
