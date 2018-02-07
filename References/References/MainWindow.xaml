@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:com.sbh.gui.references"
         xmlns:orgmodel="clr-namespace:com.sbh.gui.references.orgmodel;assembly=OrgModel"
+        xmlns:counterparty="clr-namespace:com.sbh.gui.references.counterparty;assembly=Counterparty"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <orgmodel:UCOrgModel>
-            
-        </orgmodel:UCOrgModel>
+        <!--<orgmodel:UCOrgModel/>-->
+        <counterparty:UCCounterpartyView/>
     </Grid>
 </Window>
