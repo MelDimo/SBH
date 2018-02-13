@@ -45,7 +45,18 @@
                                 Command="{Binding Path=AddBranchCommand}"
                                 Visibility="{Binding isSelected, Converter={StaticResource VisibilityConverter}}"/>
                         <TextBlock VerticalAlignment="Center" DockPanel.Dock="Left" 
-                                   Text="{Binding Path=name}"/>
+                                   Text="{Binding Path=name}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding refStatus}" Value="2">
+                                            <Setter Property="Foreground" Value="Gray"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </DockPanel>
                     <HierarchicalDataTemplate.ItemTemplate>
                         <HierarchicalDataTemplate ItemsSource="{Binding Path=Unit}">
@@ -56,14 +67,36 @@
                                         Command="{Binding Path=AddUnitCommand}"
                                         Visibility="{Binding isSelected, Converter={StaticResource VisibilityConverter}}"/>
                                 <TextBlock VerticalAlignment="Center" DockPanel.Dock="Left" 
-                                           Text="{Binding Path= name}"/>
+                                           Text="{Binding Path= name}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="Black"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding refStatus}" Value="2">
+                                                    <Setter Property="Foreground" Value="Gray"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DockPanel>
                             <HierarchicalDataTemplate.ItemTemplate>
                                 <DataTemplate>
                                     <DockPanel LastChildFill="True">
                                         <ContentControl Content="{StaticResource imgUnit}" DockPanel.Dock="Left" Height="24" Margin="0,3,7,3"/>
                                         <TextBlock VerticalAlignment="Center" DockPanel.Dock="Left" 
-                                               Text="{Binding Path=name}"/>
+                                               Text="{Binding Path=name}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding refStatus}" Value="2">
+                                                            <Setter Property="Foreground" Value="Gray"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
                                     </DockPanel>
                                 </DataTemplate>
                             </HierarchicalDataTemplate.ItemTemplate>
