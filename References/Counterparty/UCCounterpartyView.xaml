@@ -45,10 +45,12 @@
             </ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" DockPanel.Dock="Top" Width="24" HorizontalAlignment="Left" Margin="0,0,0,3"
-                    Command="{Binding AddCounterpartyCommand}"
-                    Content="{DynamicResource imgAdd}"/>
+                IsTabStop="False"
+                Command="{Binding AddCounterpartyCommand}"
+                Content="{DynamicResource imgAdd}"/>
         <DockPanel Grid.Row="1" Grid.Column="0" LastChildFill="True">
-            <ListView ItemsSource="{Binding Source={StaticResource lvSource}}" SelectedItem="{Binding currCounterparty}" FontSize="15">
+            <ListView ItemsSource="{Binding Source={StaticResource lvSource}}" 
+                      SelectedItem="{Binding currCounterparty}" FontSize="15">
                 <ListView.View>
                     <GridView ColumnHeaderContainerStyle="{DynamicResource GridViewHeaderHide}">
                         <GridViewColumn DisplayMemberBinding="{Binding name}"/>

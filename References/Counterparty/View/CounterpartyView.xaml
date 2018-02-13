@@ -8,64 +8,81 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <resdic:MultiValueConverter x:Key="MultiValueConverter"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResDic;component/ImgDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <resdic:MultiValueConverter x:Key="MultiValueConverter"/>
+        </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Наименование:" VerticalAlignment="Center" FontSize="15"/>
-        <TextBox x:Name="tbName" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15" 
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid ScrollViewer.CanContentScroll="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Наименование:" VerticalAlignment="Center" FontSize="15"/>
+            <TextBox x:Name="tbName" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15" 
                  Text="{Binding currCounterparty.name, Mode=OneWay}" />
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Группа:" VerticalAlignment="Center" FontSize="15" Margin="0,5,0,0"/>
-        <TextBox x:Name="tbGroupName" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15"
-                 Text="{Binding currCounterparty.groupname, Mode=OneWay}"/>
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Описание:" VerticalAlignment="Center" FontSize="15" Margin="0,5,0,0"/>
-        <TextBox x:Name="tbDescription" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15"
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Группа:" VerticalAlignment="Center" FontSize="15" Margin="0,5,0,0"/>
+            <ComboBox x:Name="tbGroupName" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15"
+                  ItemsSource="{Binding GroupName}"
+                  SelectedItem="{Binding currCounterparty.groupname, Mode=OneWay}"
+                  IsSynchronizedWithCurrentItem="True"
+                  TextSearch.TextPath="" IsEditable="True">
+            </ComboBox>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Описание:" VerticalAlignment="Center" FontSize="15" Margin="0,5,0,0"/>
+            <TextBox x:Name="tbDescription" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15"
                  Text="{Binding currCounterparty.description, Mode=OneWay}" 
                  AcceptsReturn="True" TextWrapping="Wrap"/>
-        <TextBlock Grid.Row="6" Grid.Column="0" Text="Статус" VerticalAlignment="Center" FontSize="15" Margin="0,5,0,0"/>
-        <Border Grid.Row="6" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="0,5,0,3">
-            <TextBlock Name="tbRefStatus" TextAlignment="Center" FontSize="15">
-                <TextBlock.InputBindings>
-                    <MouseBinding Command="{Binding currCounterparty.ChangeStatusCommand}" MouseAction="LeftClick"/>
-                </TextBlock.InputBindings>
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding currCounterparty.refStatus, Mode=OneWay}" Value="1">
-                                <Setter Property="Foreground" Value="Green"/>
-                                <Setter Property="Text" Value="Активно"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding currCounterparty.refStatus, Mode=OneWay}" Value="2">
-                                <Setter Property="Foreground" Value="Gray"/>
-                                <Setter Property="Text" Value="Не активно"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
-        </Border>
-        <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,15,0,0" HorizontalAlignment="Center" Content="Сохранить"
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Статус" VerticalAlignment="Center" FontSize="15" Margin="0,5,0,0"/>
+            <Border Grid.Row="6" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="0,5,0,3">
+                <TextBlock Name="tbRefStatus" TextAlignment="Center" FontSize="15">
+                    <TextBlock.InputBindings>
+                        <MouseBinding Command="{Binding currCounterparty.ChangeStatusCommand}" MouseAction="LeftClick"/>
+                    </TextBlock.InputBindings>
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding currCounterparty.refStatus, Mode=OneWay}" Value="1">
+                                    <Setter Property="Foreground" Value="Green"/>
+                                    <Setter Property="Text" Value="Активно"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding currCounterparty.refStatus, Mode=OneWay}" Value="2">
+                                    <Setter Property="Foreground" Value="Gray"/>
+                                    <Setter Property="Text" Value="Не активно"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Border>
+            <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,15,0,0" HorizontalAlignment="Center"
                 Command="{Binding currCounterparty.SaveCommand}">
-            <Button.CommandParameter>
-                <MultiBinding Converter="{StaticResource MultiValueConverter}" >
-                    <Binding ElementName="tbName" Path="Text"/>
-                    <Binding ElementName="tbGroupName" Path="Text"/>
-                    <Binding ElementName="tbDescription" Path="Text"/>
-                </MultiBinding>
-            </Button.CommandParameter>
-        </Button>
-    </Grid>
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <ContentControl Content="{StaticResource imgSave}" Height="24" Width="24" Margin="3,3,7,3"/>
+                        <TextBlock Text="Сохранить" FontSize="15" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button.Content>
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                        <Binding ElementName="tbName" Path="Text"/>
+                        <Binding ElementName="tbGroupName" Path="Text"/>
+                        <Binding ElementName="tbDescription" Path="Text"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

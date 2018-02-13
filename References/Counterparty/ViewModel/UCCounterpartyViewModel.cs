@@ -33,7 +33,9 @@ namespace com.sbh.gui.references.counterparty.ViewModel
             set
             {
                 _currCounterparty = value;
+                OnPropertyChanged("GroupName");
                 OnPropertyChanged("currCounterparty");
+
             }
         }
 
@@ -45,6 +47,14 @@ namespace com.sbh.gui.references.counterparty.ViewModel
             {
                 _conterParty = value;
                 OnPropertyChanged("Counterparty");
+            }
+        }
+
+        public List<string> GroupName
+        {
+            get
+            {
+                return _conterParty.OrderBy(x => x.groupname).Select(x => x.groupname).Distinct().ToList();
             }
         }
 

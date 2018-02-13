@@ -21,7 +21,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Grid.Column="0" Height="24" Width="24"  HorizontalAlignment="Left" Margin="7" Background="Transparent">
+        <Border Grid.Row="0" Grid.Column="0" Height="32" Width="32"  HorizontalAlignment="Left" Margin="7" Background="Transparent">
             <Border.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding BackOnClickCommand}"/>
             </Border.InputBindings>
