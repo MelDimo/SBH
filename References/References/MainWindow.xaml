@@ -4,12 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:com.sbh.gui.references"
-        xmlns:orgmodel="clr-namespace:com.sbh.gui.references.orgmodel;assembly=OrgModel"
-        xmlns:counterparty="clr-namespace:com.sbh.gui.references.counterparty;assembly=Counterparty"
+
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
+        <ContentControl>
+            <local:SurfaceControlView/>
+        </ContentControl>
         <!--<orgmodel:UCOrgModel/>-->
-        <counterparty:UCCounterpartyView/>
+        <!--<counterparty:UCCounterpartyView/>-->
     </Grid>
 </Window>
