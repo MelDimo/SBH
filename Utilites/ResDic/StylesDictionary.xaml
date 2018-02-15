@@ -2,7 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:com.sbh.dll.resdictionary">
     
+    <!-- Colors from https://fluentcolors.com/ ( Fluent Design Colors | #HEX )
+    
+    -->
+    
     <Style x:Key="GridViewHeaderHide" TargetType="{x:Type GridViewColumnHeader}">
         <Setter Property="Visibility" Value="Collapsed" />
     </Style>
+
+    <SolidColorBrush x:Key="FilterBackGrount" Color="#68768A"/>
+    
 </ResourceDictionary>

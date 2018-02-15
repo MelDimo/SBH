@@ -1,12 +1,15 @@
-﻿<Window x:Class="Invoices.MainWindow"
+﻿<Window x:Class="com.sbh.gui.invoices.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Invoices"
+        xmlns:local="clr-namespace:com.sbh.gui.invoices"
+        xmlns:surface="clr-namespace:com.sbh.gui.invoices.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="450" Width="525">
     <Grid>
-        
+        <ContentControl>
+            <surface:SurfaceControlView/>
+        </ContentControl>
     </Grid>
 </Window>

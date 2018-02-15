@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B0AE8178-BBCC-4536-B295-2C6F265ED1EA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Invoices</RootNamespace>
+    <RootNamespace>com.sbh.gui.invoices</RootNamespace>
     <AssemblyName>Invoices</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -34,6 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GValues">
+      <HintPath>..\..\GValues\GValues\bin\Debug\GValues.dll</HintPath>
+    </Reference>
+    <Reference Include="ResDic">
+      <HintPath>..\..\Utilites\ResDic\bin\Debug\ResDic.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -45,6 +51,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Utilites">
+      <HintPath>..\..\Utilites\Utilites\bin\Debug\Utilites.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -54,6 +63,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="Model\Document.cs" />
+    <Compile Include="Model\Filter.cs" />
+    <Compile Include="ViewModel\SurfaceControlViewModel.cs" />
+    <Compile Include="View\DocumentJournalView.xaml.cs">
+      <DependentUpon>DocumentJournalView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DocumentType1View.xaml.cs">
+      <DependentUpon>DocumentType1View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SurfaceControlView.xaml.cs">
+      <DependentUpon>SurfaceControlView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -66,6 +88,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\DocumentJournalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DocumentType1View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SurfaceControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -93,5 +127,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

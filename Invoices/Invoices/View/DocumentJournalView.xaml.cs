@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace com.sbh.gui.invoices
+namespace com.sbh.gui.invoices.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for DocumentJournalView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class DocumentJournalView : UserControl
     {
-        public MainWindow()
+        public DocumentJournalView()
         {
             InitializeComponent();
         }
