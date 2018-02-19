@@ -4,9 +4,38 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:com.sbh.gui.invoices.View"
+             xmlns:orefer="clr-namespace:com.sbh.dll.utilites.OReferences;assembly=Utilites"
+             xmlns:viewModel="clr-namespace:com.sbh.gui.invoices.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <!--<UserControl.DataContext>
+        <viewModel:DocumentType1ViewModel/>
+    </UserControl.DataContext>-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResDic;component/ImgDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ResDic;component/StylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Grid.Column="0" x:Name="borderBack"
+                BorderBrush="{StaticResource FilterBackGrount}" BorderThickness="0,0,0,1">
+            <Border  HorizontalAlignment="Left" Margin="7" Background="Transparent">
+                <Border.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" Command="{Binding BackOnClickCommand}"/>
+                </Border.InputBindings>
+                <ContentControl Content="{StaticResource imgBack}" Height="32" Width="32"/>
+            </Border >
+        </Border>
+        <Button Grid.Row="1" Grid.Column="0" Height="32" Width="128" Command="{Binding AddOnClickCommand}"/>
     </Grid>
 </UserControl>

@@ -10,26 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace com.sbh.gui.invoices.View
+namespace com.sbh.dll.resdictionary.View
 {
     /// <summary>
-    /// Interaction logic for DocumentType1.xaml
+    /// Interaction logic for DialogView.xaml
     /// </summary>
-    public partial class DocumentType1View : UserControl
+    public partial class DialogView : Window
     {
-        public DocumentType1View()
+        public DialogView()
         {
             InitializeComponent();
-
-            Loaded += DocumentType1View_Loaded;
-        }
-
-        private void DocumentType1View_Loaded(object sender, RoutedEventArgs e)
-        {
-            DataContext = new ViewModel.DocumentType1ViewModel();
         }
     }
 }

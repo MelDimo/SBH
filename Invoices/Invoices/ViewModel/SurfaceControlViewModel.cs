@@ -1,4 +1,5 @@
-﻿using com.sbh.dll.utilites.OReferences;
+﻿using com.sbh.dll.utilites;
+using com.sbh.dll.utilites.OReferences;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,8 @@ namespace com.sbh.gui.invoices.ViewModel
 {
     public class SurfaceControlViewModel : INotifyPropertyChanged
     {
+
+
         private UserControl mDocumentJournalView;
         private UserControl mDocumentType1View;
 
@@ -33,12 +36,14 @@ namespace com.sbh.gui.invoices.ViewModel
 
         public SurfaceControlViewModel()
         {
+            
             Filter = new Model.Filter();
 
             DocType = RefDocType.GetInstance.refDocType;
 
             FilterActionCommand = new DelegateCommand(FilterAction);
             FilterApplyCommand = new DelegateCommand(FilterApply);
+            BackOnClickCommand = new DelegateCommand(BackOnClick);
 
             foreach (RefDocType.DocType doc in DocType)
             {
@@ -46,6 +51,11 @@ namespace com.sbh.gui.invoices.ViewModel
             }
 
             _filterVisibility = false;
+
+            mDocumentJournalView = new View.DocumentJournalView();
+            mDocumentType1View = new View.DocumentType1View();
+
+            CurUserControl = mDocumentJournalView;
         }
 
         private bool _filterVisibility;
@@ -71,11 +81,18 @@ namespace com.sbh.gui.invoices.ViewModel
             FilterVisibility = !FilterVisibility;
         }
 
+        public static ICommand BackOnClickCommand { get; private set; }
+        void BackOnClick(object obj)
+        {
+            CurUserControl = mDocumentJournalView;
+        }
+
         void MenuItemOnClick(object obj)
         {
             switch ((int)obj)
             {
                 case 1:             // Приход
+                    CurUserControl = mDocumentType1View;
                     break;
 
                 case 2:             // Перемещение
@@ -95,12 +112,7 @@ namespace com.sbh.gui.invoices.ViewModel
 
         private void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

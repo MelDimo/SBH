@@ -65,7 +65,9 @@
     </ApplicationDefinition>
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="Model\Document.cs" />
+    <Compile Include="Model\DocumentType1.cs" />
     <Compile Include="Model\Filter.cs" />
+    <Compile Include="ViewModel\DocumentType1ViewModel.cs" />
     <Compile Include="ViewModel\SurfaceControlViewModel.cs" />
     <Compile Include="View\DocumentJournalView.xaml.cs">
       <DependentUpon>DocumentJournalView.xaml</DependentUpon>

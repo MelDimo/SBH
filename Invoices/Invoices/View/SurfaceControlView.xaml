@@ -11,16 +11,7 @@
     <UserControl.DataContext>
         <viewModel:SurfaceControlViewModel/>
     </UserControl.DataContext>
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/ResDic;component/ImgDictionary.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/ResDic;component/StylesDictionary.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid>
-        <
-        <ContentControl />
+        <ContentControl Content="{Binding CurUserControl}"/>
     </Grid>
 </UserControl>
