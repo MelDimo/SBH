@@ -33,6 +33,7 @@
     <Reference Include="GValues">
       <HintPath>..\..\GValues\GValues\bin\Debug\GValues.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -45,7 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IViewModelCommand.cs" />
+    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="OReferences\RefItem.cs" />
     <Compile Include="OReferences\RefDocType.cs" />
     <Compile Include="Support.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
