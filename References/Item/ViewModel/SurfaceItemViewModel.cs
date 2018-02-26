@@ -16,8 +16,6 @@ namespace com.sbh.gui.references.item.ViewModel
         }
 
 
-
-
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
