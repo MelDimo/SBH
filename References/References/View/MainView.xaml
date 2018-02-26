@@ -21,6 +21,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.Column="0" BorderThickness="2" BorderBrush="Black" Margin="15" 
                 MaxHeight="300" MaxWidth="300" Background="Transparent">
@@ -45,6 +46,20 @@
             </Border.InputBindings>
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Контрагенты" DockPanel.Dock="Bottom" Margin="0,0,0,15"
+                           TextAlignment="Center" FontSize="15"/>
+                <ContentControl Height="auto" Margin="7"
+                                Content="{StaticResource imgUnit}"/>
+            </DockPanel>
+        </Border>
+        <Border Grid.Row="2" Grid.Column="0" BorderThickness="2" BorderBrush="Black" Margin="15" 
+                MaxHeight="300" MaxWidth="300" Background="Transparent">
+            <Border.InputBindings>
+                <MouseBinding MouseAction="LeftClick" 
+                              Command="{Binding ItemOnClickCommand}"
+                              CommandParameter="ITEM"/>
+            </Border.InputBindings>
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="Товары" DockPanel.Dock="Bottom" Margin="0,0,0,15"
                            TextAlignment="Center" FontSize="15"/>
                 <ContentControl Height="auto" Margin="7"
                                 Content="{StaticResource imgUnit}"/>

@@ -132,6 +132,10 @@
       <Project>{66520b99-486d-4a8b-b57b-76df16bbe393}</Project>
       <Name>Counterparty</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Item\Item.csproj">
+      <Project>{e7c93a08-90f1-41ae-bdc3-d44b4787d5e5}</Project>
+      <Name>Item</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OrgModel\OrgModel.csproj">
       <Project>{a030aee5-1f07-4394-8ba7-cda585f876de}</Project>
       <Name>OrgModel</Name>

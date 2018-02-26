@@ -15,6 +15,7 @@ namespace com.sbh.gui.references.ViewModel
         private UserControl mOrgModel;
         private UserControl mMainView;
         private UserControl mReferenceContainerView;
+        private UserControl mItem;
 
         private UserControl _curReference;
         public UserControl CurReference
@@ -46,7 +47,10 @@ namespace com.sbh.gui.references.ViewModel
 
             mCounterparty = new counterparty.UCCounterpartyView();
             mOrgModel = new orgmodel.UCOrgModel();
+            mItem = new item.SurfaceItemView();
+
             mMainView = new View.MainView();
+
             mReferenceContainerView = new View.ReferenceContainerView();
 
             CurUserControl = mMainView;
@@ -69,6 +73,10 @@ namespace com.sbh.gui.references.ViewModel
 
                 case "COUNTERPARTY":
                     CurReference = mCounterparty;
+                    break;
+
+                case "ITEM":
+                    CurReference = mItem;
                     break;
             }
 

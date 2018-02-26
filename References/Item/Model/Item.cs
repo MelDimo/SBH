@@ -1,8 +1,6 @@
 ﻿using com.sbh.dll;
-using com.sbh.dll.utilites;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
@@ -10,36 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Xml;
 using System.Xml.Serialization;
 
-namespace com.sbh.gui.references.counterparty.Model
+namespace com.sbh.gui.references.item.Model
 {
-    public class Counterparty : INotifyPropertyChanged
+    public class Item : INotifyPropertyChanged
     {
         public decimal id { get; set; }
-
-        private string _name;
-        public string name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                OnPropertyChanged("name");
-            }
-        }
-
-        private string _description;
-        public string description
-        {
-            get { return _description; }
-            set
-            {
-                _description = value;
-                OnPropertyChanged("description");
-            }
-        }
 
         private string _groupname;
         public string groupname
@@ -55,6 +30,17 @@ namespace com.sbh.gui.references.counterparty.Model
         // Это пиздец, но наименование группы отображается только если свойство именуется как 'Name' O_o
         public string Name { get { return groupname; } }
 
+        private string _name;
+        public string name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged("name");
+            }
+        }
+
         private int _refStatus;
         public int refStatus
         {
@@ -66,34 +52,21 @@ namespace com.sbh.gui.references.counterparty.Model
             }
         }
 
-        public Counterparty()
+        private int _refDimensions;
+        public int refDimensions
         {
-            ChangeStatusCommand = new DelegateCommand(ChangeStatus);
-            SaveCommand = new DelegateCommand(Save);
+            get { return _refDimensions; }
+            set
+            {
+                _refDimensions = value;
+                OnPropertyChanged("refDimensions");
+            }
         }
 
-        public static ObservableCollection<Counterparty> CollectCounterParty()
+        public Item()
         {
-            ObservableCollection<Counterparty> result = new ObservableCollection<Counterparty>();
-
-            using (SqlConnection con = new SqlConnection(GValues.connString))
-            {
-                con.Open();
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = con;
-                    command.CommandText = " SELECT id, name, [description], groupname, ref_status AS refStatus " +
-                                            " FROM counterparty " +
-                                            " FOR XML RAW('Counterparty'), ROOT('ArrayOfCounterparty'), ELEMENTS ";
-
-                    XmlReader reader = command.ExecuteXmlReader();
-                    while (reader.Read())
-                    {
-                        result = Support.XMLToObject<ObservableCollection<Counterparty>>(reader.ReadOuterXml());
-                    }
-                }
-            }
-            return result;
+            ChangeStatusCommand = new dll.utilites.DelegateCommand(ChangeStatus);
+            SaveCommand = new dll.utilites.DelegateCommand(Save);
         }
 
         [XmlIgnore]
@@ -106,7 +79,7 @@ namespace com.sbh.gui.references.counterparty.Model
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
-                    command.CommandText = " UPDATE counterparty SET ref_status = @refStatus " +
+                    command.CommandText = " UPDATE item SET ref_status = @refStatus " +
                                             " WHERE id = @id;";
 
                     command.Parameters.Add("id", SqlDbType.Int).Value = id;
@@ -126,7 +99,7 @@ namespace com.sbh.gui.references.counterparty.Model
             var values = (object[])obj;
             string xName = values[0] as string;
             string xGroupname = values[1] as string;
-            string xDescription = values[2] as string;
+            int xRefDimensions = 1;// (int)values[2];
 
             using (SqlConnection con = new SqlConnection(GValues.connString))
             {
@@ -134,16 +107,16 @@ namespace com.sbh.gui.references.counterparty.Model
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
-                    command.CommandText =   " UPDATE counterparty " + 
+                    command.CommandText = " UPDATE item " +
                                             " SET name = @name, " +
                                             " groupname = @groupname, " +
-                                            " [description] = @description " +
+                                            " ref_dimensions = @refDimensions " +
                                             " WHERE id = @id; ";
 
                     command.Parameters.Add("id", SqlDbType.Int).Value = id;
                     command.Parameters.Add("name", SqlDbType.NVarChar).Value = xName;
                     command.Parameters.Add("groupname", SqlDbType.NVarChar).Value = xGroupname;
-                    command.Parameters.Add("description", SqlDbType.NVarChar).Value = xDescription;
+                    command.Parameters.Add("refDimensions", SqlDbType.NVarChar).Value = xRefDimensions;
 
                     command.ExecuteNonQuery();
                 }
@@ -151,7 +124,7 @@ namespace com.sbh.gui.references.counterparty.Model
 
             name = xName;
             groupname = xGroupname;
-            description = xDescription;
+            refDimensions = xRefDimensions;
         }
 
         #region INotifyPropertyChanged Members

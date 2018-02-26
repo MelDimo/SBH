@@ -21,8 +21,8 @@ namespace com.sbh.gui.references.counterparty.ViewModel
         public UCCounterpartyViewModel()
         {
             Counterparty = Model.Counterparty.CollectCounterParty();
-            AddCounterpartyCommand = new DelegateCommand(AddCounterparty);
-            SelectCounterpartyCommand = new DelegateCommand(SelectCounterparty);
+            AddCounterpartyCommand = new dll.utilites.DelegateCommand(AddCounterparty);
+            SelectCounterpartyCommand = new dll.utilites.DelegateCommand(SelectCounterparty);
             CounterpartyView = new View.CounterpartyView();
         }
 
