@@ -7,6 +7,7 @@
         xmlns:source="clr-namespace:com.sbh.dll.resdictionary"
         mc:Ignorable="d"
         Title="DialogView" Height="300" Width="300" 
+        Name="ThisWindow"
         ShowInTaskbar="False" 
         WindowStyle="None"
         WindowStartupLocation="CenterOwner">
@@ -27,7 +28,9 @@
         <Border Grid.Row="0" Grid.Column="0" BorderBrush="{StaticResource FilterBackGrount}" BorderThickness="0,0,0,1">
             <Border  HorizontalAlignment="Left" Margin="7" Background="Transparent">
                 <Border.InputBindings>
-                    <MouseBinding MouseAction="LeftClick" Command="{Binding DialogView_BackOnClickCommand}"/>
+                    <MouseBinding MouseAction="LeftClick" 
+                                  Command="{Binding DialogView_BackOnClickCommand}" 
+                                  CommandParameter="{Binding ElementName=ThisWindow}"/>
                 </Border.InputBindings>
                 <ContentControl Content="{StaticResource imgBack}" Height="32" Width="32"/>
             </Border >
@@ -35,7 +38,8 @@
         <ContentControl Grid.Row="1" Grid.Column="0" x:Name="MainContainer"/>
         <Border Grid.Row="2" Grid.Column="0" BorderBrush="{StaticResource FilterBackGrount}" BorderThickness="0,1,0,0">
         <Button Margin="0,7,0,7" HorizontalAlignment="Center"
-                Command="{Binding DialogView_SaveOnClickCommand}">
+                Command="{Binding DialogView_SaveOnClickCommand}"
+                CommandParameter="{Binding ElementName=ThisWindow}">
             <Button.Content>
                 <StackPanel Orientation="Horizontal" Margin="3">
                     <ContentControl Content="{StaticResource imgSave}" Height="24" Width="24" Margin="3,3,7,3"/>

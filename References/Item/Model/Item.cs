@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Xml.Serialization;
 
@@ -14,6 +15,10 @@ namespace com.sbh.gui.references.item.Model
 {
     public class Item : INotifyPropertyChanged
     {
+        private dimensions.SurfaceDimensionsView surfaceDimensionsView = new dimensions.SurfaceDimensionsView();
+        private dll.utilites.OReferences.RefDimensions RefDimensions = dll.utilites.OReferences.RefDimensions.GetInstance;
+
+
         public decimal id { get; set; }
 
         private string _groupname;
@@ -59,14 +64,21 @@ namespace com.sbh.gui.references.item.Model
             set
             {
                 _refDimensions = value;
-                OnPropertyChanged("refDimensions");
+                OnPropertyChanged("refDimensionsName");
             }
+        }
+
+        [XmlIgnore]
+        public string refDimensionsName
+        {
+            get { return RefDimensions.refDimension.Where(x => x.id == refDimensions).SingleOrDefault().namefull; }
         }
 
         public Item()
         {
             ChangeStatusCommand = new dll.utilites.DelegateCommand(ChangeStatus);
             SaveCommand = new dll.utilites.DelegateCommand(Save);
+            ChangeDimensionCommand = new dll.utilites.DelegateCommand(ChangeDimension);
         }
 
         [XmlIgnore]
@@ -99,7 +111,6 @@ namespace com.sbh.gui.references.item.Model
             var values = (object[])obj;
             string xName = values[0] as string;
             string xGroupname = values[1] as string;
-            int xRefDimensions = 1;// (int)values[2];
 
             using (SqlConnection con = new SqlConnection(GValues.connString))
             {
@@ -107,16 +118,14 @@ namespace com.sbh.gui.references.item.Model
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
-                    command.CommandText = " UPDATE item " +
-                                            " SET name = @name, " +
-                                            " groupname = @groupname, " +
-                                            " ref_dimensions = @refDimensions " +
+                    command.CommandText = " UPDATE item SET" +
+                                            " name = @name, " +
+                                            " groupname = @groupname " +
                                             " WHERE id = @id; ";
 
                     command.Parameters.Add("id", SqlDbType.Int).Value = id;
                     command.Parameters.Add("name", SqlDbType.NVarChar).Value = xName;
                     command.Parameters.Add("groupname", SqlDbType.NVarChar).Value = xGroupname;
-                    command.Parameters.Add("refDimensions", SqlDbType.NVarChar).Value = xRefDimensions;
 
                     command.ExecuteNonQuery();
                 }
@@ -124,7 +133,39 @@ namespace com.sbh.gui.references.item.Model
 
             name = xName;
             groupname = xGroupname;
-            refDimensions = xRefDimensions;
+        }
+
+        [XmlIgnore]
+        public ICommand ChangeDimensionCommand { get; private set; }
+        void ChangeDimension(object obj)
+        {
+
+            ((dimensions.ViewModel.SurfaceDimensionsViewModel)surfaceDimensionsView.DataContext).CurDimension = 
+                RefDimensions.refDimension.Where(x => x.id == refDimensions).SingleOrDefault();
+
+            dll.resdictionary.View.DialogView window = new dll.resdictionary.View.DialogView(surfaceDimensionsView);
+            if (window.ShowDialog() == true)
+            {
+                using (SqlConnection con = new SqlConnection(GValues.connString))
+                {
+                    con.Open();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = con;
+                        command.CommandText = " UPDATE item SET" +
+                                                " ref_dimensions = @ref_dimensions " +
+                                                " WHERE id = @id; ";
+
+                        command.Parameters.Add("id", SqlDbType.Int).Value = id;
+                        command.Parameters.Add("ref_dimensions", SqlDbType.Int).Value = ((dimensions.ViewModel.SurfaceDimensionsViewModel)surfaceDimensionsView.DataContext).CurDimension.id;
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                refDimensions = ((dimensions.ViewModel.SurfaceDimensionsViewModel)surfaceDimensionsView.DataContext).CurDimension.id;
+            }
+
         }
 
         #region INotifyPropertyChanged Members

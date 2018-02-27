@@ -19,9 +19,20 @@ namespace com.sbh.dll.resdictionary.View
     /// </summary>
     public partial class DialogView : Window
     {
-        public DialogView()
+        public DialogView(UserControl pContent)
         {
             InitializeComponent();
+
+            MainContainer.Content = pContent;
+            DataContext = pContent.DataContext;
+
+            this.PreviewKeyDown += DialogView_PreviewKeyDown;
+        }
+
+        private void DialogView_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                this.DialogResult = false;
         }
     }
 }

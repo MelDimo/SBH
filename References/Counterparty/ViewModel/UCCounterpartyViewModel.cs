@@ -35,7 +35,6 @@ namespace com.sbh.gui.references.counterparty.ViewModel
                 _currCounterparty = value;
                 OnPropertyChanged("GroupName");
                 OnPropertyChanged("currCounterparty");
-
             }
         }
 

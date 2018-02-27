@@ -4,9 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:com.sbh.gui.references.dimensions"
+             xmlns:viewmodel="clr-namespace:com.sbh.gui.references.dimensions.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.DataContext>
+        <viewmodel:SurfaceDimensionsViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResDic;component/StylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-        
+        <ListView ItemsSource="{Binding Dimensions}"
+                  SelectedItem="{Binding CurDimension}"
+                  FontSize="15">
+            <ListView.View>
+                <GridView ColumnHeaderContainerStyle="{DynamicResource GridViewHeaderHide}">
+                    <GridViewColumn DisplayMemberBinding="{Binding namefull}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding name}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding value}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>

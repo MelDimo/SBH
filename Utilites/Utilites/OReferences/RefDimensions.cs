@@ -23,7 +23,7 @@ namespace com.sbh.dll.utilites.OReferences
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
-                    command.CommandText = " SELECT id, parent_id, name, value, ref_status " +
+                    command.CommandText = " SELECT id, parent_id AS parentId, name, namefull, value, ref_status AS refStatus " +
                                             " FROM ref_dimensions " +
                                             " FOR XML RAW('Dimension'), ROOT('ArrayOfDimension'), ELEMENTS ";
 
@@ -50,7 +50,11 @@ namespace com.sbh.dll.utilites.OReferences
         public class Dimension
         {
             public int id { get; set; }
+            public int parentId { get; set; }
             public string name { get; set; }
+            public string namefull { get; set; }
+            public decimal value { get; set; }
+            public int refStatus { get; set; }
         }
     }
 }

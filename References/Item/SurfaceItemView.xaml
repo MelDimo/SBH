@@ -17,6 +17,9 @@
                 <ResourceDictionary Source="pack://application:,,,/ResDic;component/ConverterDictionary.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ResDic;component/StylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            </Style>
             <CollectionViewSource x:Key="lvSource" Source="{Binding Items}" IsLiveGroupingRequested="True">
                 <CollectionViewSource.GroupDescriptions>
                     <PropertyGroupDescription PropertyName="groupname"/>
@@ -50,17 +53,14 @@
                 Content="{DynamicResource imgAdd}"/>
         <DockPanel Grid.Row="1" Grid.Column="0" LastChildFill="True">
             <ListView ItemsSource="{Binding Source={StaticResource lvSource}}" 
-                      SelectedItem="{Binding CurItem}" FontSize="15">
+                      SelectedItem="{Binding CurItem}" FontSize="15"
+                      Name="lvMain">
                 <ListView.View>
-                    <GridView ColumnHeaderContainerStyle="{DynamicResource GridViewHeaderHide}">
-                        <GridViewColumn DisplayMemberBinding="{Binding name}"/>
-                        <GridViewColumn>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding description}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                    <!--<GridView ColumnHeaderContainerStyle="{DynamicResource GridViewHeaderHide}">-->
+                    <GridView>
+                        <GridViewColumn Header="Наименование" DisplayMemberBinding="{Binding name}"
+                                        Width="{Binding ElementName=helperField, Path=ActualWidth}"/>
+                        <GridViewColumn x:Name="col1" Header="Ед. измерения" DisplayMemberBinding="{Binding refDimensionsName}" />
                     </GridView>
                 </ListView.View>
                 <ListView.GroupStyle>
@@ -96,5 +96,18 @@
                 </Style>
             </ContentControl.Style>
         </ContentControl>
+        <!--Помогает расширять столбец по ширине-->
+        <Grid Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <!--Width is bound to width of the first GridViewColumn -->
+                <ColumnDefinition Width="{Binding ElementName=col1, Path=ActualWidth}"/>
+                <!--Width is set to "Fill"-->
+                <ColumnDefinition Width="*"/>
+                <!--Correction Width-->
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <!--This is the hidden helper Field which is used to bind to, using the "Fill" column of the helper grid-->
+            <Grid Grid.Column="1" x:Name="helperField"/>
+        </Grid>
     </Grid>
 </UserControl>
