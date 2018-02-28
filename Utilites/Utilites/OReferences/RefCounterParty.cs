@@ -39,6 +39,10 @@ namespace com.sbh.dll.utilites.OReferences
             }
         }
 
+        private static readonly Lazy<RefCounterParty> lazy = new Lazy<RefCounterParty>(() => new RefCounterParty());
+
+        public static RefCounterParty GetInstance { get { return lazy.Value; } }
+
         private List<Counterparty> _refCounterParty;
         public List<Counterparty> refCounterParty
         {

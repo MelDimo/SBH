@@ -47,10 +47,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\Counterpartys\ViewModel\CCouterpatyViewModel.cs" />
-    <Compile Include="Controls\Counterpartys\View\CCouterpatyView.xaml.cs">
-      <DependentUpon>CCouterpatyView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MultiValueConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -78,10 +74,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\Counterpartys\View\CCouterpatyView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ConverterDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
