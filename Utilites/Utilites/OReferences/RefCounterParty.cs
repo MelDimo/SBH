@@ -11,8 +11,6 @@ namespace com.sbh.dll.utilites.OReferences
 {
     public sealed class RefCounterParty
     {
-        public ObservableCollection<Counterparty> result = new ObservableCollection<Counterparty>();
-
         private RefCounterParty()
         {
             reload();

@@ -57,7 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Counterparty.cs" />
+    <Compile Include="ViewModel\CounterpartyExternalViewModel.cs" />
     <Compile Include="ViewModel\UCCounterpartyViewModel.cs" />
+    <Compile Include="View\CounterpartyExternalView.xaml.cs">
+      <DependentUpon>CounterpartyExternalView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CounterpartyView.xaml.cs">
       <DependentUpon>CounterpartyView.xaml</DependentUpon>
     </Compile>
@@ -69,6 +73,10 @@
       <DependentUpon>UCCounterpartyView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\CounterpartyExternalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CounterpartyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
