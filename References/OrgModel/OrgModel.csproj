@@ -56,7 +56,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DelegateCommand.cs" />
     <Compile Include="ViewModel\BranchViewModel.cs" />
     <Compile Include="ViewModel\OrganizationViewModel.cs" />
     <Compile Include="ViewModel\UCOrgViewModel.cs" />

@@ -83,7 +83,36 @@
                             <HierarchicalDataTemplate.ItemTemplate>
                                 <DataTemplate>
                                     <DockPanel LastChildFill="True">
-                                        <ContentControl Content="{StaticResource imgUnit}" DockPanel.Dock="Left" Height="24" Margin="0,3,7,3"/>
+                                        <ContentControl>
+                                            <ContentControl.Content>
+                                                <ContentControl Content="{StaticResource imgUnit}" DockPanel.Dock="Left" Height="24" Margin="0,3,7,3"
+                                                                ToolTip="Достyпны операции реализации" />
+                                            </ContentControl.Content>
+                                            <ContentControl.Style>
+                                                <Style TargetType="{x:Type ContentControl}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=isPOS}" Value="0">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ContentControl.Style>
+                                        </ContentControl>
+                                        <ContentControl>
+                                            <ContentControl.Content>
+                                                <ContentControl Content="{StaticResource imgWarehouse}" DockPanel.Dock="Left" Height="24" Margin="0,3,7,3"
+                                                                ToolTip="Достyпны складские операции"/>
+                                            </ContentControl.Content>
+                                            <ContentControl.Style>
+                                                <Style TargetType="{x:Type ContentControl}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=isDepot}" Value="0">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ContentControl.Style>
+                                        </ContentControl>
                                         <TextBlock VerticalAlignment="Center" DockPanel.Dock="Left" 
                                                Text="{Binding Path=name}">
                                             <TextBlock.Style>

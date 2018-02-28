@@ -21,17 +21,14 @@ namespace com.sbh.gui.invoices.ViewModel
 
             BackOnClickCommand = new DelegateCommand(BackOnClick);
 
-            DialogView_BackOnClickCommand = new DelegateCommand(DialogView_BackOnClick);
+            DialogView_BackOnClickCommand = new DelegateCommand (DialogView_BackOnClick);
             DialogView_SaveOnClickCommand = new DelegateCommand(DialogView_SaveOnClick);
         }
 
         public ICommand AddOnClickCommand { get; private set; }
         void AddOnClick(object obj)
         {
-            dialogView = new dll.resdictionary.View.DialogView()
-            {
-                DataContext = this
-            };
+            dialogView = new dll.resdictionary.View.DialogView(new View.DocumentType1View());
             dialogView.ShowDialog();
         }
 
@@ -41,17 +38,23 @@ namespace com.sbh.gui.invoices.ViewModel
             SurfaceControlViewModel.BackOnClickCommand.Execute(null);
         }
 
+        #region DialogView command
+
         public ICommand DialogView_SaveOnClickCommand { get; private set; }
         void DialogView_SaveOnClick(object obj)
         {
-            dialogView.Close();
+            ((Window)obj).DialogResult = true;
         }
 
         public ICommand DialogView_BackOnClickCommand { get; private set; }
         void DialogView_BackOnClick(object obj)
         {
-            dialogView.Close();
+            ((Window)obj).DialogResult = false;
         }
+
+        #endregion
+
+
 
         #region INotifyPropertyChanged Members
 

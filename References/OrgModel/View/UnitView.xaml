@@ -11,6 +11,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -40,7 +42,17 @@
                 </TextBlock.Style>
             </TextBlock>
         </Border>
-        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,15,0,0" HorizontalAlignment="Center" Content="Сохранить"
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,3,0,3" Orientation="Horizontal">
+            <TextBlock  VerticalAlignment="Center" Text="Достyпны операции реализации" />
+            <CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" 
+                      IsChecked="{Binding CurrUnit.isPOS, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,3,0,3" Orientation="Horizontal">
+            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Достyпны складские операции" Margin="0,3,0,3"/>
+            <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="23,0,0,0" 
+                      IsChecked="{Binding CurrUnit.isDepot, Mode=TwoWay}"/>
+        </StackPanel>
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,15,0,0" HorizontalAlignment="Center" Content="Сохранить"
                 Command="{Binding CurrUnit.SaveCommand}" CommandParameter="{Binding Text, ElementName=tbName}"/>
     </Grid>
 </UserControl>

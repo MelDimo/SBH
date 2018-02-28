@@ -21,7 +21,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -33,9 +33,29 @@
                 <Border.InputBindings>
                     <MouseBinding MouseAction="LeftClick" Command="{Binding BackOnClickCommand}"/>
                 </Border.InputBindings>
-                <ContentControl Content="{StaticResource imgBack}" Height="32" Width="32"/>
+                <DockPanel LastChildFill="True">
+                    <ContentControl Content="{StaticResource imgBack}" Height="32" Width="32" DockPanel.Dock="Left"/>
+                    <TextBlock Text="Документ 'Приход'" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="15"/>
+                </DockPanel>
             </Border >
         </Border>
-        <Button Grid.Row="1" Grid.Column="0" Height="32" Width="128" Command="{Binding AddOnClickCommand}"/>
+        <StackPanel Grid.Row="1" Background="{StaticResource FilterBackGrount}">
+            <!--                                        Заголовок документа                       -->
+            <Grid Grid.Column="0" MinWidth="1024" MaxWidth="1440" Background="White" Height="200">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            
+        </StackPanel>
+        
+        
+        
+        
+        <!--<Button Grid.Row="1" Grid.Column="0" Height="32" Width="128" Command="{Binding AddOnClickCommand}"/>-->
     </Grid>
 </UserControl>

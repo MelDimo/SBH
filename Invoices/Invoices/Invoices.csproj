@@ -63,7 +63,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DelegateCommand.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\DocumentType1.cs" />
     <Compile Include="Model\Filter.cs" />

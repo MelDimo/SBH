@@ -24,7 +24,11 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.Column="0" BorderThickness="2" BorderBrush="Black" Margin="15" 
-                MaxHeight="300" MaxWidth="300" Background="Transparent">
+                CornerRadius="7"
+                MaxHeight="300" MaxWidth="300" Background="White">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" Opacity="0.4"/>
+            </Border.Effect>
             <Border.InputBindings>
                 <MouseBinding MouseAction="LeftClick" 
                               Command="{Binding ItemOnClickCommand}"
@@ -34,11 +38,15 @@
                 <TextBlock Text="Организационная модель" DockPanel.Dock="Bottom" Margin="0,0,0,15"
                            TextWrapping="Wrap" TextAlignment="Center" FontSize="15"/>
                 <ContentControl Height="auto" Margin="7"
-                                Content="{StaticResource imgUnit}"/>
+                                Content="{StaticResource imgOrgModel}"/>
             </DockPanel>
         </Border>
         <Border Grid.Row="0" Grid.Column="1" BorderThickness="2" BorderBrush="Black" Margin="15" 
-                MaxHeight="300" MaxWidth="300" Background="Transparent">
+                CornerRadius="7"
+                MaxHeight="300" MaxWidth="300" Background="White">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" Opacity="0.4"/>
+            </Border.Effect>
             <Border.InputBindings>
                 <MouseBinding MouseAction="LeftClick" 
                               Command="{Binding ItemOnClickCommand}"
@@ -48,11 +56,15 @@
                 <TextBlock Text="Контрагенты" DockPanel.Dock="Bottom" Margin="0,0,0,15"
                            TextAlignment="Center" FontSize="15"/>
                 <ContentControl Height="auto" Margin="7"
-                                Content="{StaticResource imgUnit}"/>
+                                Content="{StaticResource imgCounterParty}"/>
             </DockPanel>
         </Border>
         <Border Grid.Row="2" Grid.Column="0" BorderThickness="2" BorderBrush="Black" Margin="15" 
-                MaxHeight="300" MaxWidth="300" Background="Transparent">
+                CornerRadius="7"
+                MaxHeight="300" MaxWidth="300" Background="White">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" Opacity="0.4"/>
+            </Border.Effect>
             <Border.InputBindings>
                 <MouseBinding MouseAction="LeftClick" 
                               Command="{Binding ItemOnClickCommand}"
@@ -62,7 +74,7 @@
                 <TextBlock Text="Товары" DockPanel.Dock="Bottom" Margin="0,0,0,15"
                            TextAlignment="Center" FontSize="15"/>
                 <ContentControl Height="auto" Margin="7"
-                                Content="{StaticResource imgUnit}"/>
+                                Content="{StaticResource imgBox}"/>
             </DockPanel>
         </Border>
     </Grid>

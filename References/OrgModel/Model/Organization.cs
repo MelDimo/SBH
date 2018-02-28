@@ -155,7 +155,7 @@ namespace com.sbh.gui.references.orgmodel.Model
                                         " 	CONVERT(XML, " +
                                         " 		(SELECT b.id, b.name, b.ref_status AS refStatus, " +
                                         " 			CONVERT(XML, " +
-                                        " 				(SELECT u.id, u.name, u.ref_status AS refStatus " +
+                                        " 				(SELECT u.id, u.name, u.ref_status AS refStatus, isPOS, isDepot " +
                                         " 				FROM unit u " +
                                         " 				WHERE u.branch = b.id " +
                                         " 				FOR XML RAW('Unit'), ROOT('ArrayOfUnit'), ELEMENTS)) " +

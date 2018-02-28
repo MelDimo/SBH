@@ -1,4 +1,5 @@
 ﻿using com.sbh.dll;
+using com.sbh.dll.utilites;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +13,7 @@ using System.Xml.Serialization;
 
 namespace com.sbh.gui.references.orgmodel.Model
 {
-    
+
     public class Unit : INotifyPropertyChanged
     {
         public int id { get; set; }
@@ -36,6 +37,30 @@ namespace com.sbh.gui.references.orgmodel.Model
             {
                 _refStatus = value;
                 OnPropertyChanged("refStatus");
+            }
+        }
+
+        private int _isPOS;
+        public int isPOS
+        {
+            get { return _isPOS; }
+            set
+            {
+                changeIsPos(value);
+                _isPOS = value;
+                OnPropertyChanged("isPOS");
+            }
+        }
+
+        private int _isDepot;
+        public int isDepot
+        {
+            get { return _isDepot; }
+            set
+            {
+                changeIsDepot(value);
+                _isDepot = value;
+                OnPropertyChanged("isDepot");
             }
         }
 
@@ -89,6 +114,44 @@ namespace com.sbh.gui.references.orgmodel.Model
             }
 
             name = obj as string;
+        }
+
+        private void changeIsDepot(int pValue)
+        {
+            using (SqlConnection con = new SqlConnection(GValues.connString))
+            {
+                con.Open();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = con;
+                    command.CommandText = " UPDATE unit SET isDepot = @isDepot" +
+                                            " WHERE id = @id;";
+
+                    command.Parameters.Add("id", SqlDbType.Int).Value = id;
+                    command.Parameters.Add("isDepot", SqlDbType.Int).Value = pValue;
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void changeIsPos(int pValue)
+        {
+            using (SqlConnection con = new SqlConnection(GValues.connString))
+            {
+                con.Open();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = con;
+                    command.CommandText = " UPDATE unit SET isPOS = @isPOS" +
+                                            " WHERE id = @id;";
+
+                    command.Parameters.Add("id", SqlDbType.Int).Value = id;
+                    command.Parameters.Add("isPOS", SqlDbType.Int).Value = pValue;
+
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
         #region INotifyPropertyChanged Members
