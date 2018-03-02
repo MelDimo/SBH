@@ -31,7 +31,7 @@ namespace com.sbh.dll.utilites.OReferences
                     XmlReader reader = command.ExecuteXmlReader();
                     while (reader.Read())
                     {
-                        refCounterParty = Support.XMLToObject<List<Counterparty>>(reader.ReadOuterXml());
+                        CounterPartys = Support.XMLToObject<List<Counterparty>>(reader.ReadOuterXml());
                     }
                 }
             }
@@ -41,13 +41,13 @@ namespace com.sbh.dll.utilites.OReferences
 
         public static RefCounterParty GetInstance { get { return lazy.Value; } }
 
-        private List<Counterparty> _refCounterParty;
-        public List<Counterparty> refCounterParty
+        private List<Counterparty> _counterPartys;
+        public List<Counterparty> CounterPartys
         {
-            get { return _refCounterParty; }
+            get { return _counterPartys; }
             private set 
             {
-                _refCounterParty = value;
+                _counterPartys = value;
             }
         }
 

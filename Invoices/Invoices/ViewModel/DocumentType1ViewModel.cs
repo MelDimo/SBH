@@ -1,7 +1,9 @@
 ﻿using com.sbh.dll.utilites;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,47 +16,65 @@ namespace com.sbh.gui.invoices.ViewModel
     {
 
         dll.resdictionary.View.DialogView dialogView;
+        references.counterparty.View.CounterpartyExternalView counterpartyExternalView;
+
+        public Model.DocumentType1 Document;
+
+        public string CounterpartyName {
+            get { return Document.counterpaty.name; }
+        }
+
 
         public DocumentType1ViewModel()
         {
-            AddOnClickCommand = new DelegateCommand(AddOnClick);
+            Document = new Model.DocumentType1();
+
+            counterpartyExternalView = new references.counterparty.View.CounterpartyExternalView();
+
+            SetCountertypeOnClickCommand = new DelegateCommand(SetCountertypeOnClick);
+            SetRecipientOnClickCommand = new DelegateCommand(SetRecipientOnClick);
 
             BackOnClickCommand = new DelegateCommand(BackOnClick);
-
-            DialogView_BackOnClickCommand = new DelegateCommand (DialogView_BackOnClick);
-            DialogView_SaveOnClickCommand = new DelegateCommand(DialogView_SaveOnClick);
         }
 
-        public ICommand AddOnClickCommand { get; private set; }
-        void AddOnClick(object obj)
+        public ICommand SetCountertypeOnClickCommand { get; private set; }
+        void SetCountertypeOnClick(object obj)
         {
-            dialogView = new dll.resdictionary.View.DialogView(new View.DocumentType1View());
-            dialogView.ShowDialog();
+
+            dialogView = new dll.resdictionary.View.DialogView(counterpartyExternalView);
+            if (dialogView.ShowDialog() == true)
+            {
+                foreach (dll.utilites.OReferences.RefCounterParty.Counterparty items 
+                    in ((references.counterparty.ViewModel.CounterpartyExternalViewModel)(counterpartyExternalView.DataContext)).GetSelectedItems())
+                {
+                    Document.counterpaty = items;
+                    OnPropertyChanged("CounterpartyName");
+                }
+            }
         }
+
+        public ICommand SetRecipientOnClickCommand { get; private set; }
+        void SetRecipientOnClick(object obj)
+        {
+
+            dialogView = new dll.resdictionary.View.DialogView(counterpartyExternalView);
+            if (dialogView.ShowDialog() == true)
+            {
+                foreach (dll.utilites.OReferences.RefCounterParty.Counterparty items
+                    in ((references.counterparty.ViewModel.CounterpartyExternalViewModel)(counterpartyExternalView.DataContext)).GetSelectedItems())
+                {
+                    Document.counterpaty = items;
+                    OnPropertyChanged("CounterpartyName");
+                }
+            }
+        }
+
 
         public ICommand BackOnClickCommand { get; private set; }
         void BackOnClick(object obj)
         {
             SurfaceControlViewModel.BackOnClickCommand.Execute(null);
         }
-
-        #region DialogView command
-
-        public ICommand DialogView_SaveOnClickCommand { get; private set; }
-        void DialogView_SaveOnClick(object obj)
-        {
-            ((Window)obj).DialogResult = true;
-        }
-
-        public ICommand DialogView_BackOnClickCommand { get; private set; }
-        void DialogView_BackOnClick(object obj)
-        {
-            ((Window)obj).DialogResult = false;
-        }
-
-        #endregion
-
-
 
         #region INotifyPropertyChanged Members
 

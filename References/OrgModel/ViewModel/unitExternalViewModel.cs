@@ -1,50 +1,47 @@
-﻿using System;
+﻿using com.sbh.dll.utilites;
+using com.sbh.dll.utilites.OReferences;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using com.sbh.dll.utilites.OReferences;
 
-namespace com.sbh.gui.references.counterparty.ViewModel
+namespace com.sbh.gui.references.orgmodel.ViewModel
 {
-    public class CounterpartyExternalViewModel : INotifyPropertyChanged
+    public class UnitExternalViewModel : INotifyPropertyChanged
     {
-
-        private ObservableCollection<dll.utilites.SelectableItemWrapper<RefCounterParty.Counterparty>> _counterpartys;
-        public ObservableCollection<dll.utilites.SelectableItemWrapper<RefCounterParty.Counterparty>> Counterpartys
+        private ObservableCollection<SelectableItemWrapper<RefRecipient.Recipient>> _recipients;
+        public ObservableCollection<SelectableItemWrapper<RefRecipient.Recipient>> Recipients
         {
-            get { return _counterpartys; }
-            set { _counterpartys = value; OnPropertyChanged("Counterpartys"); }
+            get { return _recipients; }
+            set { _recipients = value; OnPropertyChanged("Recipients"); }
         }
 
-        public ObservableCollection<RefCounterParty.Counterparty> GetSelectedItems()
+        public ObservableCollection<RefRecipient.Recipient> GetSelectedItems()
         {
-            var selected = Counterpartys
+            var selected = Recipients
                 .Where(p => p.IsSelected)
                 .Select(p => p.Item)
                 .ToList();
-            return new ObservableCollection<RefCounterParty.Counterparty>(selected);
+            return new ObservableCollection<RefRecipient.Recipient>(selected);
         }
 
-        public CounterpartyExternalViewModel()
+        public UnitExternalViewModel()
         {
-            Counterpartys = new ObservableCollection<dll.utilites.SelectableItemWrapper<RefCounterParty.Counterparty>>();
+            Recipients = new ObservableCollection<SelectableItemWrapper<RefRecipient.Recipient>>();
 
-            RefCounterParty RefCounterParty = RefCounterParty.GetInstance;
+            RefRecipient refRecipient = RefRecipient.GetInstance;
 
-            foreach (RefCounterParty.Counterparty item in RefCounterParty.CounterPartys)
+            foreach (RefRecipient.Recipient item in refRecipient.Recipients)
             {
-                Counterpartys.Add(new dll.utilites.SelectableItemWrapper<RefCounterParty.Counterparty>() { IsSelected = true, Item = item });
+                Recipients.Add(new SelectableItemWrapper<RefRecipient.Recipient>() { IsSelected = true, Item = item });
             }
 
             DialogView_SaveOnClickCommand = new dll.utilites.DelegateCommand(DialogView_SaveOnClick);
             DialogView_BackOnClickCommand = new dll.utilites.DelegateCommand(DialogView_BackOnClick);
         }
-
 
         #region DialogView command
 

@@ -41,14 +41,33 @@
         </Border>
         <StackPanel Grid.Row="1" Background="{StaticResource FilterBackGrount}">
             <!--                                        Заголовок документа                       -->
-            <Grid Grid.Column="0" MinWidth="1024" MaxWidth="1440" Background="White" Height="200">
+            <Grid Grid.Column="0" MaxWidth="1440" Background="White" Height="200">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="Поставщик:" FontSize="15" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <DockPanel Grid.Row="0" Grid.Column="2" LastChildFill="True" >
+                    <Button DockPanel.Dock="Right" Content="..." Width="32" Height="32"
+                            Command="{Binding SetCountertypeOnClickCommand}" Margin="3,3,3,0"/>
+                    <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource FilterBackGrount}">
+                    <TextBlock Text="{Binding CounterpartyName}" VerticalAlignment="Center" FontSize="15"/>
+                    </Border>
+                </DockPanel>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="Получатель:" FontSize="15" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <DockPanel Grid.Row="1" Grid.Column="2" LastChildFill="True" >
+                    <Button DockPanel.Dock="Right" Content="..." Width="32" Height="32"
+                            Command="{Binding SetCountertypeOnClickCommand}" Margin="3,3,3,0"/>
+                    <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource FilterBackGrount}">
+                        <TextBlock Text="{Binding CounterpartyName}" VerticalAlignment="Center" FontSize="15"/>
+                    </Border>
+                </DockPanel>
             </Grid>
             
         </StackPanel>

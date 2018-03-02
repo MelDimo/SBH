@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Counterparty">
+      <HintPath>..\..\References\Counterparty\bin\Debug\Counterparty.dll</HintPath>
+    </Reference>
     <Reference Include="GValues">
       <HintPath>..\..\GValues\GValues\bin\Debug\GValues.dll</HintPath>
     </Reference>

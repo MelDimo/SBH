@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace com.sbh.gui.invoices.Model
 {
-    class DocumentType1
+    public class DocumentType1
     {
+        public int id;
+        public dll.utilites.OReferences.RefCounterParty.Counterparty counterpaty;
+        public dll.utilites.OReferences.RefRecipient.Recipient recipient;
 
+        public DocumentType1()
+        {
+            counterpaty = new dll.utilites.OReferences.RefCounterParty.Counterparty();
+            recipient = new dll.utilites.OReferences.RefRecipient.Recipient();
+        }
     }
 }

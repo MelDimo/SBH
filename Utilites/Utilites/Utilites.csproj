@@ -51,6 +51,8 @@
     <Compile Include="OReferences\RefDimensions.cs" />
     <Compile Include="OReferences\RefItem.cs" />
     <Compile Include="OReferences\RefDocType.cs" />
+    <Compile Include="OReferences\RefRecipient.cs" />
+    <Compile Include="SelectableItemWrapper.cs" />
     <Compile Include="Support.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
