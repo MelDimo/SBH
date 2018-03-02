@@ -17,11 +17,16 @@ namespace com.sbh.gui.invoices.ViewModel
 
         dll.resdictionary.View.DialogView dialogView;
         references.counterparty.View.CounterpartyExternalView counterpartyExternalView;
+        references.orgmodel.View.UnitExternalView unitExternalView;
 
         public Model.DocumentType1 Document;
 
         public string CounterpartyName {
             get { return Document.counterpaty.name; }
+        }
+
+        public string RecipientName {
+            get { return Document.recipient.name; }
         }
 
 
@@ -30,6 +35,7 @@ namespace com.sbh.gui.invoices.ViewModel
             Document = new Model.DocumentType1();
 
             counterpartyExternalView = new references.counterparty.View.CounterpartyExternalView();
+            unitExternalView = new references.orgmodel.View.UnitExternalView();
 
             SetCountertypeOnClickCommand = new DelegateCommand(SetCountertypeOnClick);
             SetRecipientOnClickCommand = new DelegateCommand(SetRecipientOnClick);
@@ -57,14 +63,14 @@ namespace com.sbh.gui.invoices.ViewModel
         void SetRecipientOnClick(object obj)
         {
 
-            dialogView = new dll.resdictionary.View.DialogView(counterpartyExternalView);
+            dialogView = new dll.resdictionary.View.DialogView(unitExternalView);
             if (dialogView.ShowDialog() == true)
             {
-                foreach (dll.utilites.OReferences.RefCounterParty.Counterparty items
-                    in ((references.counterparty.ViewModel.CounterpartyExternalViewModel)(counterpartyExternalView.DataContext)).GetSelectedItems())
+                foreach (dll.utilites.OReferences.RefRecipient.Recipient items
+                    in ((references.orgmodel.ViewModel.UnitExternalViewModel)(unitExternalView.DataContext)).GetSelectedItems())
                 {
-                    Document.counterpaty = items;
-                    OnPropertyChanged("CounterpartyName");
+                    Document.recipient = items;
+                    OnPropertyChanged("RecipientName");
                 }
             }
         }

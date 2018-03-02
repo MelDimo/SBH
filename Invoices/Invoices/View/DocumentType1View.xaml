@@ -63,9 +63,9 @@
                 <TextBlock Grid.Row="1" Grid.Column="1" Text="Получатель:" FontSize="15" VerticalAlignment="Center" Margin="0,0,10,0"/>
                 <DockPanel Grid.Row="1" Grid.Column="2" LastChildFill="True" >
                     <Button DockPanel.Dock="Right" Content="..." Width="32" Height="32"
-                            Command="{Binding SetCountertypeOnClickCommand}" Margin="3,3,3,0"/>
+                            Command="{Binding SetRecipientOnClickCommand}" Margin="3,3,3,0"/>
                     <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource FilterBackGrount}">
-                        <TextBlock Text="{Binding CounterpartyName}" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="{Binding RecipientName}" VerticalAlignment="Center" FontSize="15"/>
                     </Border>
                 </DockPanel>
             </Grid>

@@ -18,7 +18,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Counterpartys}"
+        <ListView ItemsSource="{Binding Recipients}"
                   FontSize="15">
             <ListView.ItemTemplate>
                 <DataTemplate>

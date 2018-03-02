@@ -40,6 +40,9 @@
     <Reference Include="GValues">
       <HintPath>..\..\GValues\GValues\bin\Debug\GValues.dll</HintPath>
     </Reference>
+    <Reference Include="OrgModel">
+      <HintPath>..\..\References\OrgModel\bin\Debug\OrgModel.dll</HintPath>
+    </Reference>
     <Reference Include="ResDic">
       <HintPath>..\..\Utilites\ResDic\bin\Debug\ResDic.dll</HintPath>
     </Reference>
