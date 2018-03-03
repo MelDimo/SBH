@@ -18,7 +18,6 @@ namespace com.sbh.gui.references.item.Model
         private dimensions.SurfaceDimensionsView surfaceDimensionsView = new dimensions.SurfaceDimensionsView();
         private dll.utilites.OReferences.RefDimensions RefDimensions = dll.utilites.OReferences.RefDimensions.GetInstance;
 
-
         public decimal id { get; set; }
 
         private string _groupname;

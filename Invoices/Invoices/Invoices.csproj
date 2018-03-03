@@ -72,8 +72,12 @@
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\DocumentType1.cs" />
     <Compile Include="Model\Filter.cs" />
+    <Compile Include="Model\Item.cs" />
     <Compile Include="ViewModel\DocumentType1ViewModel.cs" />
     <Compile Include="ViewModel\SurfaceControlViewModel.cs" />
+    <Compile Include="View\DocumentItemsView.xaml.cs">
+      <DependentUpon>DocumentItemsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DocumentJournalView.xaml.cs">
       <DependentUpon>DocumentJournalView.xaml</DependentUpon>
     </Compile>
@@ -95,6 +99,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\DocumentItemsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DocumentJournalView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -12,5 +12,12 @@ namespace com.sbh.gui.invoices.Model
         public decimal docType { get; set; }
         public DateTime dateCreate { get; set; }
         public decimal refStatus { get; set; }
+
+        //public T concreteDoc { get; set; }
+
+        public Document()
+        {
+
+        }
     }
 }

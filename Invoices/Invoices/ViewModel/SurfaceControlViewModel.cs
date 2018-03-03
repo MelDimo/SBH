@@ -15,9 +15,7 @@ namespace com.sbh.gui.invoices.ViewModel
     public class SurfaceControlViewModel : INotifyPropertyChanged
     {
 
-
         private UserControl mDocumentJournalView;
-        private UserControl mDocumentType1View;
 
         private UserControl _curUserControl;
         public UserControl CurUserControl
@@ -53,7 +51,6 @@ namespace com.sbh.gui.invoices.ViewModel
             _filterVisibility = false;
 
             mDocumentJournalView = new View.DocumentJournalView();
-            mDocumentType1View = new View.DocumentType1View();
 
             CurUserControl = mDocumentJournalView;
         }
@@ -92,7 +89,8 @@ namespace com.sbh.gui.invoices.ViewModel
             switch ((int)obj)
             {
                 case 1:             // Приход
-                    CurUserControl = mDocumentType1View;
+
+                    CurUserControl = new View.DocumentType1View();
                     break;
 
                 case 2:             // Перемещение

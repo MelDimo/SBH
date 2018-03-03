@@ -41,8 +41,9 @@
         </Border>
         <StackPanel Grid.Row="1" Background="{StaticResource FilterBackGrount}">
             <!--                                        Заголовок документа                       -->
-            <Grid Grid.Column="0" MaxWidth="1440" Background="White" Height="200">
+            <Grid MaxWidth="1440" Background="White" Height="120">
                 <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition />
@@ -52,29 +53,53 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="Поставщик:" FontSize="15" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <DockPanel Grid.Row="0" Grid.Column="2" LastChildFill="True" >
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="Поставщик:" FontSize="15" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <DockPanel Grid.Row="1" Grid.Column="2" LastChildFill="True" >
                     <Button DockPanel.Dock="Right" Content="..." Width="32" Height="32"
-                            Command="{Binding SetCountertypeOnClickCommand}" Margin="3,3,3,0"/>
+                            Command="{Binding SetCountertypeOnClickCommand}" ToolTip="Выбрать поставщика" Margin="3,3,3,0"/>
                     <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource FilterBackGrount}">
                     <TextBlock Text="{Binding CounterpartyName}" VerticalAlignment="Center" FontSize="15"/>
                     </Border>
                 </DockPanel>
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="Получатель:" FontSize="15" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <DockPanel Grid.Row="1" Grid.Column="2" LastChildFill="True" >
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="Получатель:" FontSize="15" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <DockPanel Grid.Row="2" Grid.Column="2" LastChildFill="True" >
                     <Button DockPanel.Dock="Right" Content="..." Width="32" Height="32"
-                            Command="{Binding SetRecipientOnClickCommand}" Margin="3,3,3,0"/>
+                            Command="{Binding SetRecipientOnClickCommand}" ToolTip="Выбрать получателя" Margin="3,3,3,0"/>
                     <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource FilterBackGrount}">
                         <TextBlock Text="{Binding RecipientName}" VerticalAlignment="Center" FontSize="15"/>
                     </Border>
                 </DockPanel>
             </Grid>
+            <Border BorderThickness="0,1,0,1" BorderBrush="{StaticResource FilterBackGrount}">
+                <DockPanel MaxWidth="1440" Background="White">
+                    <Button Height="32" Width="32" HorizontalAlignment="Left" Margin="3"
+                            DockPanel.Dock="Left"
+                            Command="{Binding AddItemOnClickCommand}" ToolTip="Добавить позицию">
+                        <Button.Content>
+                            <ContentControl Content="{StaticResource imgDocAdd}"/>
+                        </Button.Content>
+                    </Button>
+                    <Button Height="32" Width="32" HorizontalAlignment="Left" Margin="3"
+                            DockPanel.Dock="Left"
+                            Command="{Binding EditItemOnClickCommand}" ToolTip="Редактировать позицию">
+                        <Button.Content>
+                            <ContentControl Content="{StaticResource imgDocEdit}"/>
+                        </Button.Content>
+                    </Button>
+                    <Button Height="32" Width="32" HorizontalAlignment="Left" Margin="3"
+                            DockPanel.Dock="Left"
+                            Command="{Binding DelItemOnClickCommand}" ToolTip="Удалить позицию">
+                        <Button.Content>
+                            <ContentControl Content="{StaticResource imgDocDel}"/>
+                        </Button.Content>
+                    </Button>
+                </DockPanel>
+            </Border>
+            <ScrollViewer MaxWidth="1440">
+                <ContentControl Content="{Binding ItemsView}"/>
+            </ScrollViewer>
             
         </StackPanel>
-        
-        
-        
-        
         <!--<Button Grid.Row="1" Grid.Column="0" Height="32" Width="128" Command="{Binding AddOnClickCommand}"/>-->
     </Grid>
 </UserControl>

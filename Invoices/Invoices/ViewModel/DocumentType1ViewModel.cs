@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace com.sbh.gui.invoices.ViewModel
@@ -15,9 +16,16 @@ namespace com.sbh.gui.invoices.ViewModel
     public class DocumentType1ViewModel : INotifyPropertyChanged
     {
 
-        dll.resdictionary.View.DialogView dialogView;
-        references.counterparty.View.CounterpartyExternalView counterpartyExternalView;
-        references.orgmodel.View.UnitExternalView unitExternalView;
+        private dll.resdictionary.View.DialogView dialogView;
+        private references.counterparty.View.CounterpartyExternalView counterpartyExternalView;
+        private references.orgmodel.View.UnitExternalView unitExternalView;
+
+        private UserControl _itemsView;
+        public UserControl ItemsView
+        {
+            get { return _itemsView; }
+            private set { _itemsView = value; OnPropertyChanged("ItemsView"); }
+        }
 
         public Model.DocumentType1 Document;
 
@@ -29,16 +37,27 @@ namespace com.sbh.gui.invoices.ViewModel
             get { return Document.recipient.name; }
         }
 
+        private ObservableCollection<Model.Item> _items;
+        public ObservableCollection<Model.Item> Items
+        {
+            get { return _items; }
+            set { _items = value; OnPropertyChanged("Items");  }
+        }
 
         public DocumentType1ViewModel()
         {
             Document = new Model.DocumentType1();
+
+            ItemsView = new View.DocumentItemsView();
+            ItemsView.DataContext = this;
 
             counterpartyExternalView = new references.counterparty.View.CounterpartyExternalView();
             unitExternalView = new references.orgmodel.View.UnitExternalView();
 
             SetCountertypeOnClickCommand = new DelegateCommand(SetCountertypeOnClick);
             SetRecipientOnClickCommand = new DelegateCommand(SetRecipientOnClick);
+
+            AddItemOnClickCommand = new DelegateCommand(AddItemOnClick);
 
             BackOnClickCommand = new DelegateCommand(BackOnClick);
         }
@@ -75,6 +94,11 @@ namespace com.sbh.gui.invoices.ViewModel
             }
         }
 
+        public ICommand AddItemOnClickCommand { get; private set; }
+        void AddItemOnClick(object obj)
+        {
+            return;
+        }
 
         public ICommand BackOnClickCommand { get; private set; }
         void BackOnClick(object obj)

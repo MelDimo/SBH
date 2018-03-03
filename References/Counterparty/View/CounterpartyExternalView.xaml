@@ -23,17 +23,11 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <DockPanel LastChildFill="True">
-                        <CheckBox IsChecked="{Binding IsSelected}" DockPanel.Dock="Left"/>
-                        <TextBlock Text="{Binding Item.name}" DockPanel.Dock="Left"/>
+                        <CheckBox IsChecked="{Binding IsSelected}" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,2,5,0"/>
+                        <TextBlock Text="{Binding Item.name}" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,2,0,0"/>
                     </DockPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            <!--<ListView.View>
-                <GridView ColumnHeaderContainerStyle="{DynamicResource GridViewHeaderHide}">
-                    
-                    <GridViewColumn DisplayMemberBinding="{Binding Item.name}"/>
-                </GridView>
-            </ListView.View>-->
         </ListView>
     </Grid>
 </UserControl>
