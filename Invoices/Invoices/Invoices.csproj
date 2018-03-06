@@ -69,11 +69,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\DocAbstractFactory\Document.cs" />
+    <Compile Include="Model\DocAbstractFactory\Factory\DocType1Factory.cs" />
+    <Compile Include="Model\DocAbstractFactory\Factory\IFactory.cs" />
+    <Compile Include="Model\DocAbstractFactory\Header\DocType1Header.cs" />
+    <Compile Include="Model\DocAbstractFactory\Header\IHeader.cs" />
+    <Compile Include="Model\DocAbstractFactory\Items\DocTypeAllItems.cs" />
+    <Compile Include="Model\DocAbstractFactory\Items\IItems.cs" />
     <Compile Include="Model\Document.cs" />
-    <Compile Include="Model\DocumentType1.cs" />
     <Compile Include="Model\Filter.cs" />
     <Compile Include="Model\Item.cs" />
-    <Compile Include="ViewModel\DocumentType1ViewModel.cs" />
+    <Compile Include="ViewModel\DocumentViewModel.cs" />
     <Compile Include="ViewModel\SurfaceControlViewModel.cs" />
     <Compile Include="View\DocumentItemsView.xaml.cs">
       <DependentUpon>DocumentItemsView.xaml</DependentUpon>
@@ -81,8 +87,8 @@
     <Compile Include="View\DocumentJournalView.xaml.cs">
       <DependentUpon>DocumentJournalView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\DocumentType1View.xaml.cs">
-      <DependentUpon>DocumentType1View.xaml</DependentUpon>
+    <Compile Include="View\DocumentView.xaml.cs">
+      <DependentUpon>DocumentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SurfaceControlView.xaml.cs">
       <DependentUpon>SurfaceControlView.xaml</DependentUpon>
@@ -107,7 +113,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\DocumentType1View.xaml">
+    <Page Include="View\DocumentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

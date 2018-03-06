@@ -2,6 +2,7 @@
 using com.sbh.dll.utilites.OReferences;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -14,7 +15,6 @@ namespace com.sbh.gui.invoices.ViewModel
 {
     public class SurfaceControlViewModel : INotifyPropertyChanged
     {
-
         private UserControl mDocumentJournalView;
 
         private UserControl _curUserControl;
@@ -32,9 +32,15 @@ namespace com.sbh.gui.invoices.ViewModel
 
         public List<RefDocType.DocType> DocType { get; private set; }
 
+        private ObservableCollection<Model.Document> _docs;
+        public ObservableCollection<Model.Document> Docs
+        {
+            get { return _docs; }
+            set { _docs = value; OnPropertyChanged("Docs"); }
+        }
+
         public SurfaceControlViewModel()
         {
-            
             Filter = new Model.Filter();
 
             DocType = RefDocType.GetInstance.refDocType;
@@ -66,6 +72,8 @@ namespace com.sbh.gui.invoices.ViewModel
             }
         }
 
+        #region ICommand
+
         public ICommand FilterActionCommand { get; private set; }
         void FilterAction(object obj)
         {
@@ -76,6 +84,7 @@ namespace com.sbh.gui.invoices.ViewModel
         void FilterApply(object obj)
         {
             FilterVisibility = !FilterVisibility;
+
         }
 
         public static ICommand BackOnClickCommand { get; private set; }
@@ -84,13 +93,15 @@ namespace com.sbh.gui.invoices.ViewModel
             CurUserControl = mDocumentJournalView;
         }
 
+        #endregion
+
         void MenuItemOnClick(object obj)
         {
             switch ((int)obj)
             {
                 case 1:             // Приход
 
-                    CurUserControl = new View.DocumentType1View();
+                    CurUserControl = new View.DocumentView();
                     break;
 
                 case 2:             // Перемещение
