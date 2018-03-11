@@ -19,20 +19,11 @@ namespace com.sbh.gui.invoices.View
     /// <summary>
     /// Interaction logic for DocumentType1.xaml
     /// </summary>
-    public partial class DocumentView : UserControl
+    public partial class DocumentType1View : UserControl
     {
-        private Document document;
-
-        public DocumentView()
+        public DocumentType1View()
         {
             InitializeComponent();
-
-            Loaded += DocumentType1View_Loaded;
-        }
-
-        private void DocumentType1View_Loaded(object sender, RoutedEventArgs e)
-        {
-            DataContext = new ViewModel.DocumentViewModel(null);
         }
     }
 }

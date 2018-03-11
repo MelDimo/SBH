@@ -26,7 +26,7 @@
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Grid.Column="0">
             <Menu DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" VerticalAlignment="Center" FontSize="15" Margin="7,0,0,0">
-                <MenuItem ItemsSource="{Binding DocType}"
+                <MenuItem ItemsSource="{Binding DocTypes}"
                           ToolTip="Создать документ">
                     <MenuItem.Icon>
                         <ContentControl Height="32" Content="{StaticResource imgDoc}" />
@@ -81,10 +81,10 @@
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Тип документа" FontSize="15" Foreground="White" Margin="3">
-                        <ItemsControl ItemsSource="{Binding Filter.docType}">
+                        <ItemsControl ItemsSource="{Binding Filter.docTypes}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <CheckBox Content="{Binding name}" IsChecked="{Binding isSelected}" Foreground="White"/>
+                                    <CheckBox Content="{Binding name}" IsChecked="{Binding isSelected, Mode=TwoWay}" Foreground="White"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -107,9 +107,40 @@
                     </Button>
                 </StackPanel>
             </ScrollViewer>
-            <ListBox>
-
-            </ListBox>
+            <TextBlock Text="Нет документов соответствующих фильтру" FontSize="15" Margin="15,15,0,0" DockPanel.Dock="Left">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Docs.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <ListView ItemsSource="{Binding Docs}" SelectedItem="{Binding CurDoc}">
+                <ListView.View>
+                    <GridView ColumnHeaderContainerStyle="{DynamicResource GridViewHeaderHide}">
+                        <GridViewColumn DisplayMemberBinding="{Binding id}"/>
+                    </GridView>
+                </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.Style>
+                    <Style TargetType="{x:Type ListView}">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Docs.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Style>
+            </ListView>
         </DockPanel>
     </Grid>
 </UserControl>

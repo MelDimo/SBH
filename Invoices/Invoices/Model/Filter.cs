@@ -15,13 +15,13 @@ namespace com.sbh.gui.invoices.Model
     {
         public DateTime dateStart { get; set; }
         public DateTime dateEnd { get; set; }
-        public List<DocType> docType { get; set; }
+        public List<DocType> docTypes { get; set; }
 
         public Filter()
         {
             dateStart = DateTime.Now.AddDays(-7);
             dateEnd = DateTime.Now;
-            docType = docTypeCollect();
+            docTypes = docTypeCollect();
         }
 
         public class DocType

@@ -1,17 +1,21 @@
 ﻿using com.sbh.dll.utilites;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace com.sbh.gui.invoices.ViewModel
 {
-    public class DocumentViewModel : INotifyPropertyChanged
+    public class DocumentType1ViewModel : INotifyPropertyChanged
     {
+
         private dll.resdictionary.View.DialogView dialogView;
         private references.counterparty.View.CounterpartyExternalView counterpartyExternalView;
         private references.orgmodel.View.UnitExternalView unitExternalView;
@@ -23,16 +27,26 @@ namespace com.sbh.gui.invoices.ViewModel
             private set { _itemsView = value; OnPropertyChanged("ItemsView"); }
         }
 
-        private Model.Document _doc;
-        public Model.Document Doc
-        {
-            get { return _doc; }
-            set { _doc = value; OnPropertyChanged("Doc"); }
+        public Model.DocumentType1 Document;
+
+        public string CounterpartyName {
+            get { return Document.counterpaty.name; }
         }
 
-        public DocumentViewModel(Model.Document pDocument)
+        public string RecipientName {
+            get { return Document.recipient.name; }
+        }
+
+        private ObservableCollection<Model.Item> _items;
+        public ObservableCollection<Model.Item> Items
         {
-            Doc = pDocument;
+            get { return _items; }
+            set { _items = value; OnPropertyChanged("Items");  }
+        }
+
+        public DocumentType1ViewModel()
+        {
+            //Document = new Model.DocumentType1();
 
             ItemsView = new View.DocumentItemsView();
             ItemsView.DataContext = this;
@@ -43,13 +57,10 @@ namespace com.sbh.gui.invoices.ViewModel
             SetCountertypeOnClickCommand = new DelegateCommand(SetCountertypeOnClick);
             SetRecipientOnClickCommand = new DelegateCommand(SetRecipientOnClick);
 
-            //AddItemOnClickCommand = new DelegateCommand(AddItemOnClick);
+            AddItemOnClickCommand = new DelegateCommand(AddItemOnClick);
 
             BackOnClickCommand = new DelegateCommand(BackOnClick);
-
         }
-
-        #region Command
 
         public ICommand SetCountertypeOnClickCommand { get; private set; }
         void SetCountertypeOnClick(object obj)
@@ -58,7 +69,7 @@ namespace com.sbh.gui.invoices.ViewModel
             dialogView = new dll.resdictionary.View.DialogView(counterpartyExternalView);
             if (dialogView.ShowDialog() == true)
             {
-                foreach (dll.utilites.OReferences.RefCounterParty.Counterparty items
+                foreach (dll.utilites.OReferences.RefCounterParty.Counterparty items 
                     in ((references.counterparty.ViewModel.CounterpartyExternalViewModel)(counterpartyExternalView.DataContext)).GetSelectedItems())
                 {
                     //Document.counterpaty = items;
@@ -77,16 +88,10 @@ namespace com.sbh.gui.invoices.ViewModel
                 foreach (dll.utilites.OReferences.RefRecipient.Recipient items
                     in ((references.orgmodel.ViewModel.UnitExternalViewModel)(unitExternalView.DataContext)).GetSelectedItems())
                 {
-                    //Document.recipient = items;
+                    Document.recipient = items;
                     OnPropertyChanged("RecipientName");
                 }
             }
-        }
-
-        public ICommand BackOnClickCommand { get; private set; }
-        void BackOnClick(object obj)
-        {
-            SurfaceControlViewModel.BackOnClickCommand.Execute(null);
         }
 
         public ICommand AddItemOnClickCommand { get; private set; }
@@ -95,7 +100,11 @@ namespace com.sbh.gui.invoices.ViewModel
             return;
         }
 
-        #endregion
+        public ICommand BackOnClickCommand { get; private set; }
+        void BackOnClick(object obj)
+        {
+            SurfaceControlViewModel.BackOnClickCommand.Execute(null);
+        }
 
         #region INotifyPropertyChanged Members
 

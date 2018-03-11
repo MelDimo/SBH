@@ -14,10 +14,15 @@ namespace com.sbh.gui.invoices.Model.DocAbstractFactory.Header
         public DateTime dateCreate { get; set; }
         public decimal refStatus { get; set; }
 
-        public RefCounterParty.Counterparty counterpaty;
-        public RefRecipient.Recipient recipient;
+        public RefCounterParty.Counterparty counterpaty { get; set; }
+        public RefRecipient.Recipient recipient { get; set; }
 
         public DocType1Header()
-        { }
+        {
+            id = 0;
+            docType = 1;
+            dateCreate = DateTime.Now;
+            refStatus = 1;
+        }
     }
 }
