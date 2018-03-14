@@ -58,6 +58,7 @@ namespace com.sbh.dll.utilites.OReferences
             public string description { get; set; }
             public string groupname { get; set; }
             public int refStatus { get; set; }
+            public string Name { get { return groupname; } }
         }
 
     }

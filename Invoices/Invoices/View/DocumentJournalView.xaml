@@ -25,7 +25,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Grid.Column="0">
-            <Menu DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" VerticalAlignment="Center" FontSize="15" Margin="7,0,0,0">
+            <Menu DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" 
+                  VerticalAlignment="Center" FontSize="15" Margin="7,0,0,0">
                 <MenuItem ItemsSource="{Binding DocTypes}"
                           ToolTip="Создать документ">
                     <MenuItem.Icon>
@@ -42,6 +43,14 @@
                             <Setter Property="CommandParameter" Value="{Binding id}"/>
                         </Style>
                     </MenuItem.ItemContainerStyle>
+                </MenuItem>
+            </Menu>
+            <Menu DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" 
+                  VerticalAlignment="Center" FontSize="15" Margin="7,0,0,0">
+                <MenuItem ToolTip="Удалить токумент" Command="{Binding DeleteCommand}">
+                    <MenuItem.Icon>
+                        <ContentControl Height="32" Content="{StaticResource imgDocDel}" />
+                    </MenuItem.Icon>
                 </MenuItem>
             </Menu>
             <Border Height="32" Width="32" Margin="3,3,7,3" HorizontalAlignment="Right" ToolTip="Фильтр"
@@ -119,10 +128,15 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ListView ItemsSource="{Binding Docs}" SelectedItem="{Binding CurDoc}">
+            <ListView ItemsSource="{Binding Docs}" SelectedItem="{Binding CurDoc}" FontSize="15">
                 <ListView.View>
-                    <GridView ColumnHeaderContainerStyle="{DynamicResource GridViewHeaderHide}">
-                        <GridViewColumn DisplayMemberBinding="{Binding id}"/>
+                    <GridView>
+                        <GridViewColumn Header="Номер док-та" DisplayMemberBinding="{Binding id}"/>
+                        <GridViewColumn Header="Тип док-та" DisplayMemberBinding="{Binding TypeName}"/>
+                        <GridViewColumn Header="Дата создания док-та" DisplayMemberBinding="{Binding dateCreate, StringFormat='dd.MM.yyy HH:mm'}"/>
+                        <GridViewColumn Header="Дата проводки док-та" DisplayMemberBinding="{Binding dateDoc, StringFormat='dd.MM.yyy HH:mm'}"/>
+                        <GridViewColumn Header="Откуда" DisplayMemberBinding="{Binding XFromName}"/>
+                        <GridViewColumn Header="Куда" DisplayMemberBinding="{Binding XToName}"/>
                     </GridView>
                 </ListView.View>
                 <ListView.ItemContainerStyle>

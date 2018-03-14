@@ -14,16 +14,21 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/ResDic;component/StylesDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ResDic;component/ConverterDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <ListView ItemsSource="{Binding Recipients}"
+                  SelectedItem="{Binding DataContext.CurRecipient, RelativeSource={RelativeSource AncestorType=local:UnitExternalView}}"
                   FontSize="15">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <DockPanel LastChildFill="True">
-                        <CheckBox IsChecked="{Binding IsSelected}" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,2,5,0"/>
+                        <CheckBox IsChecked="{Binding IsSelected}" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,2,5,0"
+                                  Visibility = "{Binding DataContext.isMultiSelect, 
+                                    RelativeSource={RelativeSource AncestorType=local:UnitExternalView}, 
+                                    Converter={StaticResource VisibilityConverter }}"/>
                         <TextBlock Text="{Binding Item.name}" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,2,0,0"/>
                     </DockPanel>
                 </DataTemplate>

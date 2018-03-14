@@ -14,20 +14,50 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/ResDic;component/StylesDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ResDic;component/ConverterDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <CollectionViewSource x:Key="lvSource" Source="{Binding Counterpartys}" IsLiveGroupingRequested="True">
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="Item.groupname"/>
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Counterpartys}"
+        <ListView ItemsSource="{Binding Source={StaticResource lvSource}}"
+                  SelectedItem="{Binding DataContext.CurCounterparty, RelativeSource={RelativeSource AncestorType=local:CounterpartyExternalView}}"
                   FontSize="15">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <DockPanel LastChildFill="True">
-                        <CheckBox IsChecked="{Binding IsSelected}" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,2,5,0"/>
+                        <CheckBox IsChecked="{Binding IsSelected}" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,2,5,0"
+                                  Visibility = "{Binding DataContext.isMultiSelect, 
+                                    RelativeSource={RelativeSource AncestorType=local:CounterpartyExternalView}, 
+                                    Converter={StaticResource VisibilityConverter }}"/>
                         <TextBlock Text="{Binding Item.name}" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,2,0,0"/>
                     </DockPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander IsExpanded="True">
+                                            <Expander.Header>
+                                                <TextBlock Text="{Binding Name}"/>
+                                            </Expander.Header>
+                                            <ItemsPresenter/>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
         </ListView>
     </Grid>
 </UserControl>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace com.sbh.gui.invoices.Model
 {
-    public class DocumentType1 : INotifyPropertyChanged
+    public class DocumentType2 : INotifyPropertyChanged
     {
         public decimal id { get; set; }
         public decimal docType { get; set; }
@@ -17,12 +17,12 @@ namespace com.sbh.gui.invoices.Model
         public DateTime dateDoc { get; set; }
         public decimal refStatus { get; set; }
 
-        public RefCounterParty.Counterparty counterpaty;
+        public RefRecipient.Recipient counterpaty;
         public RefRecipient.Recipient recipient;
 
-        public DocumentType1()
+        public DocumentType2()
         {
-            counterpaty = new RefCounterParty.Counterparty();
+            counterpaty = new RefRecipient.Recipient();
             recipient = new RefRecipient.Recipient();
             dateCreate = DateTime.Now;
             dateDoc = DateTime.Now;

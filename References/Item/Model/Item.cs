@@ -132,6 +132,8 @@ namespace com.sbh.gui.references.item.Model
 
             name = xName;
             groupname = xGroupname;
+
+            dll.utilites.OReferences.RefItem.GetInstance.reload();
         }
 
         [XmlIgnore]

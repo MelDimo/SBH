@@ -20,45 +20,84 @@
             <Style TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             </Style>
-            <CollectionViewSource x:Key="lvSource" Source="{Binding Items}" IsLiveGroupingRequested="True">
-                <CollectionViewSource.GroupDescriptions>
-                    <PropertyGroupDescription PropertyName="groupname"/>
-                </CollectionViewSource.GroupDescriptions>
-            </CollectionViewSource>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Source={StaticResource lvSource}}" 
-                      SelectedItem="{Binding CurItem}" FontSize="15"
-                      Name="lvMain">
-            <ListView.View>
-                <!--<GridView ColumnHeaderContainerStyle="{DynamicResource GridViewHeaderHide}">-->
-                <GridView>
-                    <GridViewColumn Header="Наименование" DisplayMemberBinding="{Binding name}"
-                                        Width="{Binding ElementName=helperField, Path=ActualWidth}"/>
-                    <GridViewColumn x:Name="col1" Header="Ед. измерения" DisplayMemberBinding="{Binding refDimensionsName}" />
-                </GridView>
-            </ListView.View>
-            <ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.ContainerStyle>
-                        <Style TargetType="{x:Type GroupItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate>
-                                        <Expander IsExpanded="True">
-                                            <Expander.Header>
-                                                <TextBlock Text="{Binding Name}"/>
-                                            </Expander.Header>
-                                            <ItemsPresenter/>
-                                        </Expander>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </GroupStyle.ContainerStyle>
-                </GroupStyle>
-            </ListView.GroupStyle>
-        </ListView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" MaxWidth="1440" Background="White">
+            <Button Height="32" Width="32" HorizontalAlignment="Left" Margin="3"
+                            DockPanel.Dock="Left"
+                            Command="{Binding AddItemOnClickCommand}" ToolTip="Добавить позицию">
+                <Button.Content>
+                    <ContentControl Content="{StaticResource imgDocAdd}"/>
+                </Button.Content>
+            </Button>
+            <Button Height="32" Width="32" HorizontalAlignment="Left" Margin="3"
+                            DockPanel.Dock="Left"
+                            Command="{Binding EditItemOnClickCommand}" ToolTip="Редактировать позицию">
+                <Button.Content>
+                    <ContentControl Content="{StaticResource imgDocEdit}"/>
+                </Button.Content>
+            </Button>
+            <Button Height="32" Width="32" HorizontalAlignment="Left" Margin="3"
+                            DockPanel.Dock="Left"
+                            Command="{Binding DelItemOnClickCommand}" ToolTip="Удалить позицию">
+                <Button.Content>
+                    <ContentControl Content="{StaticResource imgDocDel}"/>
+                </Button.Content>
+            </Button>
+        </DockPanel>
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Auto"
+                  ItemsSource="{Binding Positions}" SelectedItem="{Binding CurPosition}" FontSize="15">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Наименование">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center"
+                                      ItemsSource="{Binding RefItems}"
+                                      SelectedValue="{Binding itemId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                      SelectedValuePath="id"
+                                      IsSynchronizedWithCurrentItem="True" IsEditable="True">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0}">
+                                                    <Binding Path="name" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Кол-во">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding xcount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Цена за ед">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding xprice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Сумма">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding xsumm, Mode=OneWay, UpdateSourceTrigger=LostFocus}" IsReadOnly="True" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

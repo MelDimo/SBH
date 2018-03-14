@@ -21,6 +21,13 @@ namespace com.sbh.gui.references.orgmodel.ViewModel
             set { _recipients = value; OnPropertyChanged("Recipients"); }
         }
 
+        private dll.utilites.SelectableItemWrapper<RefRecipient.Recipient> _curRecipient;
+        public dll.utilites.SelectableItemWrapper<RefRecipient.Recipient> CurRecipient
+        {
+            get { return _curRecipient; }
+            set { _curRecipient = value; OnPropertyChanged("CurRecipient"); }
+        }
+
         public ObservableCollection<RefRecipient.Recipient> GetSelectedItems()
         {
             var selected = Recipients
@@ -41,9 +48,40 @@ namespace com.sbh.gui.references.orgmodel.ViewModel
                 Recipients.Add(new SelectableItemWrapper<RefRecipient.Recipient>() { IsSelected = true, Item = item });
             }
 
-            DialogView_SaveOnClickCommand = new dll.utilites.DelegateCommand(DialogView_SaveOnClick);
-            DialogView_BackOnClickCommand = new dll.utilites.DelegateCommand(DialogView_BackOnClick);
+            DialogView_SaveOnClickCommand = new DelegateCommand(DialogView_SaveOnClick);
+            DialogView_BackOnClickCommand = new DelegateCommand(DialogView_BackOnClick);
         }
+
+        private bool _isMultiSelect;
+        public bool isMultiSelect
+        {
+            get { return _isMultiSelect; }
+            private set { _isMultiSelect = value; OnPropertyChanged("isMultiSelect"); }
+        }
+
+        public void PresetData(List<decimal> pSelected, bool pIsMultiSelect)
+        {
+            isMultiSelect = pIsMultiSelect;
+
+            Recipients = new ObservableCollection<SelectableItemWrapper<RefRecipient.Recipient>>();
+
+            RefRecipient RefCounterParty = RefRecipient.GetInstance;
+
+            foreach (RefRecipient.Recipient item in RefCounterParty.Recipients)
+            {
+                Recipients.Add(new SelectableItemWrapper<RefRecipient.Recipient>()
+                {
+                    IsSelected = pSelected.Contains(item.id) ? true : false,
+                    Item = item
+                });
+            }
+
+            if (!pIsMultiSelect)
+            {
+                CurRecipient = Recipients.Single(x => x.IsSelected);
+            }
+        }
+
 
         #region DialogView command
 

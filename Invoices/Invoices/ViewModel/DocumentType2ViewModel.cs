@@ -2,7 +2,6 @@
 using com.sbh.dll.utilites;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
@@ -11,14 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Xml;
 
 namespace com.sbh.gui.invoices.ViewModel
 {
-    public class DocumentType1ViewModel : INotifyPropertyChanged
+    class DocumentType2ViewModel : INotifyPropertyChanged
     {
         private dll.resdictionary.View.DialogView dialogView;
-        private references.counterparty.View.CounterpartyExternalView counterpartyExternalView;
+        private references.orgmodel.View.UnitExternalView counterpartyExternalView;
         private references.orgmodel.View.UnitExternalView unitExternalView;
 
         private UserControl _itemsView;
@@ -28,24 +26,24 @@ namespace com.sbh.gui.invoices.ViewModel
             private set { _itemsView = value; OnPropertyChanged("ItemsView"); }
         }
 
-        private Model.DocumentType1 _doc;
-        public Model.DocumentType1 Doc
+        private Model.DocumentType2 _doc;
+        public Model.DocumentType2 Doc
         {
             get { return _doc; }
             set { _doc = value; OnPropertyChanged("Doc"); }
         }
 
-        public string CounterpartyName { get { return string.Format("/{0}/ {1}", Doc.counterpaty.groupname, Doc.counterpaty.name); } }
+        public string CounterpartyName { get { return Doc.counterpaty.name; } }
         public string RecipientName { get { return Doc.recipient.name; } }
 
-        public DocumentType1ViewModel(Model.DocumentType1 pDocument)
+        public DocumentType2ViewModel(Model.DocumentType2 pDocument)
         {
             Doc = pDocument;
 
             ItemsView = new View.DocumentItemsView();
             ItemsView.DataContext = new DocumentItemsViewModel(Doc.id);
 
-            counterpartyExternalView = new references.counterparty.View.CounterpartyExternalView();
+            counterpartyExternalView = new references.orgmodel.View.UnitExternalView();
             unitExternalView = new references.orgmodel.View.UnitExternalView();
 
             SetCountertypeOnClickCommand = new DelegateCommand(SetCountertypeOnClick);
@@ -62,15 +60,14 @@ namespace com.sbh.gui.invoices.ViewModel
         {
             List<decimal> selectedCounterparty = new List<decimal>();
             selectedCounterparty.Add(Doc.counterpaty.id);
-
-            (counterpartyExternalView.DataContext as references.counterparty.ViewModel.CounterpartyExternalViewModel)
+            (unitExternalView.DataContext as references.orgmodel.ViewModel.UnitExternalViewModel)
                 .PresetData(selectedCounterparty, false);
 
             dialogView = new dll.resdictionary.View.DialogView(counterpartyExternalView);
             if (dialogView.ShowDialog() == true)
             {
-                dll.utilites.OReferences.RefCounterParty.Counterparty counterparty =
-                    ((references.counterparty.ViewModel.CounterpartyExternalViewModel)(counterpartyExternalView.DataContext)).CurCounterparty.Item;
+                dll.utilites.OReferences.RefRecipient.Recipient counterparty =
+                     ((references.orgmodel.ViewModel.UnitExternalViewModel)(unitExternalView.DataContext)).CurRecipient.Item;
 
                 using (SqlConnection con = new SqlConnection(GValues.connString))
                 {
@@ -150,3 +147,4 @@ namespace com.sbh.gui.invoices.ViewModel
         #endregion
     }
 }
+

@@ -105,6 +105,7 @@ namespace com.sbh.gui.references.item.ViewModel
             }
 
             Items.Add(newItem);
+            dll.utilites.OReferences.RefItem.GetInstance.reload();
         }
 
 

@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml;
@@ -19,8 +20,6 @@ namespace com.sbh.gui.invoices.ViewModel
 {
     public class SurfaceControlViewModel : INotifyPropertyChanged
     {
-        //В дальнейшем добавляю в коллекцию
-        private DocumentType1ViewModel docType1Model;
 
         private UserControl mDocumentJournalView;
 
@@ -67,6 +66,8 @@ namespace com.sbh.gui.invoices.ViewModel
             BackOnClickCommand = new DelegateCommand(BackOnClick);
             ShowDocDetailsCommand = new DelegateCommand(ShowDocDetails);
 
+            DeleteCommand = new DelegateCommand(DeleteOnClick, DeleteCommand_CanExecute);
+
             foreach (RefDocType.DocType docType in DocTypes)
             {
                 docType.OnClickCommand = new DelegateCommand(MenuItemOnClick);
@@ -106,7 +107,9 @@ namespace com.sbh.gui.invoices.ViewModel
                         docType = CurDoc.docType,
                         dateCreate = CurDoc.dateCreate,
                         dateDoc = CurDoc.dateDoc,
-                        refStatus = CurDoc.refStatus
+                        refStatus = CurDoc.refStatus,
+                        counterpaty = RefCounterParty.GetInstance.CounterPartys.SingleOrDefault(x => x.id == CurDoc.xfrom),
+                        recipient = RefRecipient.GetInstance.Recipients.SingleOrDefault(x => x.id == CurDoc.xto)
                     });
                     View.DocumentType1View documentType1View = new View.DocumentType1View();
                     documentType1View.DataContext = docType1Model;
@@ -114,6 +117,19 @@ namespace com.sbh.gui.invoices.ViewModel
                     break;
 
                 case 2:
+                    DocumentType2ViewModel docType2Model = new DocumentType2ViewModel(new Model.DocumentType2()
+                    {
+                        id = CurDoc.id,
+                        docType = CurDoc.docType,
+                        dateCreate = CurDoc.dateCreate,
+                        dateDoc = CurDoc.dateDoc,
+                        refStatus = CurDoc.refStatus,
+                        counterpaty = RefRecipient.GetInstance.Recipients.SingleOrDefault(x => x.id == CurDoc.xfrom),
+                        recipient = RefRecipient.GetInstance.Recipients.SingleOrDefault(x => x.id == CurDoc.xto)
+                    });
+                    View.DocumentType2View documentType2View = new View.DocumentType2View();
+                    documentType2View.DataContext = docType2Model;
+                    CurUserControl = documentType2View;
                     break;
             }
         }
@@ -133,32 +149,125 @@ namespace com.sbh.gui.invoices.ViewModel
         public static ICommand BackOnClickCommand { get; private set; }
         void BackOnClick(object obj)
         {
+            switch (CurUserControl.GetType().Name)
+            {
+                case "DocumentType1View":
+                    CurDoc.dateCreate = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.dateCreate;
+                    CurDoc.dateDoc = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.dateDoc;
+                    CurDoc.docType = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.docType;
+                    CurDoc.xfrom = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.counterpaty.id;
+                    CurDoc.xto = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.recipient.id;
+                    break;
+
+                case "DocumentType2View":
+                    CurDoc.dateCreate = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.dateCreate;
+                    CurDoc.dateDoc = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.dateDoc;
+                    CurDoc.docType = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.docType;
+                    CurDoc.xfrom = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.counterpaty.id;
+                    CurDoc.xto = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.recipient.id;
+                    break;
+            }
+
             CurUserControl = mDocumentJournalView;
+        }
+
+        public ICommand DeleteCommand { get; private set; }
+        void DeleteOnClick(object obj)
+        {
+            if (MessageBox.Show(string.Format("Вы уверены что хотите удалить документ?\n Тип документа '{0}'\n № {1}\n дата документа: {2}", CurDoc.TypeName, CurDoc.id, CurDoc.dateDoc),
+                GValues.AppNameFull, MessageBoxButton.YesNo, MessageBoxImage.Question)
+                == MessageBoxResult.Yes)
+            {
+                using (SqlConnection con = new SqlConnection(GValues.connString))
+                {
+                    con.Open();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = con;
+                        command.CommandText = " UPDATE document SET ref_status = 2 WHERE id = @id";
+
+                        command.Parameters.Add("id", SqlDbType.Decimal).Value = CurDoc.id;
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                Docs.Remove(CurDoc);
+                CurDoc = null;
+                OnPropertyChanged("Docs");
+            }
+                
         }
 
         #endregion
 
+        public bool DeleteCommand_CanExecute(object obj)
+        {
+            return CurDoc != null;
+        }
+
         void MenuItemOnClick(object obj)
         {
-            
-            switch ((int)obj)
+            Model.Document document = new Model.Document()
             {
-                case 1:             // Приход
-                    DocumentType1ViewModel docType1Model = new DocumentType1ViewModel(new Model.DocumentType1());
-                    View.DocumentType1View documentType1View = new View.DocumentType1View();
-                    documentType1View.DataContext = docType1Model;
-                    CurUserControl = documentType1View;
-                    break;
+                dateCreate = DateTime.Now,
+                dateDoc = DateTime.Now,
+                docType = (int)obj,
+                refStatus = 1,
+                xfrom = 1,
+                xto = 1
+            };
 
-                case 2:             // Перемещение
-                    break;
+            document.id = createNewDoc(document);
+            Docs.Add(document);
+            CurDoc = document;
 
-                case 3:             // Списание
-                    break;
+            ShowDocDetails(null);
 
-                case 4:             // Реализация
-                    break;
+            //switch ((int)obj)
+            //{
+            //    case 1:             // Приход
+            //        ShowDocDetails(null);
+            //        break;
+
+            //    case 2:             // Перемещение
+            //        ShowDocDetails(null);
+            //        break;
+
+            //    case 3:             // Списание
+            //        break;
+
+            //    case 4:             // Реализация
+            //        break;
+            //}
+        }
+
+        private decimal createNewDoc(Model.Document pDoc)
+        {
+            decimal result = 0;
+
+            using (SqlConnection con = new SqlConnection(GValues.connString))
+            {
+                con.Open();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = con;
+                    command.CommandText = " INSERT INTO document(ref_docType, dateCreate, dateDoc, ref_status, xfrom, xto) " +
+                                            " VALUES (@ref_docType, @dateCreate, @dateDoc, @ref_status, @xfrom, @xto);"+
+                                            " SELECT SCOPE_IDENTITY(); ";
+
+                    command.Parameters.Add("ref_docType", SqlDbType.Int).Value = pDoc.docType;
+                    command.Parameters.Add("dateCreate", SqlDbType.DateTime).Value = pDoc.dateCreate;
+                    command.Parameters.Add("dateDoc", SqlDbType.DateTime).Value = pDoc.dateDoc;
+                    command.Parameters.Add("ref_status", SqlDbType.Int).Value = pDoc.refStatus;
+                    command.Parameters.Add("xfrom", SqlDbType.Int).Value = pDoc.xfrom;
+                    command.Parameters.Add("xto", SqlDbType.Int).Value = pDoc.xto;
+
+                    result = (decimal)command.ExecuteScalar();
+                }
             }
+
+            return result;
         }
 
         void CollectDocsByFilter()
@@ -173,9 +282,9 @@ namespace com.sbh.gui.invoices.ViewModel
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
-                    command.CommandText = " SELECT id, ref_docType AS docType, dateCreate, dateDoc, ref_status AS refStatus " +
+                    command.CommandText = " SELECT id, ref_docType AS docType, dateCreate, dateDoc, ref_status AS refStatus, xfrom, xto " +
                                             " FROM document " +
-                                            " WHERE dateDoc BETWEEN @dateStart AND @dateEnd " +
+                                            " WHERE ref_status = 1 AND dateDoc BETWEEN @dateStart AND @dateEnd " +
                                             (docTypes.Equals(string.Empty) ? string.Empty : " AND ref_docType in (" + docTypes + ")") +
                                             " FOR XML RAW('Document'), ROOT('ArrayOfDocument'), ELEMENTS ";
 
