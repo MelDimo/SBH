@@ -35,8 +35,8 @@ namespace com.sbh.gui.invoices.ViewModel
             set { _doc = value; OnPropertyChanged("Doc"); }
         }
 
-        public string CounterpartyName { get { return string.Format("/{0}/ {1}", Doc.counterpaty.groupname, Doc.counterpaty.name); } }
-        public string RecipientName { get { return Doc.recipient.name; } }
+        public string CounterpartyName { get { return string.Format("{0} / {1}", Doc.counterpaty.groupname, Doc.counterpaty.name); } }
+        public string RecipientName { get { return string.Format("{0} / {1}", Doc.recipient.Name, Doc.recipient.name); } }
 
         public DocumentType1ViewModel(Model.DocumentType1 pDocument)
         {

@@ -39,15 +39,6 @@ namespace com.sbh.gui.references.orgmodel.ViewModel
 
         public UnitExternalViewModel()
         {
-            Recipients = new ObservableCollection<SelectableItemWrapper<RefRecipient.Recipient>>();
-
-            RefRecipient refRecipient = RefRecipient.GetInstance;
-
-            foreach (RefRecipient.Recipient item in refRecipient.Recipients)
-            {
-                Recipients.Add(new SelectableItemWrapper<RefRecipient.Recipient>() { IsSelected = true, Item = item });
-            }
-
             DialogView_SaveOnClickCommand = new DelegateCommand(DialogView_SaveOnClick);
             DialogView_BackOnClickCommand = new DelegateCommand(DialogView_BackOnClick);
         }

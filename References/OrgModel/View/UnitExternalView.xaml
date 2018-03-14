@@ -16,10 +16,15 @@
                 <ResourceDictionary Source="pack://application:,,,/ResDic;component/StylesDictionary.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ResDic;component/ConverterDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <CollectionViewSource x:Key="lvSource" Source="{Binding Recipients}" IsLiveGroupingRequested="True">
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="Item.Name"/>
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Recipients}"
+        <ListView ItemsSource="{Binding Source={StaticResource lvSource}}"
                   SelectedItem="{Binding DataContext.CurRecipient, RelativeSource={RelativeSource AncestorType=local:UnitExternalView}}"
                   FontSize="15">
             <ListView.ItemTemplate>
@@ -33,6 +38,26 @@
                     </DockPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander IsExpanded="True">
+                                            <Expander.Header>
+                                                <TextBlock Text="{Binding Name}"/>
+                                            </Expander.Header>
+                                            <ItemsPresenter/>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
         </ListView>
     </Grid>
 </UserControl>

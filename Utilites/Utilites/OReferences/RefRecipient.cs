@@ -23,8 +23,10 @@ namespace com.sbh.dll.utilites.OReferences
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
-                    command.CommandText = " SELECT id, branch, name, ref_status AS refStatus, isPOS, isDepot " +
-                                            " FROM unit " +
+                    command.CommandText =   " SELECT u.id, o.name + ' / ' + b.name as Name, u.name, u.ref_status AS refStatus, u.isPOS, u.isDepot " +
+                                            " FROM unit u " +
+                                            " INNER JOIN branch b ON b.id = u.branch " +
+                                            " INNER JOIN dbo.organization o ON o.id = b.organization " +
                                             " FOR XML RAW('Recipient'), ROOT('ArrayOfRecipient'), ELEMENTS ";
 
                     XmlReader reader = command.ExecuteXmlReader();
@@ -53,7 +55,7 @@ namespace com.sbh.dll.utilites.OReferences
         public class Recipient
         {
             public decimal id { get; set; }
-            public decimal baranch { get; set; }
+            public string Name { get; set; }
             public string name { get; set; }
             public decimal refStatus { get; set; }
             public decimal isPOS { get; set; }
