@@ -4,18 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8EC4451B-04AA-4449-99AC-651F68EE3592}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <RootNamespace>com.sbh.gui.references</RootNamespace>
-    <AssemblyName>References</AssemblyName>
+    <ProjectGuid>{F55F958E-3DE2-4ACC-9F3A-2CC5F3D8D71C}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>com.sbh.gui.references.currency</RootNamespace>
+    <AssemblyName>Currency</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,8 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GValues, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="GValues">
       <HintPath>..\..\GValues\GValues\bin\Debug\GValues.dll</HintPath>
     </Reference>
     <Reference Include="ResDic">
@@ -52,8 +48,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Utilites, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Utilites">
       <HintPath>..\..\Utilites\Utilites\bin\Debug\Utilites.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
@@ -61,42 +56,20 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="DelegateCommand.cs" />
-    <Compile Include="ViewModel\SurfaceControlViewModel.cs" />
-    <Compile Include="View\MainView.xaml.cs">
-      <DependentUpon>MainView.xaml</DependentUpon>
+    <Compile Include="Model\SimpleCurrency.cs" />
+    <Compile Include="ViewModel\SurfaceCurrencyViewModel.cs" />
+    <Compile Include="View\ItemView.xaml.cs">
+      <DependentUpon>ItemView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ReferenceContainerView.xaml.cs">
-      <DependentUpon>ReferenceContainerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SurfaceControlView.xaml.cs">
-      <DependentUpon>SurfaceControlView.xaml</DependentUpon>
-    </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="SurfaceCurrencyView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
+    <Compile Include="SurfaceCurrencyView.xaml.cs">
+      <DependentUpon>SurfaceCurrencyView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="View\MainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ReferenceContainerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SurfaceControlView.xaml">
+    <Page Include="View\ItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -123,27 +96,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Counterparty\Counterparty.csproj">
-      <Project>{66520b99-486d-4a8b-b57b-76df16bbe393}</Project>
-      <Name>Counterparty</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Currency\Currency.csproj">
-      <Project>{f55f958e-3de2-4acc-9f3a-2cc5f3d8d71c}</Project>
-      <Name>Currency</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Item\Item.csproj">
-      <Project>{e7c93a08-90f1-41ae-bdc3-d44b4787d5e5}</Project>
-      <Name>Item</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OrgModel\OrgModel.csproj">
-      <Project>{a030aee5-1f07-4394-8ba7-cda585f876de}</Project>
-      <Name>OrgModel</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

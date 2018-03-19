@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Item", "Item\Item.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dimensions", "Dimensions\Dimensions.csproj", "{C67856B2-B6F0-426D-A618-F025EDE703C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Currency", "Currency\Currency.csproj", "{F55F958E-3DE2-4ACC-9F3A-2CC5F3D8D71C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C67856B2-B6F0-426D-A618-F025EDE703C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C67856B2-B6F0-426D-A618-F025EDE703C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C67856B2-B6F0-426D-A618-F025EDE703C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F55F958E-3DE2-4ACC-9F3A-2CC5F3D8D71C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F55F958E-3DE2-4ACC-9F3A-2CC5F3D8D71C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F55F958E-3DE2-4ACC-9F3A-2CC5F3D8D71C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F55F958E-3DE2-4ACC-9F3A-2CC5F3D8D71C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

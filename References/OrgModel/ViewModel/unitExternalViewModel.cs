@@ -73,7 +73,6 @@ namespace com.sbh.gui.references.orgmodel.ViewModel
             }
         }
 
-
         #region DialogView command
 
         public ICommand DialogView_SaveOnClickCommand { get; private set; }

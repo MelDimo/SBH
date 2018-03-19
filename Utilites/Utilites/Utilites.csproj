@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="OReferences\RefCounterParty.cs" />
+    <Compile Include="OReferences\RefCurrency.cs" />
     <Compile Include="OReferences\RefDimensions.cs" />
     <Compile Include="OReferences\RefItem.cs" />
     <Compile Include="OReferences\RefDocType.cs" />

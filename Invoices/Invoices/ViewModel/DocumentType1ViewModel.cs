@@ -52,7 +52,6 @@ namespace com.sbh.gui.invoices.ViewModel
             SetRecipientOnClickCommand = new DelegateCommand(SetRecipientOnClick);
 
             BackOnClickCommand = new DelegateCommand(BackOnClick);
-
         }
 
         #region Command

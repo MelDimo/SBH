@@ -16,6 +16,7 @@ namespace com.sbh.gui.references.ViewModel
         private UserControl mMainView;
         private UserControl mReferenceContainerView;
         private UserControl mItem;
+        private UserControl mCurrency;
 
         private UserControl _curReference;
         public UserControl CurReference
@@ -48,6 +49,7 @@ namespace com.sbh.gui.references.ViewModel
             mCounterparty = new counterparty.UCCounterpartyView();
             mOrgModel = new orgmodel.UCOrgModel();
             mItem = new item.SurfaceItemView();
+            mCurrency = new currency.SurfaceCurrencyView();
 
             mMainView = new View.MainView();
 
@@ -77,6 +79,10 @@ namespace com.sbh.gui.references.ViewModel
 
                 case "ITEM":
                     CurReference = mItem;
+                    break;
+
+                case "CURRENCY":
+                    CurReference = mCurrency;
                     break;
             }
 
