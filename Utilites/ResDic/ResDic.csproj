@@ -61,6 +61,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="View\DialogPrint.xaml.cs">
+      <DependentUpon>DialogPrint.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DialogView.xaml.cs">
       <DependentUpon>DialogView.xaml</DependentUpon>
     </Compile>
@@ -83,6 +86,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StylesDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogPrint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

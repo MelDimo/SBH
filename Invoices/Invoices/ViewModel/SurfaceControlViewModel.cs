@@ -131,6 +131,22 @@ namespace com.sbh.gui.invoices.ViewModel
                     documentType2View.DataContext = docType2Model;
                     CurUserControl = documentType2View;
                     break;
+
+                case 5:
+                    DocumentType5ViewModel docType5Model = new DocumentType5ViewModel(new Model.DocumentType5()
+                    {
+                        id = CurDoc.id,
+                        docType = CurDoc.docType,
+                        dateCreate = CurDoc.dateCreate,
+                        dateDoc = CurDoc.dateDoc,
+                        refStatus = CurDoc.refStatus,
+                        counterpaty = RefCounterParty.GetInstance.CounterPartys.SingleOrDefault(x => x.id == CurDoc.xfrom),
+                        recipient = RefRecipient.GetInstance.Recipients.SingleOrDefault(x => x.id == CurDoc.xto)
+                    });
+                    View.DocumentType5View documentType5View = new View.DocumentType5View();
+                    documentType5View.DataContext = docType5Model;
+                    CurUserControl = documentType5View;
+                    break;
             }
         }
 
@@ -165,6 +181,14 @@ namespace com.sbh.gui.invoices.ViewModel
                     CurDoc.docType = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.docType;
                     CurDoc.xfrom = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.counterpaty.id;
                     CurDoc.xto = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.recipient.id;
+                    break;
+
+                case "DocumentType5View":
+                    CurDoc.dateCreate = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.dateCreate;
+                    CurDoc.dateDoc = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.dateDoc;
+                    CurDoc.docType = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.docType;
+                    CurDoc.xfrom = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.counterpaty.id;
+                    CurDoc.xto = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.recipient.id;
                     break;
             }
 

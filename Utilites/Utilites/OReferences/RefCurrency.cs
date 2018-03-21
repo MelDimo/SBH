@@ -15,8 +15,11 @@ namespace com.sbh.dll.utilites.OReferences
     {
         private RefCurrency()
         {
-            reload();
+            //reload();
+            reloadLite();
         }
+
+        #region Большая модель
 
         public void reload()
         {
@@ -42,70 +45,115 @@ namespace com.sbh.dll.utilites.OReferences
                     XmlReader reader = command.ExecuteXmlReader();
                     while (reader.Read())
                     {
-                        Currencies = Support.XMLToObject<List<Currency>>(reader.ReadOuterXml());
+                        CurrenciesLite = Support.XMLToObject<List<CurrencyLite>>(reader.ReadOuterXml());
                     }
                 }
             }
         }
 
+        #endregion
+
+        #region Простая модель для справочника, combobox-a
+
+        public void reloadLite()
+        {
+            using (SqlConnection con = new SqlConnection(GValues.connString))
+            {
+                con.Open();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = con;
+                    command.CommandText = " SELECT id, nameshort AS name " +
+                                          " FROM currency " +
+                                          " WHERE ref_status = 1 " +
+                                          " FOR XML RAW('CurrencyLite'), ROOT('ArrayOfCurrencyLite'), ELEMENTS ";
+
+                    XmlReader reader = command.ExecuteXmlReader();
+                    while (reader.Read())
+                    {
+                        CurrenciesLite = Support.XMLToObject<List<CurrencyLite>>(reader.ReadOuterXml());
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+
         private static readonly Lazy<RefCurrency> lazy = new Lazy<RefCurrency>(() => new RefCurrency());
 
         public static RefCurrency GetInstance { get { return lazy.Value; } }
 
-        private List<Currency> _currencies;
-        public List<Currency> Currencies
+        private List<CurrencyLite> _currenciesLite;
+        public List<CurrencyLite> CurrenciesLite
         {
-            get { return _currencies; }
+            get { return _currenciesLite; }
             private set
             {
-                _currencies = value;
+                _currenciesLite = value;
             }
         }
 
-        public class CurrencyGroup
+        #region Простая модель для справочника, combobox-a
+
+        public class CurrencyLite
         {
             public decimal id { get; set; }
             public string name { get; set; }
-
-            public string Name { get { return name;} }
-
-            [XmlElement("ArrayOfCurrency", typeof(ObservableCollection<Currency>))]
-            public ObservableCollection<Currency> currency { get; set; }
-
-            public CurrencyGroup()
-            {
-                currency = new ObservableCollection<Currency>();
-            }
-
         }
 
-        public class Currency
-        {
-            public decimal id { get; set; }
-            public string nameshort { get; set; }
-            public string namefull { get; set; }
-            public decimal ref_status { get; set; }
+        #endregion
 
-            [XmlElement("ArrayOfCurrencyExchange", typeof(ObservableCollection<CurrencyExchange>))]
-            public ObservableCollection<CurrencyExchange> exchange { get; set; }
+        #region Большая модель
 
-            public Currency()
-            {
-                exchange = new ObservableCollection<CurrencyExchange>();
-            }
-        }
+        //public class CurrencyGroup
+        //{
+        //    public decimal id { get; set; }
+        //    public string name { get; set; }
 
-        public class CurrencyExchange
-        {
-            public decimal id { get; set; }
-            public DateTime xdate { get; set; }
-            public decimal buy { get; set; }
-            public decimal sale { get; set; }
-            public decimal tarif { get; set; }
-            public decimal isCurrent { get; set; }
-        }
+        //    public string Name { get { return name;} }
 
-        
+        //    [XmlElement("ArrayOfCurrency", typeof(ObservableCollection<Currency>))]
+        //    public ObservableCollection<Currency> currency { get; set; }
+
+        //    public CurrencyGroup()
+        //    {
+        //        currency = new ObservableCollection<Currency>();
+        //    }
+
+        //}
+
+        //public class Currency
+        //{
+        //    public decimal id { get; set; }
+        //    public string nameshort { get; set; }
+        //    public string namefull { get; set; }
+        //    public decimal ref_status { get; set; }
+
+        //    [XmlElement("ArrayOfCurrencyExchange", typeof(ObservableCollection<CurrencyExchange>))]
+        //    public ObservableCollection<CurrencyExchange> exchange { get; set; }
+
+        //    public Currency()
+        //    {
+        //        exchange = new ObservableCollection<CurrencyExchange>();
+        //    }
+        //}
+
+        //public class CurrencyExchange
+        //{
+        //    public decimal id { get; set; }
+        //    public DateTime xdate { get; set; }
+        //    public decimal buy { get; set; }
+        //    public decimal sale { get; set; }
+        //    public decimal tarif { get; set; }
+        //    public decimal isCurrent { get; set; }
+        //}
+
+        #endregion
+
+
+
+
 
     }
 }

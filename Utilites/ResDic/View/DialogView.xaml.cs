@@ -19,6 +19,8 @@ namespace com.sbh.dll.resdictionary.View
     /// </summary>
     public partial class DialogView : Window
     {
+        public string Header;
+
         public DialogView(UserControl pContent)
         {
             InitializeComponent();
@@ -26,7 +28,14 @@ namespace com.sbh.dll.resdictionary.View
             MainContainer.Content = pContent;
             DataContext = pContent.DataContext;
 
+            Loaded += DialogView_Loaded;
+            
             this.PreviewKeyDown += DialogView_PreviewKeyDown;
+        }
+
+        private void DialogView_Loaded(object sender, RoutedEventArgs e)
+        {
+            tbHeader.Text = Header;
         }
 
         private void DialogView_PreviewKeyDown(object sender, KeyEventArgs e)

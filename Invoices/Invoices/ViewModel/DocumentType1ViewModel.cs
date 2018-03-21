@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml;
@@ -66,6 +67,8 @@ namespace com.sbh.gui.invoices.ViewModel
                 .PresetData(selectedCounterparty, false);
 
             dialogView = new dll.resdictionary.View.DialogView(counterpartyExternalView);
+            dialogView.Owner = Application.Current.MainWindow;
+            dialogView.Header = "Поставщик";
             if (dialogView.ShowDialog() == true)
             {
                 dll.utilites.OReferences.RefCounterParty.Counterparty counterparty =
@@ -102,6 +105,8 @@ namespace com.sbh.gui.invoices.ViewModel
                 .PresetData(selectedRecipient, false);
 
             dialogView = new dll.resdictionary.View.DialogView(unitExternalView);
+            dialogView.Owner = Application.Current.MainWindow;
+            dialogView.Header = "Получатель";
             if (dialogView.ShowDialog() == true)
             {
                 dll.utilites.OReferences.RefRecipient.Recipient recipient =

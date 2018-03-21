@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:com.sbh.dll.resdictionary.View"
         xmlns:source="clr-namespace:com.sbh.dll.resdictionary"
         mc:Ignorable="d"
-        Title="DialogView" Height="300" Width="300" 
+        Title="DialogView" Height="550" Width="400" 
         Name="ThisWindow"
         ShowInTaskbar="False" 
         WindowStyle="None"
@@ -26,14 +26,17 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.Column="0" BorderBrush="{StaticResource FilterBackGrount}" BorderThickness="0,0,0,1">
-            <Border  HorizontalAlignment="Left" Margin="7" Background="Transparent">
-                <Border.InputBindings>
-                    <MouseBinding MouseAction="LeftClick" 
+            <StackPanel Orientation="Horizontal">
+                <Border  HorizontalAlignment="Left" Margin="7" Background="Transparent">
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" 
                                   Command="{Binding DialogView_BackOnClickCommand}" 
                                   CommandParameter="{Binding ElementName=ThisWindow}"/>
-                </Border.InputBindings>
-                <ContentControl Content="{StaticResource imgBack}" Height="32" Width="32"/>
-            </Border >
+                    </Border.InputBindings>
+                    <ContentControl Content="{StaticResource imgBack}" Height="32" Width="32"/>
+                </Border >
+                <TextBlock x:Name="tbHeader" FontSize="15" Margin="5,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
         </Border>
         <ContentControl Grid.Row="1" Grid.Column="0" x:Name="MainContainer"/>
         <Border Grid.Row="2" Grid.Column="0" BorderBrush="{StaticResource FilterBackGrount}" BorderThickness="0,1,0,0">

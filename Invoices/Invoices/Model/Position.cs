@@ -17,6 +17,9 @@ namespace com.sbh.gui.invoices.Model
         // Изменяю свойство после формирования списка объектов
         public bool isAvalForEdit = false;
 
+        // Сохраняю последнюю валюту как дефолтную для последующего добавления позиции
+        public static decimal lastCurrency;
+
         public decimal id { get; set; }
 
         private int _itemId;
@@ -44,6 +47,13 @@ namespace com.sbh.gui.invoices.Model
             }
         }
 
+        // для отчета
+        public string itemName
+        {
+            get { return RefItems.FirstOrDefault(x => x.id == itemId).name; }
+            set { }
+        }
+
         private decimal _xcount;
         public decimal xcount
         {
@@ -67,6 +77,35 @@ namespace com.sbh.gui.invoices.Model
                     }
                 _xcount = value;
                 OnPropertyChanged("xsumm");
+            }
+        }
+
+        private decimal _currencyId;
+        public decimal currencyId
+        {
+            get { return _currencyId; }
+            set
+            {
+                if (_currencyId != value && isAvalForEdit)
+                    using (SqlConnection con = new SqlConnection(GValues.connString))
+                    {
+                        con.Open();
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            command.Connection = con;
+                            command.CommandText = " UPDATE document_items SET currency = @currency WHERE id = @id; ";
+
+                            command.Parameters.Add("id", SqlDbType.Int).Value = id;
+                            command.Parameters.Add("currency", SqlDbType.Int).Value = value;
+
+                            command.ExecuteNonQuery();
+                        }
+                    }
+
+                _currencyId = value;
+                lastCurrency = value;
+
+                OnPropertyChanged("currencyId");
             }
         }
 
@@ -112,6 +151,14 @@ namespace com.sbh.gui.invoices.Model
         public Position()
         {
             RefItems = new ObservableCollection<dll.utilites.OReferences.RefItem.Item>(dll.utilites.OReferences.RefItem.GetInstance.refItem);
+            RefCurrency = new ObservableCollection<dll.utilites.OReferences.RefCurrency.CurrencyLite>(dll.utilites.OReferences.RefCurrency.GetInstance.CurrenciesLite);
+        }
+
+        [XmlIgnore]
+        public ObservableCollection<dll.utilites.OReferences.RefCurrency.CurrencyLite> RefCurrency
+        {
+            get;
+            private set;
         }
 
         #region INotifyPropertyChanged Members

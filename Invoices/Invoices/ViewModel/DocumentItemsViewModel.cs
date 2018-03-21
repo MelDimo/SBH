@@ -45,6 +45,7 @@ namespace com.sbh.gui.invoices.ViewModel
             bgwItems.RunWorkerAsync();
 
             AddItemOnClickCommand = new DelegateCommand(AddItemOnClick);
+            PrintOnClickCommand = new DelegateCommand(PrintOnClick);
         }
 
         private void BgwItems_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -62,8 +63,8 @@ namespace com.sbh.gui.invoices.ViewModel
                     Positions = new ObservableCollection<Model.Position>();
 
                     command.Connection = con;
-                    command.CommandText =   " SELECT di.id, di.item as itemId, " +
-                                            "    di.xcount, di.xprice " +
+                    command.CommandText =   " SELECT di.id, di.item As itemId, " +
+                                            "    di.xcount, di.currency AS currencyId, di.xprice " +
                                             " FROM document_items di " +
                                             " WHERE di.ref_status = 1 AND di.xdocument = @document " +
                                             " FOR XML RAW('Position'), ROOT('ArrayOfPosition'), ELEMENTS ";
@@ -96,17 +97,19 @@ namespace com.sbh.gui.invoices.ViewModel
                     newPositions = new Model.Position();
                     newPositions.itemId = 0;
                     newPositions.xcount = 0;
+                    newPositions.currencyId = Model.Position.lastCurrency;
                     newPositions.xprice = 0;
                     newPositions.isAvalForEdit = true;
 
                     command.Connection = con;
-                    command.CommandText = " INSERT INTO document_items(xdocument, item, xcount, xprice, ref_status) " +
-                                            " VALUES(@xdocument, @item, @xcount, @xprice, @ref_status ); " +
+                    command.CommandText = " INSERT INTO document_items(xdocument, item, xcount, currency, xprice, ref_status) " +
+                                            " VALUES(@xdocument, @item, @xcount, @currency, @xprice, @ref_status ); " +
                                             " SELECT SCOPE_IDENTITY();";
 
                     command.Parameters.Add("xdocument", SqlDbType.Int).Value = mDocId;
                     command.Parameters.Add("item", SqlDbType.Int).Value = newPositions.itemId;
                     command.Parameters.Add("xcount", SqlDbType.Decimal).Value = newPositions.xcount;
+                    command.Parameters.Add("currency", SqlDbType.Decimal).Value = newPositions.currencyId;
                     command.Parameters.Add("xprice", SqlDbType.Decimal).Value = newPositions.xprice;
                     command.Parameters.Add("ref_status", SqlDbType.Int).Value = 1;
 
@@ -116,6 +119,12 @@ namespace com.sbh.gui.invoices.ViewModel
             }
             Positions.Add(newPositions);
             newPositions = null;
+        }
+
+        public ICommand PrintOnClickCommand { get; private set; }
+        void PrintOnClick(object obj)
+        {
+
         }
 
         #endregion

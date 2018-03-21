@@ -52,6 +52,9 @@ namespace com.sbh.gui.invoices.Model
                     case 2:
                         result = RefRecipient.GetInstance.Recipients.Single(x => x.id == xfrom).name;
                         break;
+                    case 5:
+                        result = RefCounterParty.GetInstance.CounterPartys.Single(x => x.id == xfrom).name;
+                        break;
                 }
 
                 return result;
@@ -70,6 +73,9 @@ namespace com.sbh.gui.invoices.Model
                         result = RefRecipient.GetInstance.Recipients.Single(x => x.id == xto).name;
                         break;
                     case 2:
+                        result = RefRecipient.GetInstance.Recipients.Single(x => x.id == xto).name;
+                        break;
+                    case 5:
                         result = RefRecipient.GetInstance.Recipients.Single(x => x.id == xto).name;
                         break;
                 }

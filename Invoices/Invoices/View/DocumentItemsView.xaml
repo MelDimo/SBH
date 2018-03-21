@@ -49,6 +49,13 @@
                     <ContentControl Content="{StaticResource imgDocDel}"/>
                 </Button.Content>
             </Button>
+            <Button Height="32" Width="32" HorizontalAlignment="Right" Margin="3"
+                            DockPanel.Dock="Left"
+                            Command="{Binding PrintOnClickCommand}" ToolTip="Печатная форма">
+                <Button.Content>
+                    <ContentControl Content="{StaticResource imgPrinter}"/>
+                </Button.Content>
+            </Button>
         </DockPanel>
         <DataGrid Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Auto"
                   ItemsSource="{Binding Positions}" SelectedItem="{Binding CurPosition}" FontSize="15">
@@ -83,6 +90,31 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
+                <DataGridTemplateColumn Header="Валюта">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center"
+                                      ItemsSource="{Binding RefCurrency}"
+                                      SelectedValue="{Binding currencyId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                      SelectedValuePath="id"
+                                      IsSynchronizedWithCurrentItem="True" IsEditable="True">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0}">
+                                                    <Binding Path="name" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
                 <DataGridTemplateColumn Header="Цена за ед">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

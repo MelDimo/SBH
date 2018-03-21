@@ -10,15 +10,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
-
 
 namespace com.sbh.gui.invoices.ViewModel
 {
-    class DocumentType2ViewModel : INotifyPropertyChanged
+    class DocumentType5ViewModel : INotifyPropertyChanged
     {
+
         private dll.resdictionary.View.DialogView dialogView;
-        private references.orgmodel.View.UnitExternalView counterpartyExternalView;
+        private references.counterparty.View.CounterpartyExternalView counterpartyExternalView;
         private references.orgmodel.View.UnitExternalView unitExternalView;
 
         private UserControl _itemsView;
@@ -28,31 +29,32 @@ namespace com.sbh.gui.invoices.ViewModel
             private set { _itemsView = value; OnPropertyChanged("ItemsView"); }
         }
 
-        private Model.DocumentType2 _doc;
-        public Model.DocumentType2 Doc
+        private Model.DocumentType5 _doc;
+        public Model.DocumentType5 Doc
         {
             get { return _doc; }
             set { _doc = value; OnPropertyChanged("Doc"); }
         }
 
-        public string CounterpartyName { get { return Doc.counterpaty.name; } }
-        public string RecipientName { get { return Doc.recipient.name; } }
+        public string CounterpartyName { get { return string.Format("{0} / {1}", Doc.counterpaty.groupname, Doc.counterpaty.name); } }
+        public string RecipientName { get { return string.Format("{0} / {1}", Doc.recipient.Name, Doc.recipient.name); } }
 
-        public DocumentType2ViewModel(Model.DocumentType2 pDocument)
+        public DocumentType5ViewModel(Model.DocumentType5 pDocument)
         {
             Doc = pDocument;
 
             ItemsView = new View.DocumentItemsView();
             ItemsView.DataContext = new DocumentItemsViewModel(Doc.id);
 
-            counterpartyExternalView = new references.orgmodel.View.UnitExternalView();
+            counterpartyExternalView = new references.counterparty.View.CounterpartyExternalView();
             unitExternalView = new references.orgmodel.View.UnitExternalView();
 
             SetCountertypeOnClickCommand = new DelegateCommand(SetCountertypeOnClick);
             SetRecipientOnClickCommand = new DelegateCommand(SetRecipientOnClick);
 
-            BackOnClickCommand = new DelegateCommand(BackOnClick);
+            PrintOnClickCommand = new DelegateCommand(PrintOnClick);
 
+            BackOnClickCommand = new DelegateCommand(BackOnClick);
         }
 
         #region Command
@@ -62,16 +64,17 @@ namespace com.sbh.gui.invoices.ViewModel
         {
             List<decimal> selectedCounterparty = new List<decimal>();
             selectedCounterparty.Add(Doc.counterpaty.id);
-            (unitExternalView.DataContext as references.orgmodel.ViewModel.UnitExternalViewModel)
+
+            (counterpartyExternalView.DataContext as references.counterparty.ViewModel.CounterpartyExternalViewModel)
                 .PresetData(selectedCounterparty, false);
 
             dialogView = new dll.resdictionary.View.DialogView(counterpartyExternalView);
             dialogView.Owner = Application.Current.MainWindow;
-            dialogView.Header = "Отправитель";
+            dialogView.Header = "Поставщик";
             if (dialogView.ShowDialog() == true)
             {
-                dll.utilites.OReferences.RefRecipient.Recipient counterparty =
-                     ((references.orgmodel.ViewModel.UnitExternalViewModel)(unitExternalView.DataContext)).CurRecipient.Item;
+                dll.utilites.OReferences.RefCounterParty.Counterparty counterparty =
+                    ((references.counterparty.ViewModel.CounterpartyExternalViewModel)(counterpartyExternalView.DataContext)).CurCounterparty.Item;
 
                 using (SqlConnection con = new SqlConnection(GValues.connString))
                 {
@@ -139,6 +142,43 @@ namespace com.sbh.gui.invoices.ViewModel
             SurfaceControlViewModel.BackOnClickCommand.Execute(null);
         }
 
+        public ICommand PrintOnClickCommand { get; private set; }
+        void PrintOnClick(object obj)
+        {
+            //PrintDialog printDialog = new PrintDialog();
+            //if (printDialog.ShowDialog() == true)
+            //{
+            //    printDialog.PrintVisual(UserControl, "Распечатываем элемент Canvas");
+            //}
+
+            Report.DocumentViewerType5 documentViewerType5 = new Report.DocumentViewerType5(new object[] { CounterpartyName, RecipientName });
+            documentViewerType5.DataContext = (DocumentItemsViewModel)ItemsView.DataContext;
+
+            dll.resdictionary.View.DialogPrint dialogPrint = new dll.resdictionary.View.DialogPrint(documentViewerType5);
+            dialogPrint.ShowDialog();
+
+            //FlowDocument flowDocument = new FlowDocument();
+            //Table table = new Table();
+
+            //flowDocument.Blocks.Add(table);
+
+            //for (int i = 0; i < 2; i++)
+            //{
+            //    table.Columns.Add(new TableColumn());
+            //}
+
+            //table.RowGroups.Add(new TableRowGroup());
+
+            //DocumentItemsViewModel itemsModel = (ItemsView.DataContext as ViewModel.DocumentItemsViewModel);
+
+            //for (int i = 0; i < itemsModel.Positions.Count; i++)
+            //{
+            //    table.RowGroups[0].Rows[i].Cells.Add(new TableCell(new Paragraph(new Run(itemsModel.Positions[i].itemName))));
+            //}
+
+
+        }
+
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -153,4 +193,3 @@ namespace com.sbh.gui.invoices.ViewModel
         #endregion
     }
 }
-

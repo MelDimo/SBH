@@ -79,11 +79,16 @@
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\DocumentType1.cs" />
     <Compile Include="Model\DocumentType2.cs" />
+    <Compile Include="Model\DocumentType5.cs" />
     <Compile Include="Model\Filter.cs" />
     <Compile Include="Model\Position.cs" />
+    <Compile Include="Report\DocumentViewerType5.xaml.cs">
+      <DependentUpon>DocumentViewerType5.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\DocumentItemsViewModel.cs" />
     <Compile Include="ViewModel\DocumentType1ViewModel.cs" />
     <Compile Include="ViewModel\DocumentType2ViewModel.cs" />
+    <Compile Include="ViewModel\DocumentType5ViewModel.cs" />
     <Compile Include="ViewModel\SurfaceControlViewModel.cs" />
     <Compile Include="View\DocumentItemsView.xaml.cs">
       <DependentUpon>DocumentItemsView.xaml</DependentUpon>
@@ -96,6 +101,9 @@
     </Compile>
     <Compile Include="View\DocumentType2View.xaml.cs">
       <DependentUpon>DocumentType2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DocumentType5View.xaml.cs">
+      <DependentUpon>DocumentType5View.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SurfaceControlView.xaml.cs">
       <DependentUpon>SurfaceControlView.xaml</DependentUpon>
@@ -112,6 +120,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Report\DocumentViewerType5.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DocumentItemsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +137,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DocumentType2View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DocumentType5View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
