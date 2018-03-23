@@ -28,46 +28,5 @@ namespace com.sbh.gui.mainwindow
         {
             InitializeComponent();
         }
-
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            tblockOutput.Text += "Starting async download\n";
-
-            cts = new CancellationTokenSource();
-            cts.CancelAfter(5000);
-
-            await DoDownloadAsync();
-
-
-            tblockOutput.Text += "Async download started\n";
-        }
-
-
-        private async Task DoDownloadAsync()
-        {
-            var req = (HttpWebRequest)WebRequest.Create("http://www.microsoft.com");
-            req.Method = "GET";
-            var task = req.GetResponseAsync();
-
-            var resp = (HttpWebResponse)await task;
-
-            tblockOutput.Text += resp.Headers.ToString();
-            tblockOutput.Text += "Async download completed\n";
-        }
-
-        async void DoDownloadFromAsync()
-        {
-            var req = (HttpWebRequest)WebRequest.Create("http://www.microsoft.com");
-            req.Method = "GET";
-
-            Task<WebResponse> getResponseTask = Task.Factory.FromAsync<WebResponse>(
-                req.BeginGetResponse, req.EndGetResponse, null);
-
-            var resp = (HttpWebResponse)await getResponseTask;
-
-            string headersText = resp.Headers.ToString();
-            tblockOutput.Text += headersText;
-            tblockOutput.Text += "Async download completed\n";
-        }
     }
 }
