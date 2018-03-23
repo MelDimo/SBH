@@ -49,14 +49,15 @@ namespace com.sbh.gui.invoices.Model
 
                 switch (docType)
                 {
-                    case 1:
-                        result = RefCounterParty.GetInstance.CounterPartys.Single(x => x.id == xfrom).name;
-                        break;
+                    
                     case 2:
-                        result = RefRecipient.GetInstance.Recipients.Single(x => x.id == xfrom).name;
+                        result = String.Format("{0} / {1}", 
+                            RefRecipient.GetInstance.Recipients.Single(x => x.id == xfrom).Name, RefRecipient.GetInstance.Recipients.Single(x => x.id == xfrom).name);
                         break;
-                    case 5:
-                        result = RefCounterParty.GetInstance.CounterPartys.Single(x => x.id == xfrom).name;
+
+                    default:
+                        result = String.Format("{0} / {1}",
+                            RefCounterParty.GetInstance.CounterPartys.Single(x => x.id == xfrom).groupname, RefCounterParty.GetInstance.CounterPartys.Single(x => x.id == xfrom).name);
                         break;
                 }
 
@@ -72,14 +73,9 @@ namespace com.sbh.gui.invoices.Model
 
                 switch (docType)
                 {
-                    case 1:
-                        result = RefRecipient.GetInstance.Recipients.Single(x => x.id == xto).name;
-                        break;
-                    case 2:
-                        result = RefRecipient.GetInstance.Recipients.Single(x => x.id == xto).name;
-                        break;
-                    case 5:
-                        result = RefRecipient.GetInstance.Recipients.Single(x => x.id == xto).name;
+                    default:
+                        result = String.Format("{0} / {1}", 
+                            RefRecipient.GetInstance.Recipients.Single(x => x.id == xfrom).Name, RefRecipient.GetInstance.Recipients.Single(x => x.id == xto).name);
                         break;
                 }
 

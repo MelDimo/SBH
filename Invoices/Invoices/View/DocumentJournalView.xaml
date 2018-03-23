@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:com.sbh.gui.invoices.View"
              xmlns:viewModel="clr-namespace:com.sbh.gui.invoices.ViewModel"
              xmlns:orefer="clr-namespace:com.sbh.dll.utilites.OReferences;assembly=Utilites"
+             xmlns:resdic="clr-namespace:com.sbh.dll.resdictionary;assembly=ResDic"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -14,6 +15,7 @@
                 <ResourceDictionary Source="pack://application:,,,/ResDic;component/ImgDictionary.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ResDic;component/StylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <resdic:WidthConverter x:Key="WidthConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -163,10 +165,45 @@
                     </Style>
                 </ListView.Style>
             </ListView>-->
-            <TreeView ItemsSource="{Binding DocsTree}" FontSize="15" >
+            <TreeView x:Name="treeview" Grid.Row="1" ItemsSource="{Binding DocsTree}" FontSize="15" >
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Path= DocumentTreeChild}">
-                        <TextBlock Text="{Binding id}"/>
+                        <Border BorderThickness="1" BorderBrush="Black"  Margin="3">
+                            <Grid Width="{Binding Path=ActualWidth, ElementName=treeview, Converter={StaticResource WidthConverter} }">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" 
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
+                                           Text="{Binding id}" />
+                                <TextBlock Grid.Row="0" Grid.Column="1" 
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
+                                           Text="{Binding TypeName}"/>
+                                <TextBlock Grid.Row="0" Grid.Column="2" 
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
+                                           Text="{Binding Path=dateDoc, StringFormat= 'Дата проводки док-та: {0}', ConverterCulture=ru-RU}"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" 
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
+                                           Text="Откуда: "/>
+                                <TextBlock Grid.Row="1" Grid.Column="2" 
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
+                                           Text="{Binding XFromName}"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" 
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
+                                           Text="Куда: "/>
+                                <TextBlock Grid.Row="2" Grid.Column="2" 
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
+                                           Text="{Binding XToName}"/>
+                            </Grid>
+                        </Border>
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
             </TreeView>
