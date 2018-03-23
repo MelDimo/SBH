@@ -4,13 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:com.sbh.dll.resdictionary.View"
+        xmlns:viewer="clr-namespace:SAPBusinessObjects.WPF.Viewer;assembly=SAPBusinessObjects.WPF.Viewer"
         mc:Ignorable="d"
         Title="DialogPrint" Height="450" Width="500"
         Name="ThisWindow"
-        ShowInTaskbar="False" 
-        WindowStyle="None"
+        ShowInTaskbar="True" 
         WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../ImgDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+    </Window.Resources>
     <Grid>
-        <ContentControl Grid.Row="1" Grid.Column="0" x:Name="MainContainer"/>
+        <viewer:CrystalReportsViewer Grid.Row="1" x:Name="reportViewer" x:FieldModifier="public"/>
     </Grid>
 </Window>

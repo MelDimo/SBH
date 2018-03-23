@@ -20,7 +20,6 @@ namespace com.sbh.gui.invoices.ViewModel
 {
     public class SurfaceControlViewModel : INotifyPropertyChanged
     {
-
         private UserControl mDocumentJournalView;
 
         private UserControl _curUserControl;
@@ -55,6 +54,25 @@ namespace com.sbh.gui.invoices.ViewModel
             set { _docs = value; OnPropertyChanged("Docs"); }
         }
 
+
+        private Model.Document _curDocTree;
+        public Model.Document CurDocTree
+        {
+            get { return _curDocTree; }
+            set
+            {
+                _curDocTree = value;
+                OnPropertyChanged("CurDocTree");
+            }
+        }
+
+        private ObservableCollection<Model.DocumentTree> _docsTree;
+        public ObservableCollection<Model.DocumentTree> DocsTree
+        {
+            get { return _docsTree; }
+            set { _docsTree = value; OnPropertyChanged("DocsTree"); }
+        }
+
         public SurfaceControlViewModel()
         {
             Filter = new Model.Filter();
@@ -80,6 +98,7 @@ namespace com.sbh.gui.invoices.ViewModel
             CurUserControl = mDocumentJournalView;
 
             CollectDocsByFilter();
+            CollectDocsByFilterTree();
         }
 
         private bool _filterVisibility;
@@ -223,6 +242,12 @@ namespace com.sbh.gui.invoices.ViewModel
                 
         }
 
+        public ICommand ResponseCommand { get; private set; }
+        void ResponseOnClick(object obj)
+        {
+
+        }
+
         #endregion
 
         public bool DeleteCommand_CanExecute(object obj)
@@ -247,23 +272,6 @@ namespace com.sbh.gui.invoices.ViewModel
             CurDoc = document;
 
             ShowDocDetails(null);
-
-            //switch ((int)obj)
-            //{
-            //    case 1:             // Приход
-            //        ShowDocDetails(null);
-            //        break;
-
-            //    case 2:             // Перемещение
-            //        ShowDocDetails(null);
-            //        break;
-
-            //    case 3:             // Списание
-            //        break;
-
-            //    case 4:             // Реализация
-            //        break;
-            //}
         }
 
         private decimal createNewDoc(Model.Document pDoc)
@@ -306,7 +314,7 @@ namespace com.sbh.gui.invoices.ViewModel
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
-                    command.CommandText = " SELECT id, ref_docType AS docType, dateCreate, dateDoc, ref_status AS refStatus, xfrom, xto " +
+                    command.CommandText = " SELECT id, parentId, ref_docType AS docType, dateCreate, dateDoc, ref_status AS refStatus, xfrom, xto " +
                                             " FROM document " +
                                             " WHERE ref_status = 1 AND dateDoc BETWEEN @dateStart AND @dateEnd " +
                                             (docTypes.Equals(string.Empty) ? string.Empty : " AND ref_docType in (" + docTypes + ")") +
@@ -319,6 +327,44 @@ namespace com.sbh.gui.invoices.ViewModel
                     while (reader.Read())
                     {
                         Docs = Support.XMLToObject<ObservableCollection<Model.Document>>(reader.ReadOuterXml());
+                    }
+                }
+            }
+        }
+
+        void CollectDocsByFilterTree()
+        {
+            DocsTree = new ObservableCollection<Model.DocumentTree>();
+
+            string docTypes = string.Join(",", Filter.docTypes.Where(x => x.isSelected == true).Select(x => x.id));
+
+            using (SqlConnection con = new SqlConnection(GValues.connString))
+            {
+                con.Open();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = con;
+                    command.CommandText = " SELECT	[id], " +
+                                            "		[parentId], " +
+                                            "		[ref_docType] AS docType, " +
+                                            "		[dateCreate], " +
+                                            "		[dateDoc], " +
+                                            "		[ref_status] AS refStatus, " +
+                                            "		[xfrom], " +
+                                            "		[xto], " +
+                                            "		dbo.SelectDocumentChild_xml([id]) " +
+                                            " FROM document " +
+                                            " WHERE ref_status = 1 AND parentId = 0 /*AND dateDoc BETWEEN @dateStart AND @dateEnd*/ " +
+                                            (docTypes.Equals(string.Empty) ? string.Empty : " AND ref_docType in (" + docTypes + ")") +
+                                            " FOR XML RAW('DocumentTree'), ROOT('ArrayOfDocumentTree'), ELEMENTS ";
+
+                    command.Parameters.Add("dateStart", SqlDbType.DateTime).Value = Filter.dateStart;
+                    command.Parameters.Add("dateEnd", SqlDbType.DateTime).Value = Filter.dateEnd;
+
+                    XmlReader reader = command.ExecuteXmlReader();
+                    while (reader.Read())
+                    {
+                        DocsTree = Support.XMLToObject<ObservableCollection<Model.DocumentTree>>(reader.ReadOuterXml());
                     }
                 }
             }

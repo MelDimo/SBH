@@ -19,11 +19,9 @@ namespace com.sbh.dll.resdictionary.View
     /// </summary>
     public partial class DialogPrint : Window
     {
-        public DialogPrint(UserControl pContent)
+        public DialogPrint()
         {
             InitializeComponent();
-
-            MainContainer.Content = pContent;
         }
     }
 }

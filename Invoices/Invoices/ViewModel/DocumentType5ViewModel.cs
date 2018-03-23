@@ -22,6 +22,8 @@ namespace com.sbh.gui.invoices.ViewModel
         private references.counterparty.View.CounterpartyExternalView counterpartyExternalView;
         private references.orgmodel.View.UnitExternalView unitExternalView;
 
+        private dll.resdictionary.View.DialogPrint dialogPrint;
+
         private UserControl _itemsView;
         public UserControl ItemsView
         {
@@ -145,38 +147,21 @@ namespace com.sbh.gui.invoices.ViewModel
         public ICommand PrintOnClickCommand { get; private set; }
         void PrintOnClick(object obj)
         {
-            //PrintDialog printDialog = new PrintDialog();
-            //if (printDialog.ShowDialog() == true)
-            //{
-            //    printDialog.PrintVisual(UserControl, "Распечатываем элемент Canvas");
-            //}
+            Report.DocumentType5 report = new Report.DocumentType5();
+            
 
-            Report.DocumentViewerType5 documentViewerType5 = new Report.DocumentViewerType5(new object[] { CounterpartyName, RecipientName });
-            documentViewerType5.DataContext = (DocumentItemsViewModel)ItemsView.DataContext;
+            var items = (from p in (ItemsView.DataContext as DocumentItemsViewModel).Positions
+                         select new { p.itemName, p.xcount, p.currencyName, p.dimensionName }).ToList();
 
-            dll.resdictionary.View.DialogPrint dialogPrint = new dll.resdictionary.View.DialogPrint(documentViewerType5);
-            dialogPrint.ShowDialog();
-
-            //FlowDocument flowDocument = new FlowDocument();
-            //Table table = new Table();
-
-            //flowDocument.Blocks.Add(table);
-
-            //for (int i = 0; i < 2; i++)
-            //{
-            //    table.Columns.Add(new TableColumn());
-            //}
-
-            //table.RowGroups.Add(new TableRowGroup());
-
-            //DocumentItemsViewModel itemsModel = (ItemsView.DataContext as ViewModel.DocumentItemsViewModel);
-
-            //for (int i = 0; i < itemsModel.Positions.Count; i++)
-            //{
-            //    table.RowGroups[0].Rows[i].Cells.Add(new TableCell(new Paragraph(new Run(itemsModel.Positions[i].itemName))));
-            //}
+            report.SetDataSource(items);
+            report.SetParameterValue("counterpatyName", CounterpartyName);
+            report.SetParameterValue("recipientName", RecipientName);
+            report.SetParameterValue("dateDoc", Doc.dateDoc);
 
 
+            dialogPrint = new dll.resdictionary.View.DialogPrint();
+            dialogPrint.reportViewer.ViewerCore.ReportSource = report;
+            dialogPrint.Show();
         }
 
         #endregion

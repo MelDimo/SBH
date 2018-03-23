@@ -47,11 +47,29 @@ namespace com.sbh.gui.invoices.Model
             }
         }
 
-        // для отчета
-        public string itemName
+        private int _dimensionId;
+        public int dimensionId
         {
-            get { return RefItems.FirstOrDefault(x => x.id == itemId).name; }
-            set { }
+            get { return _dimensionId; }
+            set
+            {
+                if (_xcount != value && isAvalForEdit)
+                    using (SqlConnection con = new SqlConnection(GValues.connString))
+                    {
+                        con.Open();
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            command.Connection = con;
+                            command.CommandText = " UPDATE document_items SET ref_dimensions = @dimensionId WHERE id = @id; ";
+
+                            command.Parameters.Add("id", SqlDbType.Int).Value = id;
+                            command.Parameters.Add("dimensionId", SqlDbType.Int).Value = value;
+
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                _dimensionId = value;
+            }
         }
 
         private decimal _xcount;
@@ -141,17 +159,26 @@ namespace com.sbh.gui.invoices.Model
             get { return Math.Round(xcount * xprice, 3); }
         }
 
-        [XmlIgnore]
-        public ObservableCollection<dll.utilites.OReferences.RefItem.Item> RefItems
-        {
-            get;
-            private set;
-        }
+        #region field for report
+
+        public string itemName { get { return RefItems.FirstOrDefault(x => x.id == itemId).name; } }
+        public string currencyName { get { return RefCurrency.FirstOrDefault(x => x.id == currencyId).name; } }
+        public string dimensionName { get { return RefDimensions.FirstOrDefault(x => x.id == dimensionId).name; } }
+
+        #endregion
 
         public Position()
         {
             RefItems = new ObservableCollection<dll.utilites.OReferences.RefItem.Item>(dll.utilites.OReferences.RefItem.GetInstance.refItem);
             RefCurrency = new ObservableCollection<dll.utilites.OReferences.RefCurrency.CurrencyLite>(dll.utilites.OReferences.RefCurrency.GetInstance.CurrenciesLite);
+            RefDimensions = new ObservableCollection<dll.utilites.OReferences.RefDimensions.Dimension> (dll.utilites.OReferences.RefDimensions.GetInstance.refDimension);
+        }
+
+        [XmlIgnore]
+        public ObservableCollection<dll.utilites.OReferences.RefItem.Item> RefItems
+        {
+            get;
+            private set;
         }
 
         [XmlIgnore]
@@ -160,6 +187,14 @@ namespace com.sbh.gui.invoices.Model
             get;
             private set;
         }
+
+        [XmlIgnore]
+        public ObservableCollection<dll.utilites.OReferences.RefDimensions.Dimension> RefDimensions
+        {
+            get;
+            private set;
+        }
+
 
         #region INotifyPropertyChanged Members
 

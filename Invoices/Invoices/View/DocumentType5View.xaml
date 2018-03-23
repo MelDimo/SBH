@@ -80,13 +80,6 @@
                         <ContentControl Content="{StaticResource imgPrinter}"/>
                     </Button.Content>
                 </Button>
-                <Button Grid.Row="4" Grid.Column="1" Height="32" Width="32" HorizontalAlignment="Right" Margin="3"
-                            DockPanel.Dock="Left"
-                            Click="Button_Click" ToolTip="Печатная форма">
-                    <Button.Content>
-                        <ContentControl Content="{StaticResource imgPrinter}"/>
-                    </Button.Content>
-                </Button>
             </Grid>
             <Border BorderThickness="0,1,0,1" BorderBrush="{StaticResource FilterBackGrount}"/>
             <ContentControl Content="{Binding ItemsView}" MaxWidth="1440"/>

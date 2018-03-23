@@ -25,10 +25,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Grid.Column="0">
-            <Menu DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" 
+            <Menu ToolTip="Создать документ" DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" 
                   VerticalAlignment="Center" FontSize="15" Margin="7,0,0,0">
-                <MenuItem ItemsSource="{Binding DocTypes}"
-                          ToolTip="Создать документ">
+                <MenuItem ItemsSource="{Binding DocTypes}">
                     <MenuItem.Icon>
                         <ContentControl Height="32" Content="{StaticResource imgDoc}" />
                     </MenuItem.Icon>
@@ -45,9 +44,18 @@
                     </MenuItem.ItemContainerStyle>
                 </MenuItem>
             </Menu>
-            <Menu DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" 
+            <Menu ToolTip="Ответный документ" DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" 
+                  VerticalAlignment="Center" FontSize="15" Margin="7,0,7,0">
+                <MenuItem Command="{Binding DeleteCommand}">
+                    <MenuItem.Icon>
+                        <ContentControl Height="32" Content="{StaticResource imgDocResponse}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </Menu>
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            <Menu ToolTip="Удалить токумент" DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" 
                   VerticalAlignment="Center" FontSize="15" Margin="7,0,0,0">
-                <MenuItem ToolTip="Удалить токумент" Command="{Binding DeleteCommand}">
+                <MenuItem Command="{Binding ResponseCommand}">
                     <MenuItem.Icon>
                         <ContentControl Height="32" Content="{StaticResource imgDocDel}" />
                     </MenuItem.Icon>
@@ -128,7 +136,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ListView ItemsSource="{Binding Docs}" SelectedItem="{Binding CurDoc}" FontSize="15">
+            <!--<ListView ItemsSource="{Binding Docs}" SelectedItem="{Binding CurDoc}" FontSize="15">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Номер док-та" DisplayMemberBinding="{Binding id}"/>
@@ -154,7 +162,14 @@
                         </Style.Triggers>
                     </Style>
                 </ListView.Style>
-            </ListView>
+            </ListView>-->
+            <TreeView ItemsSource="{Binding DocsTree}" FontSize="15" >
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Path= DocumentTreeChild}">
+                        <TextBlock Text="{Binding id}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
         </DockPanel>
     </Grid>
 </UserControl>

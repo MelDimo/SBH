@@ -6,10 +6,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace com.sbh.gui.invoices.Model
 {
-    public class Document : INotifyPropertyChanged
+    public class DocumentTree : INotifyPropertyChanged
     {
         public decimal id { get; set; }
         public decimal perentId { get; set; }
@@ -19,6 +20,9 @@ namespace com.sbh.gui.invoices.Model
         public decimal refStatus { get; set; }
         public decimal xfrom { get; set; }
         public decimal xto { get; set; }
+
+        [XmlElement("ArrayOfDocumentTree", typeof(ObservableCollection<DocumentTree>))]
+        public ObservableCollection<DocumentTree> DocumentTreeChild { get; set; }
 
         public string TypeName
         {
@@ -83,9 +87,9 @@ namespace com.sbh.gui.invoices.Model
             }
         }
 
-        public Document()
+        public DocumentTree()
         {
-
+            DocumentTreeChild = new ObservableCollection<DocumentTree>();
         }
 
         #region INotifyPropertyChanged Members

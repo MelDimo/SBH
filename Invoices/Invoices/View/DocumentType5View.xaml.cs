@@ -24,18 +24,5 @@ namespace com.sbh.gui.invoices.View
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            PrintDialog printDialog = new PrintDialog();
-            if (printDialog.ShowDialog() == true)
-            {
-                Size pageSize = new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
-                // sizing of the element.
-                this.Measure(pageSize);
-                this.Arrange(new Rect(5, 5, pageSize.Width, pageSize.Height));
-                printDialog.PrintVisual(this, "Распечатываем элемент Canvas");
-            }
-        }
     }
 }

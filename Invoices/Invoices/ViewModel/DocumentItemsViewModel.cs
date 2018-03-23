@@ -45,7 +45,6 @@ namespace com.sbh.gui.invoices.ViewModel
             bgwItems.RunWorkerAsync();
 
             AddItemOnClickCommand = new DelegateCommand(AddItemOnClick);
-            PrintOnClickCommand = new DelegateCommand(PrintOnClick);
         }
 
         private void BgwItems_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -63,7 +62,7 @@ namespace com.sbh.gui.invoices.ViewModel
                     Positions = new ObservableCollection<Model.Position>();
 
                     command.Connection = con;
-                    command.CommandText =   " SELECT di.id, di.item As itemId, " +
+                    command.CommandText = " SELECT di.id, di.item As itemId, di.ref_dimensions AS dimensionId, " +
                                             "    di.xcount, di.currency AS currencyId, di.xprice " +
                                             " FROM document_items di " +
                                             " WHERE di.ref_status = 1 AND di.xdocument = @document " +
@@ -119,12 +118,6 @@ namespace com.sbh.gui.invoices.ViewModel
             }
             Positions.Add(newPositions);
             newPositions = null;
-        }
-
-        public ICommand PrintOnClickCommand { get; private set; }
-        void PrintOnClick(object obj)
-        {
-
         }
 
         #endregion
