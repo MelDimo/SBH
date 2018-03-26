@@ -161,9 +161,9 @@ namespace com.sbh.gui.invoices.Model
 
         #region field for report
 
-        public string itemName { get { return RefItems.FirstOrDefault(x => x.id == itemId).name; } }
-        public string currencyName { get { return RefCurrency.FirstOrDefault(x => x.id == currencyId).name; } }
-        public string dimensionName { get { return RefDimensions.FirstOrDefault(x => x.id == dimensionId).name; } }
+        public string itemName { get { return itemId != 0 ? RefItems.FirstOrDefault(x => x.id == itemId).name : string.Empty; } }
+        public string currencyName { get { return currencyId != 0 ? RefCurrency.FirstOrDefault(x => x.id == currencyId).name : string.Empty; } }
+        public string dimensionName { get { return dimensionId != 0 ? RefDimensions.FirstOrDefault(x => x.id == dimensionId).name: string.Empty; } }
 
         #endregion
 

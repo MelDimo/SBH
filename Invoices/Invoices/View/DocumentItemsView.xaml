@@ -37,14 +37,7 @@
             </Button>
             <Button Height="32" Width="32" HorizontalAlignment="Left" Margin="3"
                             DockPanel.Dock="Left"
-                            Command="{Binding EditItemOnClickCommand}" ToolTip="Редактировать позицию">
-                <Button.Content>
-                    <ContentControl Content="{StaticResource imgDocEdit}"/>
-                </Button.Content>
-            </Button>
-            <Button Height="32" Width="32" HorizontalAlignment="Left" Margin="3"
-                            DockPanel.Dock="Left"
-                            Command="{Binding DelItemOnClickCommand}" ToolTip="Удалить позицию">
+                            Command="{Binding DeleteItemOnClickCommand}" ToolTip="Удалить позицию">
                 <Button.Content>
                     <ContentControl Content="{StaticResource imgDocDel}"/>
                 </Button.Content>

@@ -19,8 +19,8 @@ namespace com.sbh.gui.invoices.ViewModel
     public class DocumentType1ViewModel : INotifyPropertyChanged
     {
         private dll.resdictionary.View.DialogView dialogView;
-        private references.counterparty.View.CounterpartyExternalView counterpartyExternalView;
-        private references.orgmodel.View.UnitExternalView unitExternalView;
+        private com.sbh.gui.references.counterparty.View.CounterpartyExternalView counterpartyExternalView;
+        private com.sbh.gui.references.orgmodel.View.UnitExternalView unitExternalView;
 
         private UserControl _itemsView;
         public UserControl ItemsView

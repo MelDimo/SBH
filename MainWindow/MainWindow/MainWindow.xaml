@@ -4,9 +4,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:com.sbh.gui.mainwindow"
+        xmlns:viewModel="clr-namespace:com.sbh.gui.mainwindow.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Window.DataContext>
+        <viewModel:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResDic;component/ImgDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ResDic;component/StylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.Column="0" 
+                BorderBrush="{StaticResource FilterBackGrount}" Background="{StaticResource FilterBackGrount}" BorderThickness="0,0,1,0">
+            <StackPanel >
+                <Button Height="64" Width="96" Margin="3"
+                            Command="{Binding ReferencesOnClickCommand}" ToolTip="Справочники">
+                    <Button.Content>
+                        <ContentControl Content="{StaticResource imgReferences}"/>
+                    </Button.Content>
+                </Button>
+                <Button Height="64" Width="96" Margin="3"
+                            Command="{Binding JournalOnClickCommand}" ToolTip="Журнал документов">
+                    <Button.Content>
+                        <ContentControl Content="{StaticResource imgArchive}"/>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Border>
+        <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding ItemsView}"/>
     </Grid>
 </Window>

@@ -37,6 +37,18 @@
     <StartupObject>com.sbh.gui.mainwindow.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GValues">
+      <HintPath>..\..\GValues\GValues\bin\Debug\GValues.dll</HintPath>
+    </Reference>
+    <Reference Include="Invoices">
+      <HintPath>..\..\Invoices\Invoices\bin\Debug\Invoices.dll</HintPath>
+    </Reference>
+    <Reference Include="References">
+      <HintPath>..\..\References\References\bin\Debug\References.dll</HintPath>
+    </Reference>
+    <Reference Include="ResDic">
+      <HintPath>..\..\Utilites\ResDic\bin\Debug\ResDic.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -48,6 +60,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Utilites">
+      <HintPath>..\..\Utilites\Utilites\bin\Debug\Utilites.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -57,6 +72,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

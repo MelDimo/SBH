@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>com.sbh.gui.invoices</RootNamespace>
     <AssemblyName>Invoices</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Counterparty">
@@ -73,10 +76,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
     <Compile Include="Model\DocAbstractFactory\Document.cs" />
     <Compile Include="Model\DocAbstractFactory\Factory\DocType1Factory.cs" />
     <Compile Include="Model\DocAbstractFactory\Factory\IFactory.cs" />
@@ -96,6 +95,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DocumentType5.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Report\dsReport.cs">
       <DependentUpon>dsReport.xsd</DependentUpon>
@@ -105,6 +105,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsReport.xsd</DependentUpon>
     </Compile>
+    <Compile Include="StartUp.cs" />
     <Compile Include="ViewModel\DocumentItemsViewModel.cs" />
     <Compile Include="ViewModel\DocumentType1ViewModel.cs" />
     <Compile Include="ViewModel\DocumentType2ViewModel.cs" />
@@ -132,10 +133,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -186,6 +183,7 @@
     <EmbeddedResource Include="Report\DocumentType5.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>DocumentType5.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -45,6 +45,7 @@ namespace com.sbh.gui.invoices.ViewModel
             bgwItems.RunWorkerAsync();
 
             AddItemOnClickCommand = new DelegateCommand(AddItemOnClick);
+            DeleteItemOnClickCommand = new DelegateCommand(DeleteItemOnClick, DeleteCommand_CanExecute);
         }
 
         private void BgwItems_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -101,12 +102,13 @@ namespace com.sbh.gui.invoices.ViewModel
                     newPositions.isAvalForEdit = true;
 
                     command.Connection = con;
-                    command.CommandText = " INSERT INTO document_items(xdocument, item, xcount, currency, xprice, ref_status) " +
-                                            " VALUES(@xdocument, @item, @xcount, @currency, @xprice, @ref_status ); " +
+                    command.CommandText = " INSERT INTO document_items(xdocument, item, ref_dimensions, xcount, currency, xprice, ref_status) " +
+                                            " VALUES(@xdocument, @item, @ref_dimensions, @xcount, @currency, @xprice, @ref_status ); " +
                                             " SELECT SCOPE_IDENTITY();";
 
                     command.Parameters.Add("xdocument", SqlDbType.Int).Value = mDocId;
                     command.Parameters.Add("item", SqlDbType.Int).Value = newPositions.itemId;
+                    command.Parameters.Add("ref_dimensions", SqlDbType.Int).Value = newPositions.dimensionId;
                     command.Parameters.Add("xcount", SqlDbType.Decimal).Value = newPositions.xcount;
                     command.Parameters.Add("currency", SqlDbType.Decimal).Value = newPositions.currencyId;
                     command.Parameters.Add("xprice", SqlDbType.Decimal).Value = newPositions.xprice;
@@ -118,6 +120,31 @@ namespace com.sbh.gui.invoices.ViewModel
             }
             Positions.Add(newPositions);
             newPositions = null;
+        }
+
+        public bool DeleteCommand_CanExecute(object obj)
+        {
+            return CurPosition != null;
+        }
+
+        public ICommand DeleteItemOnClickCommand { get; private set; }
+        void DeleteItemOnClick(object obj)
+        {
+            using (SqlConnection con = new SqlConnection(GValues.connString))
+            {
+                con.Open();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = con;
+                    command.CommandText = " DELETE FROM document_items WHERE id = @id;";
+
+                    command.Parameters.Add("id", SqlDbType.Int).Value = CurPosition.id;
+
+                    command.ExecuteNonQuery();
+                }
+            }
+            Positions.Remove(CurPosition);
+            CurPosition = null;
         }
 
         #endregion

@@ -165,7 +165,8 @@
                     </Style>
                 </ListView.Style>
             </ListView>-->
-            <TreeView x:Name="treeview" Grid.Row="1" ItemsSource="{Binding DocsTree}" FontSize="15" >
+            <TreeView x:Name="treeview" Grid.Row="1" ItemsSource="{Binding DocsTree}" FontSize="15" 
+                      SelectedItemChanged="treeview_SelectedItemChanged">
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Path= DocumentTreeChild}">
                         <Border BorderThickness="1" BorderBrush="Black"  Margin="3">

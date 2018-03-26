@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace com.sbh.gui.references
+namespace com.sbh.gui.references.View
 {
     /// <summary>
     /// Interaction logic for SurfaceControl.xaml

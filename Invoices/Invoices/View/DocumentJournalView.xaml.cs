@@ -30,5 +30,14 @@ namespace com.sbh.gui.invoices.View
         {
             (this.DataContext as ViewModel.SurfaceControlViewModel).ShowDocDetailsCommand.Execute(null);
         }
+
+        private void treeview_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (DataContext != null)
+            {
+                ViewModel.SurfaceControlViewModel viewModel = DataContext as ViewModel.SurfaceControlViewModel;
+                viewModel.SelectObject(e.NewValue);
+            }
+        }
     }
 }
