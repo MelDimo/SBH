@@ -88,6 +88,8 @@ namespace com.sbh.gui.references.orgmodel.Model
             }
 
             Unit.Add(new Unit() { id = (int)recId, name = "Новая торговая точка", refStatus = 1 });
+
+            dll.utilites.OReferences.RefRecipient.GetInstance.reload();
         }
 
         [XmlIgnore]
@@ -111,6 +113,8 @@ namespace com.sbh.gui.references.orgmodel.Model
             }
 
             refStatus = refStatus == 1 ? 2 : 1;
+
+            dll.utilites.OReferences.RefRecipient.GetInstance.reload();
         }
 
         [XmlIgnore]
@@ -134,6 +138,8 @@ namespace com.sbh.gui.references.orgmodel.Model
             }
 
             name = obj as string;
+
+            dll.utilites.OReferences.RefRecipient.GetInstance.reload();
         }
 
         #region INotifyPropertyChanged Members

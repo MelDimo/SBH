@@ -101,6 +101,8 @@ namespace com.sbh.gui.references.item.Model
             }
 
             refStatus = refStatus == 1 ? 2 : 1;
+
+            dll.utilites.OReferences.RefItem.GetInstance.reload();
         }
 
         [XmlIgnore]
@@ -165,8 +167,9 @@ namespace com.sbh.gui.references.item.Model
                 }
 
                 refDimensions = ((dimensions.ViewModel.SurfaceDimensionsViewModel)surfaceDimensionsView.DataContext).CurDimension.id;
-            }
 
+                dll.utilites.OReferences.RefItem.GetInstance.reload();
+            }
         }
 
         #region INotifyPropertyChanged Members

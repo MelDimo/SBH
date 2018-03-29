@@ -29,6 +29,17 @@ namespace com.sbh.dll.utilites.OReferences
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
+
+ //   SELECT ce.id, c.nameshort AS name, cg.name AS namegroup, ce.buy, ce.sale
+ //   FROM dbo.currency_exchange ce
+
+ //   INNER JOIN dbo.currency c ON c.id = ce.currency
+
+ //   INNER JOIN dbo.currency_group cg ON cg.id = ce.currency_group
+
+ //   WHERE xdate = (SELECT max(xdate) FROM currency_exchange WHERE currency = ce.currency AND currency_group = ce.currency_group)
+	//ORDER BY c.nameshort
+
                     command.CommandText = " SELECT cg.id, cg.name, " +
                                           "         CONVERT(XML, " +
                                           "             (SELECT c.id, c.nameshort, c.namefull, ref_status AS refStatus, " +

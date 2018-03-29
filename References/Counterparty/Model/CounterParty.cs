@@ -152,6 +152,8 @@ namespace com.sbh.gui.references.counterparty.Model
             name = xName;
             groupname = xGroupname;
             description = xDescription;
+
+            dll.utilites.OReferences.RefCounterParty.GetInstance.reload();
         }
 
         #region INotifyPropertyChanged Members

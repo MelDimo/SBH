@@ -104,6 +104,7 @@ namespace com.sbh.gui.references.currency.ViewModel
                 }
             }
             newCourse.id = recId;
+
             CurSimpleCurrency.CoursesHistory.Add(newCourse);
         }
 

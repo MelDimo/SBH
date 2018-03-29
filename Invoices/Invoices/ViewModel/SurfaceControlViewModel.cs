@@ -61,6 +61,8 @@ namespace com.sbh.gui.invoices.ViewModel
             ShowDocDetails(null);
         }
 
+        BackgroundWorker bgwTouchReportDocument = new BackgroundWorker();
+
         public SurfaceControlViewModel()
         {
             Filter = new Model.Filter();
@@ -86,6 +88,16 @@ namespace com.sbh.gui.invoices.ViewModel
             CurUserControl = mDocumentJournalView;
 
             CollectDocsByFilterTree();
+
+            // Дергаю документ для последующего быстрого вызова
+            bgwTouchReportDocument.DoWork += Bgw_DoWork;
+            bgwTouchReportDocument.RunWorkerAsync();
+        }
+
+        private void Bgw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            CrystalDecisions.CrystalReports.Engine.ReportDocument doc = new CrystalDecisions.CrystalReports.Engine.ReportDocument();
+            doc.Dispose();
         }
 
         private bool _filterVisibility;
@@ -289,35 +301,35 @@ namespace com.sbh.gui.invoices.ViewModel
             return result;
         }
 
-        void CollectDocsByFilter()
-        {
-            DocsTree = new ObservableCollection<Model.DocumentTree>();
+        //void CollectDocsByFilter()
+        //{
+        //    DocsTree = new ObservableCollection<Model.DocumentTree>();
 
-            string docTypes = string.Join(",", Filter.docTypes.Where(x => x.isSelected == true).Select(x => x.id));
+        //    string docTypes = string.Join(",", Filter.docTypes.Where(x => x.isSelected == true).Select(x => x.id));
 
-            using (SqlConnection con = new SqlConnection(GValues.connString))
-            {
-                con.Open();
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = con;
-                    command.CommandText = " SELECT id, parentId, ref_docType AS docType, dateCreate, dateDoc, ref_status AS refStatus, xfrom, xto " +
-                                            " FROM document " +
-                                            " WHERE ref_status = 1 AND dateDoc BETWEEN @dateStart AND @dateEnd " +
-                                            (docTypes.Equals(string.Empty) ? string.Empty : " AND ref_docType in (" + docTypes + ")") +
-                                            " FOR XML RAW('Document'), ROOT('ArrayOfDocument'), ELEMENTS ";
+        //    using (SqlConnection con = new SqlConnection(GValues.connString))
+        //    {
+        //        con.Open();
+        //        using (SqlCommand command = new SqlCommand())
+        //        {
+        //            command.Connection = con;
+        //            command.CommandText = " SELECT id, parentId, ref_docType AS docType, dateCreate, dateDoc, ref_status AS refStatus, xfrom, xto " +
+        //                                    " FROM document " +
+        //                                    " WHERE ref_status = 1 AND dateDoc BETWEEN @dateStart AND @dateEnd " +
+        //                                    (docTypes.Equals(string.Empty) ? string.Empty : " AND ref_docType in (" + docTypes + ")") +
+        //                                    " FOR XML RAW('Document'), ROOT('ArrayOfDocument'), ELEMENTS ";
 
-                    command.Parameters.Add("dateStart", SqlDbType.DateTime).Value = Filter.dateStart;
-                    command.Parameters.Add("dateEnd", SqlDbType.DateTime).Value = Filter.dateEnd;
+        //            command.Parameters.Add("dateStart", SqlDbType.DateTime).Value = Filter.dateStart;
+        //            command.Parameters.Add("dateEnd", SqlDbType.DateTime).Value = Filter.dateEnd;
 
-                    XmlReader reader = command.ExecuteXmlReader();
-                    while (reader.Read())
-                    {
-                        DocsTree = Support.XMLToObject<ObservableCollection<Model.DocumentTree>>(reader.ReadOuterXml());
-                    }
-                }
-            }
-        }
+        //            XmlReader reader = command.ExecuteXmlReader();
+        //            while (reader.Read())
+        //            {
+        //                DocsTree = Support.XMLToObject<ObservableCollection<Model.DocumentTree>>(reader.ReadOuterXml());
+        //            }
+        //        }
+        //    }
+        //}
 
         void CollectDocsByFilterTree()
         {

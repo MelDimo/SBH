@@ -83,6 +83,8 @@ namespace com.sbh.gui.references.counterparty.ViewModel
             }
 
             Counterparty.Add(newCounterparty);
+
+            dll.utilites.OReferences.RefCounterParty.GetInstance.reload();
         }
 
         public ICommand SelectCounterpartyCommand { get; private set; }

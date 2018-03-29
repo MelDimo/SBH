@@ -131,7 +131,7 @@
                     <Style TargetType="{x:Type TextBlock}">
                         <Setter Property="Visibility" Value="Collapsed" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Docs.Count}" Value="0">
+                            <DataTrigger Binding="{Binding DocsTree.Count}" Value="0">
                                 <Setter Property="Visibility" Value="Visible" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -165,8 +165,8 @@
                     </Style>
                 </ListView.Style>
             </ListView>-->
-            <TreeView x:Name="treeview" Grid.Row="1" ItemsSource="{Binding DocsTree}" FontSize="15" 
-                      SelectedItemChanged="treeview_SelectedItemChanged">
+            <TreeView x:Name="treeview" Grid.Row="1" ItemsSource="{Binding DocsTree}" FontSize="15"
+                      TreeViewItem.PreviewMouseDoubleClick="treeview_PreviewMouseDoubleClick" >
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Path= DocumentTreeChild}">
                         <Border BorderThickness="1" BorderBrush="Black"  Margin="3">
@@ -207,6 +207,21 @@
                         </Border>
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="True"/>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.Style>
+                    <Style TargetType="{x:Type TreeView}">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DocsTree.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TreeView.Style>
             </TreeView>
         </DockPanel>
     </Grid>

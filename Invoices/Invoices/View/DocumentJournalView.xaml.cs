@@ -26,18 +26,27 @@ namespace com.sbh.gui.invoices.View
             InitializeComponent();
         }
 
-        private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void treeview_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            (this.DataContext as ViewModel.SurfaceControlViewModel).ShowDocDetailsCommand.Execute(null);
-        }
+            e.Handled = true;
 
-        private void treeview_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
             if (DataContext != null)
             {
                 ViewModel.SurfaceControlViewModel viewModel = DataContext as ViewModel.SurfaceControlViewModel;
-                viewModel.SelectObject(e.NewValue);
+                viewModel.SelectObject((Model.DocumentTree)((TreeView)sender).SelectedItem);
             }
+            
         }
+
+
+
+        //private void treeview_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        //{
+        //    if (DataContext != null)
+        //    {
+        //        ViewModel.SurfaceControlViewModel viewModel = DataContext as ViewModel.SurfaceControlViewModel;
+        //        viewModel.SelectObject(e.NewValue);
+        //    }
+        //}
     }
 }

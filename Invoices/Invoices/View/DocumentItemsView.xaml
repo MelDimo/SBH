@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:com.sbh.gui.invoices.View"
              xmlns:viewModel="clr-namespace:com.sbh.gui.invoices.ViewModel"
+             xmlns:Behaviours="clr-namespace:com.sbh.dll.utilites;assembly=Utilites"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <!--<UserControl.DataContext>
@@ -43,100 +44,108 @@
                 </Button.Content>
             </Button>
         </DockPanel>
-        <DataGrid Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Auto"
-                  ItemsSource="{Binding Positions}" SelectedItem="{Binding CurPosition}" FontSize="15">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Наименование">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center"
+        <ListView Grid.Row="1" SelectionMode="Single"
+                  ItemsSource="{Binding Positions}" SelectedItem="{Binding CurPosition}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Наименование">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center"
                                       ItemsSource="{Binding RefItems}"
                                       SelectedValue="{Binding itemId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                       SelectedValuePath="id"
-                                      IsSynchronizedWithCurrentItem="True" IsEditable="True">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock>
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0}">
-                                                    <Binding Path="name" />
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Ед.изм">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center"
+                                      Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
+                                      IsEditable="True">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}">
+                                                        <Binding Path="name" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Ед.изм">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center"
                                       ItemsSource="{Binding RefDimensions}"
                                       SelectedValue="{Binding dimensionId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                       SelectedValuePath="id"
-                                      IsSynchronizedWithCurrentItem="True" IsEditable="True">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock>
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0}">
-                                                    <Binding Path="name" />
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Кол-во">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox Text="{Binding xcount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Цена за ед">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox Text="{Binding xprice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Валюта">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center"
+                                      Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
+                                      IsEditable="True">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}">
+                                                        <Binding Path="name" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Кол-во">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding xcount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"
+                                         Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Цена за ед">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding xprice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"
+                                         Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Валюта">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center"
                                       ItemsSource="{Binding RefCurrency}"
                                       SelectedValue="{Binding currencyId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                       SelectedValuePath="id"
-                                      IsSynchronizedWithCurrentItem="True" IsEditable="True">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock>
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0}">
-                                                    <Binding Path="name" />
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Сумма">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox Text="{Binding xsumm, Mode=OneWay, UpdateSourceTrigger=LostFocus}" IsReadOnly="True" VerticalAlignment="Center"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+                                      Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
+                                      IsEditable="True">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}">
+                                                        <Binding Path="name" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Сумма">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding xsumm, Mode=OneWay, UpdateSourceTrigger=LostFocus}" IsReadOnly="True" VerticalAlignment="Center"
+                                         Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>
