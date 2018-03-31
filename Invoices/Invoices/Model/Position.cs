@@ -42,6 +42,8 @@ namespace com.sbh.gui.invoices.Model
 
                             command.ExecuteNonQuery();
                         }
+
+                        dimensionId = RefItems.SingleOrDefault(x => x.id == value).refDimensions;
                     }
                 _itemId = value;
             }
@@ -69,6 +71,7 @@ namespace com.sbh.gui.invoices.Model
                         }
                     }
                 _dimensionId = value;
+                OnPropertyChanged("dimensionId");
             }
         }
 
@@ -78,7 +81,7 @@ namespace com.sbh.gui.invoices.Model
             get { return _xcount; }
             set
             {
-                if(_xcount != value && isAvalForEdit)
+                if (_xcount != value && isAvalForEdit)
                     using (SqlConnection con = new SqlConnection(GValues.connString))
                     {
                         con.Open();
@@ -124,6 +127,7 @@ namespace com.sbh.gui.invoices.Model
                 lastCurrency = value;
 
                 OnPropertyChanged("currencyId");
+                
             }
         }
 
@@ -149,7 +153,7 @@ namespace com.sbh.gui.invoices.Model
                         }
                     }
                 _xprice = value;
-                OnPropertyChanged("xsumm");
+                //OnPropertyChanged("xsumm");
             }
         }
 

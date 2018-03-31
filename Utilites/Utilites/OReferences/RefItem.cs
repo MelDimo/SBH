@@ -24,7 +24,7 @@ namespace com.sbh.dll.utilites.OReferences
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
-                    command.CommandText = " SELECT id, name " +
+                    command.CommandText = " SELECT id, name, ref_dimensions AS refDimensions " +
                                             " FROM item " +
                                             " FOR XML RAW('Item'), ROOT('ArrayOfItem'), ELEMENTS ";
 
@@ -52,6 +52,7 @@ namespace com.sbh.dll.utilites.OReferences
         {
             public int id { get; set; }
             public string name { get; set; }
+            public int refDimensions { get; set; }
         }
     }
 }

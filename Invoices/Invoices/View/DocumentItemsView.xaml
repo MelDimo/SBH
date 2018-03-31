@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:com.sbh.gui.invoices.View"
              xmlns:viewModel="clr-namespace:com.sbh.gui.invoices.ViewModel"
-             xmlns:Behaviours="clr-namespace:com.sbh.dll.utilites;assembly=Utilites"
+             xmlns:behaviours="clr-namespace:com.sbh.dll.utilites;assembly=Utilites"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <!--<UserControl.DataContext>
@@ -55,7 +55,7 @@
                                       ItemsSource="{Binding RefItems}"
                                       SelectedValue="{Binding itemId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                       SelectedValuePath="id"
-                                      Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
+                                      behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
                                       IsEditable="True">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
@@ -79,7 +79,7 @@
                                       ItemsSource="{Binding RefDimensions}"
                                       SelectedValue="{Binding dimensionId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                       SelectedValuePath="id"
-                                      Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
+                                      behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
                                       IsEditable="True">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
@@ -100,7 +100,8 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding xcount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"
-                                         Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"/>
+                                         behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
+                                         behaviours:HighlightTextOnFocusBehavior.HighlightTextOnFocus="True"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -108,8 +109,8 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding xprice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"
-                                         Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
-                                         Behaviours:HighlightTextOnFocusBehavior.HighlightTextOnFocus="True"/>
+                                         behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
+                                         behaviours:HighlightTextOnFocusBehavior.HighlightTextOnFocus="True"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -120,7 +121,7 @@
                                       ItemsSource="{Binding RefCurrency}"
                                       SelectedValue="{Binding currencyId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                       SelectedValuePath="id"
-                                      Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
+                                      behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
                                       IsEditable="True">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
@@ -141,7 +142,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding xsumm, Mode=OneWay, UpdateSourceTrigger=LostFocus}" IsReadOnly="True" VerticalAlignment="Center"
-                                         Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"/>
+                                         behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
