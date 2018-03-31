@@ -18,7 +18,7 @@ namespace com.sbh.dll.utilites.OReferences
             reload();
         }
 
-        public ICommand MenuItemOnClickCommand { get; set; }
+        //public ICommand MenuItemOnClickCommand { get; set; }
 
         public void reload()
         {
@@ -30,6 +30,7 @@ namespace com.sbh.dll.utilites.OReferences
                     command.Connection = con;
                     command.CommandText = " SELECT id, name " +
                                             " FROM ref_docType " +
+                                            " WHERE ref_status = 1 " +
                                             " FOR XML RAW('DocType'), ROOT('ArrayOfDocType'), ELEMENTS ";
 
                     XmlReader reader = command.ExecuteXmlReader();

@@ -59,12 +59,11 @@ namespace com.sbh.gui.references.currency.ViewModel
                     command.Connection = con;
                     command.CommandText = " SELECT id, xdate, buy, sale, tarif " +
                                             " FROM currency_exchange " +
-                                            " WHERE currency_group = @currency_group AND currency = @currency " +
+                                            " WHERE currency = @currency " +
                                             " ORDER BY xdate DESC" +
                                             " FOR XML RAW('Courses'), ROOT('ArrayOfCourses'), ELEMENTS;";
 
-                    command.Parameters.Add("currency_group", SqlDbType.Int).Value = CurSimpleCurrency.groupId;
-                    command.Parameters.Add("currency", SqlDbType.Int).Value = CurSimpleCurrency.currencyId;
+                    command.Parameters.Add("currency", SqlDbType.Int).Value = CurSimpleCurrency.id;
 
                     XmlReader reader = command.ExecuteXmlReader();
                     while (reader.Read())
@@ -89,12 +88,11 @@ namespace com.sbh.gui.references.currency.ViewModel
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
-                    command.CommandText = " INSERT INTO currency_exchange(currency, currency_group, xdate, buy, sale, tarif) "+
+                    command.CommandText = " INSERT INTO currency_exchange(currency, xdate, buy, sale, tarif) "+
                                             " VALUES(@currency, @currency_group, @xdate, @buy, @sale, @tarif); " +
                                             " SELECT SCOPE_IDENTITY();";
 
-                    command.Parameters.Add("currency", SqlDbType.Int).Value = CurSimpleCurrency.currencyId;
-                    command.Parameters.Add("currency_group", SqlDbType.Int).Value = CurSimpleCurrency.groupId;
+                    command.Parameters.Add("currency", SqlDbType.Int).Value = CurSimpleCurrency.id;
                     command.Parameters.Add("xdate", SqlDbType.DateTime).Value = newCourse.xdate;
                     command.Parameters.Add("buy", SqlDbType.Decimal).Value = newCourse.buy;
                     command.Parameters.Add("sale", SqlDbType.Decimal).Value = newCourse.sale;
@@ -112,7 +110,7 @@ namespace com.sbh.gui.references.currency.ViewModel
         {
             get
             {
-                return SimpleCurrencies.OrderBy(x => x.groupName).Select(x => x.groupName).Distinct().ToList();
+                return SimpleCurrencies.OrderBy(x => x.xgroup).Select(x => x.xgroup).Distinct().ToList();
             }
         }
 
@@ -125,23 +123,17 @@ namespace com.sbh.gui.references.currency.ViewModel
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
-                    command.CommandText =   " SELECT cg.id AS groupId, " +
-                                            "		 cg.name AS groupName, " +
-                                            "		 c.id AS currencyId, " +
-                                            "		 c.nameshort AS currencyNameShort, " +
-                                            "		 c.namefull AS currencyNameFull, " +
-                                            "		 ce.buy, " +
-                                            "		 ce.sale " +
-                                            " FROM currency_exchange ce " +
-                                            " LEFT JOIN currency_group cg ON cg.id = ce.currency_group " +
-                                            " LEFT JOIN currency c ON c.id = ce.currency " +
-                                            " WHERE ce.xdate = (SELECT max(xdate) FROM currency_exchange WHERE currency = ce.currency AND currency_group = ce.currency_group) " +
-                                            " FOR XML RAW('SimpleCurrency'), ROOT('ArrayOfSimpleCurrency'), ELEMENTS ";
+                    command.CommandText =   " SELECT c.id, c.xgroup, c.nameshort, c.namefull,  ce.buy, ce.sale " +
+                                            " FROM dbo.currency_exchange ce " +
+                                            " INNER JOIN dbo.currency c ON c.id = ce.currency " +
+                                            " WHERE xdate = (SELECT max(xdate) FROM currency_exchange WHERE currency = ce.currency) " +
+                                            " ORDER BY c.nameshort " +
+                                            " FOR XML RAW('SimpleCurrency'), ROOT('ArrayOfSimpleCurrency'), ELEMENTS;";
 
                     XmlReader reader = command.ExecuteXmlReader();
                     while (reader.Read())
                     {
-                        SimpleCurrencies = dll.utilites.Support.XMLToObject<ObservableCollection<Model.SimpleCurrency>>(reader.ReadOuterXml());
+                        SimpleCurrencies = Support.XMLToObject<ObservableCollection<Model.SimpleCurrency>>(reader.ReadOuterXml());
                     }
                 }
             }

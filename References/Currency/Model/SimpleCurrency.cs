@@ -10,14 +10,12 @@ namespace com.sbh.gui.references.currency.Model
 {
     public class SimpleCurrency
     {
-        public int groupId { get; set; }
+        public string xgroup { get; set; }
+        public string Name { get { return xgroup; } }
 
-        public string groupName { get; set; }
-        public string Name { get { return groupName; } }
-
-        public int currencyId { get; set; }
-        public string currencyNameShort { get; set; }
-        public string currencyNameFull { get; set; }
+        public int id { get; set; }
+        public string nameshort { get; set; }
+        public string namefull { get; set; }
 
         public decimal buy { get; set; }
         public decimal sale { get; set; }

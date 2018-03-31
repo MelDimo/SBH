@@ -19,7 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
             <CollectionViewSource x:Key="lvSource" Source="{Binding SimpleCurrencies}" IsLiveGroupingRequested="True">
                 <CollectionViewSource.GroupDescriptions>
-                    <PropertyGroupDescription PropertyName="groupName"/>
+                    <PropertyGroupDescription PropertyName="xgroup"/>
                 </CollectionViewSource.GroupDescriptions>
             </CollectionViewSource>
         </ResourceDictionary>
@@ -47,13 +47,13 @@
         <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" DockPanel.Dock="Top" Width="24" HorizontalAlignment="Left" Margin="0,0,0,3"
                 IsTabStop="False"
                 Command="{Binding AddCounterpartyCommand}"
-                Content="{DynamicResource imgAdd}"/>
+                Content="{DynamicResource imgAdd}" IsEnabled="False"/>
         <ListView Grid.Row="1" Grid.Column="0" FontSize="15"
                   ItemsSource="{Binding Source={StaticResource lvSource}}" 
                   SelectedItem="{Binding CurSimpleCurrency}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="Auto" Header="Краткое наименование" DisplayMemberBinding="{Binding Path=currencyNameShort}"/>
+                    <GridViewColumn Width="Auto" Header="Краткое наименование" DisplayMemberBinding="{Binding Path=nameshort}"/>
                     <GridViewColumn Width="Auto" Header="   Покупка   " DisplayMemberBinding="{Binding Path=buy}"/>
                     <GridViewColumn Width="Auto" Header="   Продажа   " DisplayMemberBinding="{Binding Path=sale}"/>
                 </GridView>

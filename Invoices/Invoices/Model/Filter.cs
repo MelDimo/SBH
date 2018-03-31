@@ -43,6 +43,7 @@ namespace com.sbh.gui.invoices.Model
                     command.Connection = con;
                     command.CommandText = " SELECT id, name, 1 As isSelected " +
                                             " FROM ref_docType " +
+                                            " WHERE ref_status = 1 " +
                                             " FOR XML RAW('DocType'), ROOT('ArrayOfDocType'), ELEMENTS ";
 
                     XmlReader reader = command.ExecuteXmlReader();

@@ -44,14 +44,14 @@
                 </Button.Content>
             </Button>
         </DockPanel>
-        <ListView Grid.Row="1" SelectionMode="Single"
+        <ListView Grid.Row="1" SelectionMode="Single" FontSize="15"
                   ItemsSource="{Binding Positions}" SelectedItem="{Binding CurPosition}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Наименование">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center"
+                                <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center" MinWidth="250"
                                       ItemsSource="{Binding RefItems}"
                                       SelectedValue="{Binding itemId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                       SelectedValuePath="id"
@@ -75,7 +75,7 @@
                     <GridViewColumn Header="Ед.изм">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center"
+                                <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center" MinWidth="50"
                                       ItemsSource="{Binding RefDimensions}"
                                       SelectedValue="{Binding dimensionId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                       SelectedValuePath="id"
@@ -108,14 +108,15 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding xprice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"
-                                         Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"/>
+                                         Behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
+                                         Behaviours:HighlightTextOnFocusBehavior.HighlightTextOnFocus="True"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Валюта">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center"
+                                <ComboBox Margin="3,3,3,0" TextSearch.TextPath="textName" VerticalAlignment="Center" MinWidth="250"
                                       ItemsSource="{Binding RefCurrency}"
                                       SelectedValue="{Binding currencyId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                       SelectedValuePath="id"
@@ -126,7 +127,7 @@
                                             <TextBlock>
                                                 <TextBlock.Text>
                                                     <MultiBinding StringFormat="{}{0}">
-                                                        <Binding Path="name" />
+                                                        <Binding Path="textName" />
                                                     </MultiBinding>
                                                 </TextBlock.Text>
                                             </TextBlock>

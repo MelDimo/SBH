@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DelegateCommand.cs" />
+    <Compile Include="HighlightTextOnFocusBehavior.cs" />
     <Compile Include="SelectListViewItemOnFocusBehaviour.cs" />
     <Compile Include="OReferences\RefCounterParty.cs" />
     <Compile Include="OReferences\RefCurrency.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="SelectableItemWrapper.cs" />
     <Compile Include="Support.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VisualTreeHelpers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,7 +12,6 @@ namespace com.sbh.gui.invoices.Model
     public class Document : INotifyPropertyChanged
     {
         public decimal id { get; set; }
-        public decimal perentId { get; set; }
         public decimal docType { get; set; }
         public DateTime dateCreate { get; set; }
         public DateTime dateDoc { get; set; }

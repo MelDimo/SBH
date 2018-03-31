@@ -75,6 +75,7 @@ namespace com.sbh.gui.invoices.ViewModel
             ShowDocDetailsCommand = new DelegateCommand(ShowDocDetails);
 
             DeleteCommand = new DelegateCommand(DeleteOnClick, DeleteCommand_CanExecute);
+            ResponseCommand = new DelegateCommand(ResponseOnClick/*, ResponseCommand_CanExecute*/);
 
             foreach (RefDocType.DocType docType in DocTypes)
             {
@@ -122,6 +123,7 @@ namespace com.sbh.gui.invoices.ViewModel
                     DocumentType1ViewModel docType1Model = new DocumentType1ViewModel(new Model.DocumentType1()
                     {
                         id = CurDocTree.id,
+                        parentId = CurDocTree.perentId,
                         docType = CurDocTree.docType,
                         dateCreate = CurDocTree.dateCreate,
                         dateDoc = CurDocTree.dateDoc,
@@ -138,6 +140,7 @@ namespace com.sbh.gui.invoices.ViewModel
                     DocumentType2ViewModel docType2Model = new DocumentType2ViewModel(new Model.DocumentType2()
                     {
                         id = CurDocTree.id,
+                        parentId = CurDocTree.perentId,
                         docType = CurDocTree.docType,
                         dateCreate = CurDocTree.dateCreate,
                         dateDoc = CurDocTree.dateDoc,
@@ -154,6 +157,7 @@ namespace com.sbh.gui.invoices.ViewModel
                     DocumentType5ViewModel docType5Model = new DocumentType5ViewModel(new Model.DocumentType5()
                     {
                         id = CurDocTree.id,
+                        parentId = CurDocTree.perentId,
                         docType = CurDocTree.docType,
                         dateCreate = CurDocTree.dateCreate,
                         dateDoc = CurDocTree.dateDoc,
@@ -187,6 +191,7 @@ namespace com.sbh.gui.invoices.ViewModel
             {
                 case "DocumentType1View":
                     CurDocTree.dateCreate = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.dateCreate;
+                    CurDocTree.perentId = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.parentId;
                     CurDocTree.dateDoc = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.dateDoc;
                     CurDocTree.docType = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.docType;
                     CurDocTree.xfrom = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.counterpaty.id;
@@ -195,6 +200,7 @@ namespace com.sbh.gui.invoices.ViewModel
 
                 case "DocumentType2View":
                     CurDocTree.dateCreate = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.dateCreate;
+                    CurDocTree.perentId = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.parentId;
                     CurDocTree.dateDoc = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.dateDoc;
                     CurDocTree.docType = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.docType;
                     CurDocTree.xfrom = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.counterpaty.id;
@@ -203,6 +209,7 @@ namespace com.sbh.gui.invoices.ViewModel
 
                 case "DocumentType5View":
                     CurDocTree.dateCreate = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.dateCreate;
+                    CurDocTree.perentId = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.parentId;
                     CurDocTree.dateDoc = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.dateDoc;
                     CurDocTree.docType = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.docType;
                     CurDocTree.xfrom = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.counterpaty.id;
@@ -216,6 +223,8 @@ namespace com.sbh.gui.invoices.ViewModel
         public ICommand DeleteCommand { get; private set; }
         void DeleteOnClick(object obj)
         {
+            CurDocTree = obj as Model.DocumentTree;
+
             if (MessageBox.Show(string.Format("Вы уверены что хотите удалить документ?\n Тип документа '{0}'\n № {1}\n дата документа: {2}", CurDocTree.TypeName, CurDocTree.id, CurDocTree.dateDoc),
                 GValues.AppNameFull, MessageBoxButton.YesNo, MessageBoxImage.Question)
                 == MessageBoxResult.Yes)
@@ -238,26 +247,49 @@ namespace com.sbh.gui.invoices.ViewModel
                 CurDocTree = null;
                 OnPropertyChanged("CurDocTree");
             }
-                
+        }
+
+        public bool DeleteCommand_CanExecute(object obj)
+        {
+            return true;
         }
 
         public ICommand ResponseCommand { get; private set; }
         void ResponseOnClick(object obj)
         {
+            Model.DocumentTree parentDoc = obj as Model.DocumentTree;
 
+            Model.DocumentTree document = new Model.DocumentTree()
+            {
+                perentId = parentDoc.id,
+                dateCreate = DateTime.Now,
+                dateDoc = DateTime.Now,
+                docType = 1,
+                refStatus = 1,
+                xfrom = 1,
+                xto = 1
+            };
+
+            document.id = createDoc(document);
+
+            parentDoc.DocumentTreeChild.Add(document);
+            CurDocTree = document;
+
+            ShowDocDetails(null);
+        }
+
+        public bool ResponseCommand_CanExecute(object obj)
+        {
+            return true;
         }
 
         #endregion
-
-        public bool DeleteCommand_CanExecute(object obj)
-        {
-            return CurDocTree != null;
-        }
 
         void MenuItemOnClick(object obj)
         {
             Model.DocumentTree document = new Model.DocumentTree()
             {
+                perentId = 0,
                 dateCreate = DateTime.Now,
                 dateDoc = DateTime.Now,
                 docType = (int)obj,
@@ -266,14 +298,14 @@ namespace com.sbh.gui.invoices.ViewModel
                 xto = 1
             };
 
-            document.id = createNewDoc(document);
+            document.id = createDoc(document);
             DocsTree.Add(document);
             CurDocTree = document;
 
             ShowDocDetails(null);
         }
 
-        private decimal createNewDoc(Model.DocumentTree pDoc)
+        private decimal createDoc(Model.DocumentTree pDoc)
         {
             decimal result = 0;
 
@@ -283,10 +315,11 @@ namespace com.sbh.gui.invoices.ViewModel
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
-                    command.CommandText = " INSERT INTO document(ref_docType, dateCreate, dateDoc, ref_status, xfrom, xto) " +
-                                            " VALUES (@ref_docType, @dateCreate, @dateDoc, @ref_status, @xfrom, @xto);"+
+                    command.CommandText = " INSERT INTO document(parentId, ref_docType, dateCreate, dateDoc, ref_status, xfrom, xto) " +
+                                            " VALUES (@parentId, @ref_docType, @dateCreate, @dateDoc, @ref_status, @xfrom, @xto);" +
                                             " SELECT SCOPE_IDENTITY(); ";
 
+                    command.Parameters.Add("parentId", SqlDbType.Int).Value = pDoc.perentId;
                     command.Parameters.Add("ref_docType", SqlDbType.Int).Value = pDoc.docType;
                     command.Parameters.Add("dateCreate", SqlDbType.DateTime).Value = pDoc.dateCreate;
                     command.Parameters.Add("dateDoc", SqlDbType.DateTime).Value = pDoc.dateDoc;

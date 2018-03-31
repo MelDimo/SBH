@@ -41,14 +41,14 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Наименование полное:" VerticalAlignment="Center" FontSize="15"/>
             <TextBox x:Name="tbNameFull" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15" 
-                 Text="{Binding CurSimpleCurrency.currencyNameFull, Mode=OneWay}" />
+                 Text="{Binding CurSimpleCurrency.namefull, Mode=OneWay}" />
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Наименование краткое:" VerticalAlignment="Center" FontSize="15"/>
             <TextBox x:Name="tbNameShort" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15" 
-                 Text="{Binding CurSimpleCurrency.currencyNameShort, Mode=OneWay}" />
+                 Text="{Binding CurSimpleCurrency.nameshort, Mode=OneWay}" />
             <TextBlock Grid.Row="4" Grid.Column="0" Text="Группа:" VerticalAlignment="Center" FontSize="15" Margin="0,5,0,0"/>
             <ComboBox x:Name="tbGroupName" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15"
                   ItemsSource="{Binding GroupName}"
-                  SelectedItem="{Binding CurSimpleCurrency.groupName, Mode=OneWay}"
+                  SelectedItem="{Binding CurSimpleCurrency.xgroup, Mode=OneWay}"
                   IsSynchronizedWithCurrentItem="True"
                   TextSearch.TextPath="" IsEditable="True">
             </ComboBox>

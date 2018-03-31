@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="pack://application:,,,/ResDic;component/StylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <resdic:WidthConverter x:Key="WidthConverter"/>
+            <resdic:MultiValueConverter x:Key="MultiValueConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -48,7 +49,22 @@
             </Menu>
             <Menu ToolTip="Ответный документ" DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" 
                   VerticalAlignment="Center" FontSize="15" Margin="7,0,7,0">
-                <MenuItem Command="{Binding DeleteCommand}">
+                <MenuItem Command="{Binding ResponseCommand}" 
+                          CommandParameter="{Binding ElementName=treeview, Path=SelectedItem}">
+                    <MenuItem.Style>
+                        <Style TargetType="{x:Type MenuItem}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <!--<Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=treeview, Path=SelectedItem.docType}" Value="5"/>
+                                        <Condition Binding="{Binding ElementName=treeview, Path=SelectedItem.DocumentTreeChild.Count}" Value="0"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>-->
+                        </Style>
+                    </MenuItem.Style>
                     <MenuItem.Icon>
                         <ContentControl Height="32" Content="{StaticResource imgDocResponse}" />
                     </MenuItem.Icon>
@@ -57,7 +73,20 @@
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
             <Menu ToolTip="Удалить токумент" DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" 
                   VerticalAlignment="Center" FontSize="15" Margin="7,0,0,0">
-                <MenuItem Command="{Binding ResponseCommand}">
+                <MenuItem Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=treeview, Path=SelectedItem}">
+                    <MenuItem.Style>
+                        <Style TargetType="{x:Type MenuItem}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=treeview, Path=SelectedItem.DocumentTreeChild.Count}" Value="0"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </MenuItem.Style>
                     <MenuItem.Icon>
                         <ContentControl Height="32" Content="{StaticResource imgDocDel}" />
                     </MenuItem.Icon>

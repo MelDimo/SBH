@@ -103,9 +103,10 @@ namespace com.sbh.gui.references.item.ViewModel
                     recId = (decimal)command.ExecuteScalar();
                 }
             }
-
+            newItem.id = recId;
             Items.Add(newItem);
             dll.utilites.OReferences.RefItem.GetInstance.reload();
+            CurItem = newItem;
         }
 
 

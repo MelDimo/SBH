@@ -11,7 +11,10 @@ namespace com.sbh.dll
         public static string AppNameFull = "SmartBuissinesHelper";
         public static string AppNameShort = "SBH";
 
-        public static string connString = 
+        //public static string connString = 
+        //    @"Data Source=127.0.0.1\SQLMAIN;Initial Catalog=sbh;User ID=sa;Password=Q1234567";
+
+        public static string connString =
             @"Data Source=192.168.1.104\SQLMAIN_SBS;Initial Catalog=sbh;User ID=sa;Password=74563";
 
     }

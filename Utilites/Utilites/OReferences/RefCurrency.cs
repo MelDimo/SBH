@@ -74,7 +74,7 @@ namespace com.sbh.dll.utilites.OReferences
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
-                    command.CommandText = " SELECT id, nameshort AS name " +
+                    command.CommandText = " SELECT id, nameshort AS name, xgroup " +
                                           " FROM currency " +
                                           " WHERE ref_status = 1 " +
                                           " FOR XML RAW('CurrencyLite'), ROOT('ArrayOfCurrencyLite'), ELEMENTS ";
@@ -111,6 +111,9 @@ namespace com.sbh.dll.utilites.OReferences
         {
             public decimal id { get; set; }
             public string name { get; set; }
+            public string xgroup { get; set; }
+
+            public string textName { get { return string.Format("{0} [{1}]", name, xgroup); } }
         }
 
         #endregion
