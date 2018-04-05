@@ -141,13 +141,25 @@ namespace com.sbh.gui.invoices.ViewModel
         public ICommand BackOnClickCommand { get; private set; }
         void BackOnClick(object obj)
         {
-            //(ItemsView as View.DocumentItemsView).DocumentItemsView_UnsetPreviewKeyDown();
+            DocumentItemsViewModel documentItemsViewModel = (ItemsView.DataContext as DocumentItemsViewModel);
 
-            MSG oMsg = (ItemsView.DataContext as ViewModel.DocumentItemsViewModel).checkData();
+            MSG oMsg = documentItemsViewModel.checkData();
 
             if (!oMsg.IsSuccess)
-                MessageBox.Show(oMsg.Message, GValues.AppNameFull, MessageBoxButton.OKCancel, MessageBoxImage.Question);
-                //SurfaceControlViewModel.BackOnClickCommand.Execute(null);
+            {
+                if (MessageBox.Show(oMsg.Message, GValues.AppNameFull, MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
+                {
+                    oMsg = documentItemsViewModel.groupingData();
+                }
+            }
+
+            if (!oMsg.IsSuccess)
+            {
+                MessageBox.Show(oMsg.Message, GValues.AppNameFull, MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            SurfaceControlViewModel.BackOnClickCommand.Execute(null);
         }
 
         public ICommand PrintOnClickCommand { get; private set; }

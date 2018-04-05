@@ -125,29 +125,38 @@ namespace com.sbh.gui.invoices.ViewModel
                 IsSuccess = true
             };
 
-            //using (SqlConnection con = new SqlConnection(GValues.connString))
-            //{
-            //    con.Open();
-            //    using (SqlCommand command = new SqlCommand())
-            //    {
+            using (SqlConnection con = new SqlConnection(GValues.connString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    SqlTransaction transaction;
 
-            //        command.Connection = con;
-            //        command.CommandText = " INSERT INTO document_items(xdocument, item, ref_dimensions, xcount, currency, xprice, ref_status) " +
-            //                                " VALUES(@xdocument, @item, @ref_dimensions, @xcount, @currency, @xprice, @ref_status ); " +
-            //                                " SELECT SCOPE_IDENTITY();";
+                    try
+                    {
+                        con.Open();
 
-            //        command.Parameters.Add("xdocument", SqlDbType.Int).Value = mDocId;
-            //        command.Parameters.Add("item", SqlDbType.Int).Value = newPositions.itemId;
-            //        command.Parameters.Add("ref_dimensions", SqlDbType.Int).Value = newPositions.dimensionId;
-            //        command.Parameters.Add("xcount", SqlDbType.Decimal).Value = newPositions.xcount;
-            //        command.Parameters.Add("currency", SqlDbType.Decimal).Value = newPositions.currencyId;
-            //        command.Parameters.Add("xprice", SqlDbType.Decimal).Value = newPositions.xprice;
-            //        command.Parameters.Add("ref_status", SqlDbType.Int).Value = 1;
+                        transaction = con.BeginTransaction();
 
-            //        command.ExecuteNonQuery();
+                        command.Connection = con;
+                        command.Transaction = transaction;
 
-            //    }
-            //}
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.CommandText = "Position_CorrectDublicate";
+
+                        command.Parameters.Add("pDocId", SqlDbType.Int).Value = mDocId;
+
+                        command.ExecuteNonQuery();
+
+                        transaction.Commit();
+                    }
+                    catch (Exception exc)
+                    {
+                        result.IsSuccess = false;
+                        result.Message = exc.Message;
+                    }
+
+                }
+            }
 
             return result;
         }
