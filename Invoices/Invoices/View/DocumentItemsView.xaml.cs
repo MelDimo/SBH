@@ -1,5 +1,7 @@
-﻿using System;
+﻿using com.sbh.dll;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,25 @@ namespace com.sbh.gui.invoices.View
         public DocumentItemsView()
         {
             InitializeComponent();
+            IsVisibleChanged += DocumentItemsView_IsVisibleChanged;
+        }
+
+        private void DocumentItemsView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue)
+            {
+                GValues.MainWindow.PreviewKeyDown += DocumentItemsView_PreviewKeyDown;
+            }
+            else
+            {
+                GValues.MainWindow.PreviewKeyDown -= DocumentItemsView_PreviewKeyDown;
+            }
+        }
+
+        private void DocumentItemsView_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Insert)
+                (this.DataContext as ViewModel.DocumentItemsViewModel).AddItemOnClickCommand.Execute(null);
         }
     }
 }

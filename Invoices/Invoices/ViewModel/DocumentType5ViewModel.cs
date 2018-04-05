@@ -24,8 +24,8 @@ namespace com.sbh.gui.invoices.ViewModel
 
         private dll.resdictionary.View.DialogPrint dialogPrint;
 
-        private UserControl _itemsView;
-        public UserControl ItemsView
+        private View.DocumentItemsView _itemsView;
+        public View.DocumentItemsView ItemsView
         {
             get { return _itemsView; }
             private set { _itemsView = value; OnPropertyChanged("ItemsView"); }
@@ -141,7 +141,13 @@ namespace com.sbh.gui.invoices.ViewModel
         public ICommand BackOnClickCommand { get; private set; }
         void BackOnClick(object obj)
         {
-            SurfaceControlViewModel.BackOnClickCommand.Execute(null);
+            //(ItemsView as View.DocumentItemsView).DocumentItemsView_UnsetPreviewKeyDown();
+
+            MSG oMsg = (ItemsView.DataContext as ViewModel.DocumentItemsViewModel).checkData();
+
+            if (!oMsg.IsSuccess)
+                MessageBox.Show(oMsg.Message, GValues.AppNameFull, MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                //SurfaceControlViewModel.BackOnClickCommand.Execute(null);
         }
 
         public ICommand PrintOnClickCommand { get; private set; }

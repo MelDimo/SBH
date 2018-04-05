@@ -28,7 +28,7 @@ namespace com.sbh.gui.invoices.Model
             get { return _itemId; }
             set
             {
-                if (_xcount != value && isAvalForEdit)
+                if (_itemId != value && isAvalForEdit)
                     using (SqlConnection con = new SqlConnection(GValues.connString))
                     {
                         con.Open();
@@ -55,7 +55,7 @@ namespace com.sbh.gui.invoices.Model
             get { return _dimensionId; }
             set
             {
-                if (_xcount != value && isAvalForEdit)
+                if (_dimensionId != value && isAvalForEdit)
                     using (SqlConnection con = new SqlConnection(GValues.connString))
                     {
                         con.Open();
@@ -153,7 +153,7 @@ namespace com.sbh.gui.invoices.Model
                         }
                     }
                 _xprice = value;
-                //OnPropertyChanged("xsumm");
+                OnPropertyChanged("xsumm");
             }
         }
 

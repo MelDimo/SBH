@@ -1,5 +1,8 @@
-﻿using System;
+﻿using com.sbh.dll;
+using com.sbh.dll.utilites;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -22,11 +25,10 @@ namespace com.sbh.gui.mainwindow
     /// </summary>
     public partial class MainWindow : Window
     {
-        CancellationTokenSource cts;
-
         public MainWindow()
         {
             InitializeComponent();
+            GValues.MainWindow = this;
         }
     }
 }

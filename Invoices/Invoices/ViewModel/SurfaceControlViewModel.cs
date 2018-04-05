@@ -37,6 +37,28 @@ namespace com.sbh.gui.invoices.ViewModel
 
         public List<RefDocType.DocType> DocTypes { get; private set; }
 
+        public ObservableCollection<RefDocMap.DocMap> _docResponseType;
+        public ObservableCollection<RefDocMap.DocMap> DocResponseType
+        {
+            get
+            {
+                return new ObservableCollection<RefDocMap.DocMap>(_docResponseType.Where(x => x.refDocTypeSource == CurSelectedDocTree?.docType).ToList());
+            }
+
+            private set { _docResponseType = value; }
+        }
+
+        private Model.DocumentTree _curSelectedDocTree;
+        public Model.DocumentTree CurSelectedDocTree
+        {
+            get { return _curSelectedDocTree; }
+            set
+            {
+                _curSelectedDocTree = value;
+                OnPropertyChanged("DocResponseType");
+            }
+        }
+
         private Model.DocumentTree _curDocTree;
         public Model.DocumentTree CurDocTree
         {
@@ -69,13 +91,19 @@ namespace com.sbh.gui.invoices.ViewModel
 
             DocTypes = RefDocType.GetInstance.refDocType;
 
+            foreach (RefDocMap.DocMap docMap in RefDocMap.GetInstance.refDocMap)
+            {
+                docMap.OnClickCommand = new DelegateCommand(MenuItemResponseOnClick);
+            }
+            DocResponseType = new ObservableCollection<RefDocMap.DocMap>(RefDocMap.GetInstance.refDocMap);
+
             FilterActionCommand = new DelegateCommand(FilterAction);
             FilterApplyCommand = new DelegateCommand(FilterApply);
             BackOnClickCommand = new DelegateCommand(BackOnClick);
             ShowDocDetailsCommand = new DelegateCommand(ShowDocDetails);
 
             DeleteCommand = new DelegateCommand(DeleteOnClick, DeleteCommand_CanExecute);
-            ResponseCommand = new DelegateCommand(ResponseOnClick/*, ResponseCommand_CanExecute*/);
+            //ResponseCommand = new DelegateCommand(ResponseOnClick/*, ResponseCommand_CanExecute*/);
 
             foreach (RefDocType.DocType docType in DocTypes)
             {
@@ -254,17 +282,14 @@ namespace com.sbh.gui.invoices.ViewModel
             return true;
         }
 
-        public ICommand ResponseCommand { get; private set; }
-        void ResponseOnClick(object obj)
+        void MenuItemResponseOnClick(object obj)
         {
-            Model.DocumentTree parentDoc = obj as Model.DocumentTree;
-
             Model.DocumentTree document = new Model.DocumentTree()
             {
-                perentId = parentDoc.id,
+                perentId = CurSelectedDocTree.id,
                 dateCreate = DateTime.Now,
                 dateDoc = DateTime.Now,
-                docType = 1,
+                docType = (decimal)obj,
                 refStatus = 1,
                 xfrom = 1,
                 xto = 1
@@ -272,15 +297,10 @@ namespace com.sbh.gui.invoices.ViewModel
 
             document.id = createDoc(document);
 
-            parentDoc.DocumentTreeChild.Add(document);
+            CurSelectedDocTree.DocumentTreeChild.Add(document);
             CurDocTree = document;
 
             ShowDocDetails(null);
-        }
-
-        public bool ResponseCommand_CanExecute(object obj)
-        {
-            return true;
         }
 
         #endregion

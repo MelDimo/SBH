@@ -7,10 +7,14 @@
              xmlns:viewModel="clr-namespace:com.sbh.gui.invoices.ViewModel"
              xmlns:behaviours="clr-namespace:com.sbh.dll.utilites;assembly=Utilites"
              mc:Ignorable="d" 
+             Focusable="True"
              d:DesignHeight="300" d:DesignWidth="300">
     <!--<UserControl.DataContext>
         <viewModel:DocumentType1ViewModel/>
     </UserControl.DataContext>-->
+    <!--<UserControl.InputBindings>
+        <KeyBinding Key="Insert" Command="{Binding AddItemOnClickCommand}" />
+    </UserControl.InputBindings>-->
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

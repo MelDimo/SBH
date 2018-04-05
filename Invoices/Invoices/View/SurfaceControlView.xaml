@@ -11,7 +11,22 @@
     <UserControl.DataContext>
         <viewModel:SurfaceControlViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResDic;component/StylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-        <ContentControl Content="{Binding CurUserControl}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="{StaticResource FilterBackGrount}">
+            <TextBlock  Text="Журнал документов" Margin="0,7,0,7"
+                   FontSize="20" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Border>
+        <ContentControl Grid.Row="1" Content="{Binding CurUserControl}"/>
     </Grid>
 </UserControl>

@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Xml;
 
@@ -82,6 +83,76 @@ namespace com.sbh.gui.invoices.ViewModel
             // Перевожу полученные объекты в режим редактирования
             foreach (Model.Position mpos in Positions) mpos.isAvalForEdit = true;
         }
+
+        #region Checking Data
+
+        /*
+         * Проверяю позиции например на дублирование 
+         */
+        public MSG checkData()
+        {
+            StringBuilder sbPosition = new StringBuilder();
+
+            MSG result = new MSG
+            {
+                IsSuccess = true,
+            };
+
+            foreach (Model.Position pos in Positions)
+            {
+                if (Positions.Where(x => x.itemId == pos.itemId
+                                     && x.currencyId == pos.currencyId
+                                     && x.dimensionId == pos.dimensionId
+                                     && x.xprice == pos.xprice).Count() > 1)
+                {
+                    result.IsSuccess = false;
+                    sbPosition.Append(string.Format("{0} | {1} | {2} | {3};\n", pos.itemName, pos.currencyName, pos.dimensionName, pos.xprice));
+                }
+            }
+
+            if (!result.IsSuccess)
+            {
+                result.Message = string.Format("{0}\n\n{1}\n{2}", "Найдены следующие дублированные позиции:", sbPosition.ToString(), "Позиции будут объеденены.");
+            }
+
+            return result;
+        }
+
+        public MSG groupingData()
+        {
+            MSG result = new MSG
+            {
+                IsSuccess = true
+            };
+
+            //using (SqlConnection con = new SqlConnection(GValues.connString))
+            //{
+            //    con.Open();
+            //    using (SqlCommand command = new SqlCommand())
+            //    {
+
+            //        command.Connection = con;
+            //        command.CommandText = " INSERT INTO document_items(xdocument, item, ref_dimensions, xcount, currency, xprice, ref_status) " +
+            //                                " VALUES(@xdocument, @item, @ref_dimensions, @xcount, @currency, @xprice, @ref_status ); " +
+            //                                " SELECT SCOPE_IDENTITY();";
+
+            //        command.Parameters.Add("xdocument", SqlDbType.Int).Value = mDocId;
+            //        command.Parameters.Add("item", SqlDbType.Int).Value = newPositions.itemId;
+            //        command.Parameters.Add("ref_dimensions", SqlDbType.Int).Value = newPositions.dimensionId;
+            //        command.Parameters.Add("xcount", SqlDbType.Decimal).Value = newPositions.xcount;
+            //        command.Parameters.Add("currency", SqlDbType.Decimal).Value = newPositions.currencyId;
+            //        command.Parameters.Add("xprice", SqlDbType.Decimal).Value = newPositions.xprice;
+            //        command.Parameters.Add("ref_status", SqlDbType.Int).Value = 1;
+
+            //        command.ExecuteNonQuery();
+
+            //    }
+            //}
+
+            return result;
+        }
+        #endregion
+
 
         #region Command
 

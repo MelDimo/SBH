@@ -49,12 +49,29 @@
             </Menu>
             <Menu ToolTip="Ответный документ" DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" 
                   VerticalAlignment="Center" FontSize="15" Margin="7,0,7,0">
-                <MenuItem Command="{Binding ResponseCommand}" 
+                <MenuItem ItemsSource="{Binding DocResponseType}">
+                    <MenuItem.Icon>
+                        <ContentControl Height="32" Content="{StaticResource imgDocResponse}" />
+                    </MenuItem.Icon>
+                    <MenuItem.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding refDocTypeReceiverName}"/>
+                        </DataTemplate>
+                    </MenuItem.ItemTemplate>
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="MenuItem">
+                            <Setter Property="Command" Value="{Binding OnClickCommand}"/>
+                            <Setter Property="CommandParameter" Value="{Binding refDocTypeReceiver}"/>
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
+                </MenuItem>
+                
+                <!--<MenuItem Command="{Binding ResponseCommand}" 
                           CommandParameter="{Binding ElementName=treeview, Path=SelectedItem}">
                     <MenuItem.Style>
                         <Style TargetType="{x:Type MenuItem}">
                             <Setter Property="IsEnabled" Value="False"/>
-                            <!--<Style.Triggers>
+                            --><!--<Style.Triggers>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding ElementName=treeview, Path=SelectedItem.docType}" Value="5"/>
@@ -62,13 +79,13 @@
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="IsEnabled" Value="True"/>
                                 </MultiDataTrigger>
-                            </Style.Triggers>-->
+                            </Style.Triggers>--><!--
                         </Style>
                     </MenuItem.Style>
                     <MenuItem.Icon>
                         <ContentControl Height="32" Content="{StaticResource imgDocResponse}" />
                     </MenuItem.Icon>
-                </MenuItem>
+                </MenuItem>-->
             </Menu>
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
             <Menu ToolTip="Удалить токумент" DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" 
@@ -195,6 +212,7 @@
                 </ListView.Style>
             </ListView>-->
             <TreeView x:Name="treeview" Grid.Row="1" ItemsSource="{Binding DocsTree}" FontSize="15"
+                      SelectedItemChanged="treeview_SelectedItemChanged"
                       TreeViewItem.PreviewMouseDoubleClick="treeview_PreviewMouseDoubleClick" >
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Path= DocumentTreeChild}">

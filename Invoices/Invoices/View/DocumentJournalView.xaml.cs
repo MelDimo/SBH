@@ -36,5 +36,12 @@ namespace com.sbh.gui.invoices.View
                 viewModel.SelectObject((Model.DocumentTree)((TreeView)sender).SelectedItem);
             }
         }
+
+        private void treeview_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            Model.DocumentTree doc = ((TreeView)sender).SelectedItem as Model.DocumentTree;
+
+            if (doc != null) (DataContext as ViewModel.SurfaceControlViewModel).CurSelectedDocTree = doc;
+        }
     }
 }

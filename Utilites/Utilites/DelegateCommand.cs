@@ -20,9 +20,8 @@ namespace com.sbh.dll.utilites
 
         public bool CanExecute(object parameter)
         {
-            if (canExecute != null)
-                return canExecute(parameter);
-            return true;
+            if (canExecute != null) return canExecute(parameter);
+            else return true;
         }
 
         public void Execute(object parameter)

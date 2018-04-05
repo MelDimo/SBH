@@ -53,6 +53,8 @@
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="FocusBehavior.cs" />
     <Compile Include="HighlightTextOnFocusBehavior.cs" />
+    <Compile Include="MSG.cs" />
+    <Compile Include="OReferences\RefDocMap.cs" />
     <Compile Include="SelectListViewItemOnFocusBehaviour.cs" />
     <Compile Include="OReferences\RefCounterParty.cs" />
     <Compile Include="OReferences\RefCurrency.cs" />

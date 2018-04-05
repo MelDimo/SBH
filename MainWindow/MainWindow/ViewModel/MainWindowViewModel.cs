@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,12 @@ namespace com.sbh.gui.mainwindow.ViewModel
         public UserControl ItemsView
         {
             get { return _itemsView; }
-            set { _itemsView = value; OnPropertyChanged("ItemsView"); }
+            set
+            {
+
+                _itemsView = value;
+                OnPropertyChanged("ItemsView");
+            }
         }
 
         UserControl UCReferences;
@@ -30,6 +36,8 @@ namespace com.sbh.gui.mainwindow.ViewModel
 
             UCReferences = new references.View.SurfaceControlView();
             UCInvoices = new invoices.View.SurfaceControlView();
+
+
         }
 
         #region Command
@@ -58,5 +66,7 @@ namespace com.sbh.gui.mainwindow.ViewModel
         }
 
         #endregion
+
+        
     }
 }
