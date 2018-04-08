@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:com.sbh.gui.invoices.View"
+             xmlns:controls="clr-namespace:com.sbh.dll.resdictionary.Controls;assembly=ResDic"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -80,6 +81,9 @@
                         <ContentControl Content="{StaticResource imgPrinter}"/>
                     </Button.Content>
                 </Button>
+                <controls:TextBoxNumeric Grid.Row="4" Grid.Column="0" 
+                                         VerticalAlignment="Center"
+                                         MaxValue="20" MinValue="0"/>
             </Grid>
             <Border BorderThickness="0,1,0,1" BorderBrush="{StaticResource FilterBackGrount}"/>
             <ContentControl Content="{Binding ItemsView}" MaxWidth="1440"/>

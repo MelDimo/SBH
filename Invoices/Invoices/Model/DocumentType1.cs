@@ -18,6 +18,8 @@ namespace com.sbh.gui.invoices.Model
         public DateTime dateDoc { get; set; }
         public decimal refStatus { get; set; }
 
+        public bool IsContainsChild { get; set; }
+
         public RefCounterParty.Counterparty counterpaty;
         public RefRecipient.Recipient recipient;
 
@@ -27,21 +29,22 @@ namespace com.sbh.gui.invoices.Model
             recipient = new RefRecipient.Recipient();
             dateCreate = DateTime.Now;
             dateDoc = DateTime.Now;
+            IsContainsChild = false;
         }
 
-        private Position _curItem;
-        private Position CurItem
-        {
-            get { return _curItem; }
-            set { _curItem = value; OnPropertyChanged("CurItem"); }
-        }
+        //private Position _curItem;
+        //private Position CurItem
+        //{
+        //    get { return _curItem; }
+        //    set { _curItem = value; OnPropertyChanged("CurItem"); }
+        //}
 
-        private ObservableCollection<Position> _items;
-        public ObservableCollection<Position> Items
-        {
-            get { return _items; }
-            set { _items = value; OnPropertyChanged("Items"); }
-        }
+        //private ObservableCollection<Position> _items;
+        //public ObservableCollection<Position> Items
+        //{
+        //    get { return _items; }
+        //    set { _items = value; OnPropertyChanged("Items"); }
+        //}
 
         #region INotifyPropertyChanged Members
 

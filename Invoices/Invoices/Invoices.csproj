@@ -108,9 +108,7 @@
     </Compile>
     <Compile Include="StartUp.cs" />
     <Compile Include="ViewModel\DocumentItemsViewModel.cs" />
-    <Compile Include="ViewModel\DocumentType1ViewModel.cs" />
-    <Compile Include="ViewModel\DocumentType2ViewModel.cs" />
-    <Compile Include="ViewModel\DocumentType5ViewModel.cs" />
+    <Compile Include="ViewModel\DocumentViewModel.cs" />
     <Compile Include="ViewModel\SurfaceControlViewModel.cs" />
     <Compile Include="View\DocumentItemsView.xaml.cs">
       <DependentUpon>DocumentItemsView.xaml</DependentUpon>
@@ -118,14 +116,8 @@
     <Compile Include="View\DocumentJournalView.xaml.cs">
       <DependentUpon>DocumentJournalView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\DocumentType1View.xaml.cs">
-      <DependentUpon>DocumentType1View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DocumentType2View.xaml.cs">
-      <DependentUpon>DocumentType2View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DocumentType5View.xaml.cs">
-      <DependentUpon>DocumentType5View.xaml</DependentUpon>
+    <Compile Include="View\DocumentView.xaml.cs">
+      <DependentUpon>DocumentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SurfaceControlView.xaml.cs">
       <DependentUpon>SurfaceControlView.xaml</DependentUpon>
@@ -146,15 +138,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\DocumentType1View.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\DocumentType2View.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\DocumentType5View.xaml">
+    <Page Include="View\DocumentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

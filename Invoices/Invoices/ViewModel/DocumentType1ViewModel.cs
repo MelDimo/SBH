@@ -44,7 +44,11 @@ namespace com.sbh.gui.invoices.ViewModel
             Doc = pDocument;
 
             ItemsView = new View.DocumentItemsView();
-            ItemsView.DataContext = new DocumentItemsViewModel(Doc.id);
+            ItemsView.DataContext = new DocumentItemsViewModel(Doc.id)
+            {
+                IsAvailForAdding = Doc.parentId == 0,
+                IsDocContainChild = Doc.IsContainsChild
+            };
 
             counterpartyExternalView = new references.counterparty.View.CounterpartyExternalView();
             unitExternalView = new references.orgmodel.View.UnitExternalView();
@@ -137,7 +141,31 @@ namespace com.sbh.gui.invoices.ViewModel
         public ICommand BackOnClickCommand { get; private set; }
         void BackOnClick(object obj)
         {
-            SurfaceControlViewModel.BackOnClickCommand.Execute(null);
+            DocumentItemsViewModel documentItemsViewModel = (ItemsView.DataContext as DocumentItemsViewModel);
+
+            MSG oMsg = documentItemsViewModel.checkData();
+
+            if (!oMsg.IsSuccess)
+            {
+                if (MessageBox.Show(oMsg.Message, GValues.AppNameFull, MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
+                {
+                    oMsg = documentItemsViewModel.groupingData();
+                }
+            }
+
+            if (!oMsg.IsSuccess)
+            {
+                MessageBox.Show(oMsg.Message, GValues.AppNameFull, MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            oMsg = new MSG
+            {
+                Obj = documentItemsViewModel.Positions.Sum(x => x.xcount)
+            };
+            
+
+            SurfaceControlViewModel.BackOnClickCommand.Execute(oMsg);
         }
 
         #endregion

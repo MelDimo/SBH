@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:com.sbh.gui.invoices.View"
              xmlns:viewModel="clr-namespace:com.sbh.gui.invoices.ViewModel"
              xmlns:behaviours="clr-namespace:com.sbh.dll.utilites;assembly=Utilites"
+             xmlns:controls="clr-namespace:com.sbh.dll.resdictionary.Controls;assembly=ResDic"
              mc:Ignorable="d" 
              Focusable="True"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -49,7 +50,7 @@
             </Button>
         </DockPanel>
         <ListView Grid.Row="1" SelectionMode="Single" FontSize="15"
-                  ItemsSource="{Binding Positions}" SelectedItem="{Binding CurPosition}">
+                  ItemsSource="{Binding Doc.DocumentPositions}" SelectedItem="{Binding CurPosition}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Наименование">
@@ -103,9 +104,13 @@
                     <GridViewColumn Header="Кол-во">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding xcount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"
+                                <controls:TextBoxNumeric Text="{Binding xcount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"
+                                                         MaxValue="{Binding maxValue}" MinValue="1"
+                                                         behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
+                                                         behaviours:HighlightTextOnFocusBehavior.HighlightTextOnFocus="True"/>
+                                <!--<TextBox Text="{Binding xcount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"
                                          behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
-                                         behaviours:HighlightTextOnFocusBehavior.HighlightTextOnFocus="True"/>
+                                         behaviours:HighlightTextOnFocusBehavior.HighlightTextOnFocus="True"/>-->
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

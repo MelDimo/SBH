@@ -17,9 +17,17 @@ namespace com.sbh.gui.invoices.ViewModel
 {
     class DocumentItemsViewModel : INotifyPropertyChanged
     {
-        private decimal mDocId;
+        public Model.Document Doc { get; set; }
 
-        private BackgroundWorker bgwItems;
+        //private BackgroundWorker bgwItems;
+        //private BackgroundWorker bgwItemsAvailable;
+
+        //private ObservableCollection<Model.Position> _positionsAvailable;
+        //public ObservableCollection<Model.Position> PositionsAvailable
+        //{
+        //    get { return _positions; }
+        //    set { _positions = value; OnPropertyChanged("Positions"); }
+        //}
 
         private ObservableCollection<Model.Position> _positions;
         public ObservableCollection<Model.Position> Positions
@@ -35,54 +43,21 @@ namespace com.sbh.gui.invoices.ViewModel
             set { _curPosition = value; OnPropertyChanged("CurPosition"); }
         }
 
-        public DocumentItemsViewModel(decimal pDocId)
+        public bool IsAvailForAdding { get; set; }
+        public bool IsDocContainChild { get; set; }
+
+        public DocumentItemsViewModel()
         {
-            mDocId = pDocId;
-
-            bgwItems = new BackgroundWorker();
-            bgwItems.DoWork += BgwItems_DoWork;
-            bgwItems.RunWorkerCompleted += BgwItems_RunWorkerCompleted;
-
-            bgwItems.RunWorkerAsync();
-
-            AddItemOnClickCommand = new DelegateCommand(AddItemOnClick);
+            //Positions = Doc.DocumentPositions;
+            AddItemOnClickCommand = new DelegateCommand(AddItemOnClick, AddItemOnClick_CanExecute);
             DeleteItemOnClickCommand = new DelegateCommand(DeleteItemOnClick, DeleteCommand_CanExecute);
         }
 
-        private void BgwItems_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void getAvailablePositionCount()
         {
 
         }
 
-        private void BgwItems_DoWork(object sender, DoWorkEventArgs e)
-        {
-            using (SqlConnection con = new SqlConnection(GValues.connString))
-            {
-                con.Open();
-                using (SqlCommand command = new SqlCommand())
-                {
-                    Positions = new ObservableCollection<Model.Position>();
-
-                    command.Connection = con;
-                    command.CommandText = " SELECT di.id, di.item As itemId, di.ref_dimensions AS dimensionId, " +
-                                            "    di.xcount, di.currency AS currencyId, di.xprice " +
-                                            " FROM document_items di " +
-                                            " WHERE di.ref_status = 1 AND di.xdocument = @document " +
-                                            " FOR XML RAW('Position'), ROOT('ArrayOfPosition'), ELEMENTS ";
-
-                    command.Parameters.Add("document", SqlDbType.Int).Value = mDocId;
-
-                    XmlReader reader = command.ExecuteXmlReader();
-                    while (reader.Read())
-                    {
-                        Positions = Support.XMLToObject<ObservableCollection<Model.Position>>(reader.ReadOuterXml());
-                    }
-                }
-            }
-
-            // Перевожу полученные объекты в режим редактирования
-            foreach (Model.Position mpos in Positions) mpos.isAvalForEdit = true;
-        }
 
         #region Checking Data
 
@@ -143,7 +118,7 @@ namespace com.sbh.gui.invoices.ViewModel
                         command.CommandType = CommandType.StoredProcedure;
                         command.CommandText = "Position_CorrectDublicate";
 
-                        command.Parameters.Add("pDocId", SqlDbType.Int).Value = mDocId;
+                        command.Parameters.Add("pDocId", SqlDbType.Int).Value = Doc.Id;
 
                         command.ExecuteNonQuery();
 
@@ -160,8 +135,8 @@ namespace com.sbh.gui.invoices.ViewModel
 
             return result;
         }
-        #endregion
 
+        #endregion
 
         #region Command
 
@@ -186,7 +161,7 @@ namespace com.sbh.gui.invoices.ViewModel
                                             " VALUES(@xdocument, @item, @ref_dimensions, @xcount, @currency, @xprice, @ref_status ); " +
                                             " SELECT SCOPE_IDENTITY();";
 
-                    command.Parameters.Add("xdocument", SqlDbType.Int).Value = mDocId;
+                    command.Parameters.Add("xdocument", SqlDbType.Int).Value = Doc.Id;
                     command.Parameters.Add("item", SqlDbType.Int).Value = newPositions.itemId;
                     command.Parameters.Add("ref_dimensions", SqlDbType.Int).Value = newPositions.dimensionId;
                     command.Parameters.Add("xcount", SqlDbType.Decimal).Value = newPositions.xcount;
@@ -201,10 +176,9 @@ namespace com.sbh.gui.invoices.ViewModel
             Positions.Add(newPositions);
             newPositions = null;
         }
-
-        public bool DeleteCommand_CanExecute(object obj)
+        public bool AddItemOnClick_CanExecute(object obj)
         {
-            return CurPosition != null;
+            return IsAvailForAdding;
         }
 
         public ICommand DeleteItemOnClickCommand { get; private set; }
@@ -225,6 +199,10 @@ namespace com.sbh.gui.invoices.ViewModel
             }
             Positions.Remove(CurPosition);
             CurPosition = null;
+        }
+        public bool DeleteCommand_CanExecute(object obj)
+        {
+            return CurPosition != null && !IsDocContainChild;
         }
 
         #endregion

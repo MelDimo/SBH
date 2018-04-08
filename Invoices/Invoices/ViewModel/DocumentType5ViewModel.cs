@@ -45,8 +45,12 @@ namespace com.sbh.gui.invoices.ViewModel
         {
             Doc = pDocument;
 
-            ItemsView = new View.DocumentItemsView();
-            ItemsView.DataContext = new DocumentItemsViewModel(Doc.id);
+            //ItemsView = new View.DocumentItemsView();
+            //ItemsView.DataContext = new DocumentItemsViewModel(Doc.id)
+            //{
+            //    IsAvailForAdding = Doc.parentId == 0,
+            //    IsDocContainChild = Doc.IsContainsChild
+            //};
 
             counterpartyExternalView = new references.counterparty.View.CounterpartyExternalView();
             unitExternalView = new references.orgmodel.View.UnitExternalView();
@@ -159,7 +163,12 @@ namespace com.sbh.gui.invoices.ViewModel
                 return;
             }
 
-            SurfaceControlViewModel.BackOnClickCommand.Execute(null);
+            oMsg = new MSG
+            {
+                Obj = documentItemsViewModel.Positions.Sum(x => x.xcount)
+            };
+
+            SurfaceControlViewModel.BackOnClickCommand.Execute(oMsg);
         }
 
         public ICommand PrintOnClickCommand { get; private set; }

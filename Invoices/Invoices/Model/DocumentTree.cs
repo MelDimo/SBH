@@ -13,13 +13,24 @@ namespace com.sbh.gui.invoices.Model
     public class DocumentTree : INotifyPropertyChanged
     {
         public decimal id { get; set; }
-        public decimal perentId { get; set; }
+        public decimal parentId { get; set; }
         public decimal docType { get; set; }
         public DateTime dateCreate { get; set; }
         public DateTime dateDoc { get; set; }
         public decimal refStatus { get; set; }
         public decimal xfrom { get; set; }
         public decimal xto { get; set; }
+        public decimal countItems { get; set; }
+
+        [XmlIgnore]
+        public string relationCountItem
+        {
+            get
+            {
+                return string.Format("Распределено {0} из {1}", DocumentTreeChild.Sum(x => x.countItems), countItems);
+            }
+        }
+
 
         [XmlElement("ArrayOfDocumentTree", typeof(ObservableCollection<DocumentTree>))]
         public ObservableCollection<DocumentTree> DocumentTreeChild { get; set; }
@@ -87,6 +98,7 @@ namespace com.sbh.gui.invoices.Model
         {
             DocumentTreeChild = new ObservableCollection<DocumentTree>();
         }
+
 
         #region INotifyPropertyChanged Members
 

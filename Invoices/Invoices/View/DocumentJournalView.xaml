@@ -65,27 +65,6 @@
                         </Style>
                     </MenuItem.ItemContainerStyle>
                 </MenuItem>
-                
-                <!--<MenuItem Command="{Binding ResponseCommand}" 
-                          CommandParameter="{Binding ElementName=treeview, Path=SelectedItem}">
-                    <MenuItem.Style>
-                        <Style TargetType="{x:Type MenuItem}">
-                            <Setter Property="IsEnabled" Value="False"/>
-                            --><!--<Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding ElementName=treeview, Path=SelectedItem.docType}" Value="5"/>
-                                        <Condition Binding="{Binding ElementName=treeview, Path=SelectedItem.DocumentTreeChild.Count}" Value="0"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="IsEnabled" Value="True"/>
-                                </MultiDataTrigger>
-                            </Style.Triggers>--><!--
-                        </Style>
-                    </MenuItem.Style>
-                    <MenuItem.Icon>
-                        <ContentControl Height="32" Content="{StaticResource imgDocResponse}" />
-                    </MenuItem.Icon>
-                </MenuItem>-->
             </Menu>
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
             <Menu ToolTip="Удалить токумент" DockPanel.Dock="Left" Height="32" Width="32" Background="Transparent" 
@@ -184,41 +163,15 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <!--<ListView ItemsSource="{Binding Docs}" SelectedItem="{Binding CurDoc}" FontSize="15">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Номер док-та" DisplayMemberBinding="{Binding id}"/>
-                        <GridViewColumn Header="Тип док-та" DisplayMemberBinding="{Binding TypeName}"/>
-                        <GridViewColumn Header="Дата создания док-та" DisplayMemberBinding="{Binding dateCreate, StringFormat='dd.MM.yyy HH:mm'}"/>
-                        <GridViewColumn Header="Дата проводки док-та" DisplayMemberBinding="{Binding dateDoc, StringFormat='dd.MM.yyy HH:mm'}"/>
-                        <GridViewColumn Header="Откуда" DisplayMemberBinding="{Binding XFromName}"/>
-                        <GridViewColumn Header="Куда" DisplayMemberBinding="{Binding XToName}"/>
-                    </GridView>
-                </ListView.View>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.Style>
-                    <Style TargetType="{x:Type ListView}">
-                        <Setter Property="Visibility" Value="Visible"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Docs.Count}" Value="0">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ListView.Style>
-            </ListView>-->
-            <TreeView x:Name="treeview" Grid.Row="1" ItemsSource="{Binding DocsTree}" FontSize="15"
+            <TreeView x:Name="treeview" Grid.Row="1" ItemsSource="{Binding Docs}" FontSize="15"
                       SelectedItemChanged="treeview_SelectedItemChanged"
                       TreeViewItem.PreviewMouseDoubleClick="treeview_PreviewMouseDoubleClick" >
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Path= DocumentTreeChild}">
+                    <HierarchicalDataTemplate ItemsSource="{Binding Path= DocumentChilds}">
                         <Border BorderThickness="1" BorderBrush="Black"  Margin="3">
                             <Grid Width="{Binding Path=ActualWidth, ElementName=treeview, Converter={StaticResource WidthConverter} }">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
@@ -231,13 +184,13 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" 
                                            VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
-                                           Text="{Binding id}" />
+                                           Text="{Binding Id}" />
                                 <TextBlock Grid.Row="0" Grid.Column="1" 
                                            VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
-                                           Text="{Binding TypeName}"/>
+                                           Text="{Binding DocTypeName}"/>
                                 <TextBlock Grid.Row="0" Grid.Column="2" 
                                            VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
-                                           Text="{Binding Path=dateDoc, StringFormat= 'Дата проводки док-та: {0}', ConverterCulture=ru-RU}"/>
+                                           Text="{Binding Path=DateDoc, StringFormat= 'Дата проводки док-та: {0}', ConverterCulture=ru-RU}"/>
                                 <TextBlock Grid.Row="1" Grid.Column="1" 
                                            VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
                                            Text="Откуда: "/>
@@ -250,6 +203,9 @@
                                 <TextBlock Grid.Row="2" Grid.Column="2" 
                                            VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
                                            Text="{Binding XToName}"/>
+                                <!--<TextBlock Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3"
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
+                                           Text="{Binding Path=relationCountItem}"/>-->
                             </Grid>
                         </Border>
                     </HierarchicalDataTemplate>

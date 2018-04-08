@@ -20,7 +20,12 @@ namespace com.sbh.gui.invoices.ViewModel
 {
     public class SurfaceControlViewModel : INotifyPropertyChanged
     {
+        public delegate Model.Document DgtGetCurrentDocument();
+        private DgtGetCurrentDocument GetCurrentDocument;
+
         private UserControl mDocumentJournalView;
+
+        private View.DocumentView documentView;
 
         private UserControl _curUserControl;
         public UserControl CurUserControl
@@ -42,33 +47,33 @@ namespace com.sbh.gui.invoices.ViewModel
         {
             get
             {
-                return new ObservableCollection<RefDocMap.DocMap>(_docResponseType.Where(x => x.refDocTypeSource == CurSelectedDocTree?.docType).ToList());
+                return new ObservableCollection<RefDocMap.DocMap>(_docResponseType.Where(x => x.refDocTypeSource == CurSelectedDoc?.DocType).ToList());
             }
 
             private set { _docResponseType = value; }
         }
 
-        private Model.DocumentTree _curSelectedDocTree;
-        public Model.DocumentTree CurSelectedDocTree
+        private Model.Document _curSelectedDoc;
+        public Model.Document CurSelectedDoc
         {
-            get { return _curSelectedDocTree; }
+            get { return _curSelectedDoc; }
             set
             {
-                _curSelectedDocTree = value;
+                _curSelectedDoc = value;
                 OnPropertyChanged("DocResponseType");
             }
         }
 
-        private ObservableCollection<Model.DocumentTree> _docsTree;
-        public ObservableCollection<Model.DocumentTree> DocsTree
+        private ObservableCollection<Model.Document> _docs;
+        public ObservableCollection<Model.Document> Docs
         {
-            get { return _docsTree; }
-            set { _docsTree = value; OnPropertyChanged("DocsTree"); }
+            get { return _docs; }
+            set { _docs = value; OnPropertyChanged("Docs"); }
         }
 
         public void SelectObject(object pSelectedItem)
         {
-            CurSelectedDocTree = (pSelectedItem as Model.DocumentTree);
+            CurSelectedDoc = (pSelectedItem as Model.Document);
             ShowDocDetails(null);
         }
 
@@ -76,6 +81,8 @@ namespace com.sbh.gui.invoices.ViewModel
 
         public SurfaceControlViewModel()
         {
+            GetCurrentDocument = getCurrentDocument;
+
             Filter = new Model.Filter();
 
             DocTypes = RefDocType.GetInstance.refDocType;
@@ -105,11 +112,16 @@ namespace com.sbh.gui.invoices.ViewModel
 
             CurUserControl = mDocumentJournalView;
 
-            CollectDocsByFilterTree();
+            CollectDocsByFilter();
 
-            // Дергаю документ для последующего быстрого вызова
+            // Дергаю Crystal для последующего быстрого вызова
             bgwTouchReportDocument.DoWork += Bgw_DoWork;
             bgwTouchReportDocument.RunWorkerAsync();
+        }
+
+        private Model.Document getCurrentDocument()
+        {
+            return CurSelectedDoc;
         }
 
         private void Bgw_DoWork(object sender, DoWorkEventArgs e)
@@ -134,59 +146,9 @@ namespace com.sbh.gui.invoices.ViewModel
         public ICommand ShowDocDetailsCommand { get; private set; }
         void ShowDocDetails(object obj)
         {
-            switch (CurSelectedDocTree.docType)
-            {
-                case 1:
-                    DocumentType1ViewModel docType1Model = new DocumentType1ViewModel(new Model.DocumentType1()
-                    {
-                        id = CurSelectedDocTree.id,
-                        parentId = CurSelectedDocTree.perentId,
-                        docType = CurSelectedDocTree.docType,
-                        dateCreate = CurSelectedDocTree.dateCreate,
-                        dateDoc = CurSelectedDocTree.dateDoc,
-                        refStatus = CurSelectedDocTree.refStatus,
-                        counterpaty = RefCounterParty.GetInstance.CounterPartys.SingleOrDefault(x => x.id == CurSelectedDocTree.xfrom),
-                        recipient = RefRecipient.GetInstance.Recipients.SingleOrDefault(x => x.id == CurSelectedDocTree.xto)
-                    });
-                    View.DocumentType1View documentType1View = new View.DocumentType1View();
-                    documentType1View.DataContext = docType1Model;
-                    CurUserControl = documentType1View;
-                    break;
-
-                case 2:
-                    DocumentType2ViewModel docType2Model = new DocumentType2ViewModel(new Model.DocumentType2()
-                    {
-                        id = CurSelectedDocTree.id,
-                        parentId = CurSelectedDocTree.perentId,
-                        docType = CurSelectedDocTree.docType,
-                        dateCreate = CurSelectedDocTree.dateCreate,
-                        dateDoc = CurSelectedDocTree.dateDoc,
-                        refStatus = CurSelectedDocTree.refStatus,
-                        counterpaty = RefRecipient.GetInstance.Recipients.SingleOrDefault(x => x.id == CurSelectedDocTree.xfrom),
-                        recipient = RefRecipient.GetInstance.Recipients.SingleOrDefault(x => x.id == CurSelectedDocTree.xto)
-                    });
-                    View.DocumentType2View documentType2View = new View.DocumentType2View();
-                    documentType2View.DataContext = docType2Model;
-                    CurUserControl = documentType2View;
-                    break;
-
-                case 5:
-                    DocumentType5ViewModel docType5Model = new DocumentType5ViewModel(new Model.DocumentType5()
-                    {
-                        id = CurSelectedDocTree.id,
-                        parentId = CurSelectedDocTree.perentId,
-                        docType = CurSelectedDocTree.docType,
-                        dateCreate = CurSelectedDocTree.dateCreate,
-                        dateDoc = CurSelectedDocTree.dateDoc,
-                        refStatus = CurSelectedDocTree.refStatus,
-                        counterpaty = RefCounterParty.GetInstance.CounterPartys.SingleOrDefault(x => x.id == CurSelectedDocTree.xfrom),
-                        recipient = RefRecipient.GetInstance.Recipients.SingleOrDefault(x => x.id == CurSelectedDocTree.xto)
-                    });
-                    View.DocumentType5View documentType5View = new View.DocumentType5View();
-                    documentType5View.DataContext = docType5Model;
-                    CurUserControl = documentType5View;
-                    break;
-            }
+            documentView = new View.DocumentView();
+            documentView.DataContext = new DocumentViewModel(GetCurrentDocument);
+            CurUserControl = documentView;
         }
 
         public ICommand FilterActionCommand { get; private set; }
@@ -198,49 +160,20 @@ namespace com.sbh.gui.invoices.ViewModel
         public ICommand FilterApplyCommand { get; private set; }
         void FilterApply(object obj)
         {
-            CollectDocsByFilterTree();
+            CollectDocsByFilter();
         }
 
         public static ICommand BackOnClickCommand { get; private set; }
         void BackOnClick(object obj)
         {
-            switch (CurUserControl.GetType().Name)
-            {
-                case "DocumentType1View":
-                    CurSelectedDocTree.dateCreate = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.dateCreate;
-                    CurSelectedDocTree.perentId = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.parentId;
-                    CurSelectedDocTree.dateDoc = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.dateDoc;
-                    CurSelectedDocTree.docType = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.docType;
-                    CurSelectedDocTree.xfrom = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.counterpaty.id;
-                    CurSelectedDocTree.xto = ((CurUserControl as View.DocumentType1View).DataContext as DocumentType1ViewModel).Doc.recipient.id;
-                    break;
-
-                case "DocumentType2View":
-                    CurSelectedDocTree.dateCreate = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.dateCreate;
-                    CurSelectedDocTree.perentId = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.parentId;
-                    CurSelectedDocTree.dateDoc = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.dateDoc;
-                    CurSelectedDocTree.docType = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.docType;
-                    CurSelectedDocTree.xfrom = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.counterpaty.id;
-                    CurSelectedDocTree.xto = ((CurUserControl as View.DocumentType2View).DataContext as DocumentType2ViewModel).Doc.recipient.id;
-                    break;
-
-                case "DocumentType5View":
-                    CurSelectedDocTree.dateCreate = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.dateCreate;
-                    CurSelectedDocTree.perentId = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.parentId;
-                    CurSelectedDocTree.dateDoc = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.dateDoc;
-                    CurSelectedDocTree.docType = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.docType;
-                    CurSelectedDocTree.xfrom = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.counterpaty.id;
-                    CurSelectedDocTree.xto = ((CurUserControl as View.DocumentType5View).DataContext as DocumentType5ViewModel).Doc.recipient.id;
-                    break;
-            }
-
             CurUserControl = mDocumentJournalView;
         }
 
         public ICommand DeleteCommand { get; private set; }
         void DeleteOnClick(object obj)
         {
-            if (MessageBox.Show(string.Format("Вы уверены что хотите удалить документ?\n Тип документа '{0}'\n № {1}\n дата документа: {2}", CurSelectedDocTree.TypeName, CurSelectedDocTree.id, CurSelectedDocTree.dateDoc),
+            if (MessageBox.Show(string.Format("Вы уверены что хотите удалить документ?\n Тип документа '{0}'\n № {1}\n дата документа: {2}", 
+                CurSelectedDoc.DocTypeName, CurSelectedDoc.Id, CurSelectedDoc.DateDoc),
                 GValues.AppNameFull, MessageBoxButton.YesNo, MessageBoxImage.Question)
                 == MessageBoxResult.Yes)
             {
@@ -252,40 +185,39 @@ namespace com.sbh.gui.invoices.ViewModel
                         command.Connection = con;
                         command.CommandText = " UPDATE document SET ref_status = 2 WHERE id = @id";
 
-                        command.Parameters.Add("id", SqlDbType.Decimal).Value = CurSelectedDocTree.id;
+                        command.Parameters.Add("id", SqlDbType.Decimal).Value = CurSelectedDoc.Id;
 
                         command.ExecuteNonQuery();
                     }
                 }
-                //OnPropertyChanged("CurDocTree");
-            }
 
-            removeDocFromTree(CurSelectedDocTree.id);
+                removeDocFromTree(CurSelectedDoc.Id);
+            }
         }
 
         public bool DeleteCommand_CanExecute(object obj)
         {
-            return CurSelectedDocTree?.DocumentTreeChild.Count == 0;
+            return CurSelectedDoc?.DocumentChilds.Count == 0;
         }
 
         void MenuItemResponseOnClick(object obj)
         {
-            Model.DocumentTree document = new Model.DocumentTree()
+            Model.Document document = new Model.Document()
             {
-                perentId = CurSelectedDocTree.id,
-                dateCreate = DateTime.Now,
-                dateDoc = DateTime.Now,
-                docType = (decimal)obj,
-                refStatus = 1,
-                xfrom = CurSelectedDocTree.xfrom,
-                xto = CurSelectedDocTree.xto
+                ParentId = CurSelectedDoc.Id,
+                DateCreate = DateTime.Now,
+                DateDoc = DateTime.Now,
+                DocType = (decimal)obj,
+                RefStatus = 1,
+                XFrom = CurSelectedDoc.XFrom,
+                XTo = CurSelectedDoc.XTo
             };
 
-            document.id = createDoc(document);
+            document.Id = createDoc(document);
 
-            CurSelectedDocTree.DocumentTreeChild.Add(document);
+            CurSelectedDoc.DocumentChilds.Add(document);
 
-            CurSelectedDocTree = document;
+            CurSelectedDoc = document;
 
             document = null;
 
@@ -324,7 +256,7 @@ namespace com.sbh.gui.invoices.ViewModel
                         command.CommandType = CommandType.StoredProcedure;
                         command.CommandText = "Position_ResponseDublicate";
 
-                        command.Parameters.Add("pDocId", SqlDbType.Int).Value = CurSelectedDocTree.id;
+                        command.Parameters.Add("pDocId", SqlDbType.Int).Value = CurSelectedDoc.Id;
 
                         command.ExecuteNonQuery();
 
@@ -346,25 +278,25 @@ namespace com.sbh.gui.invoices.ViewModel
 
         void MenuItemOnClick(object obj)
         {
-            Model.DocumentTree document = new Model.DocumentTree()
+            Model.Document document = new Model.Document()
             {
-                perentId = 0,
-                dateCreate = DateTime.Now,
-                dateDoc = DateTime.Now,
-                docType = (int)obj,
-                refStatus = 1,
-                xfrom = 1,
-                xto = 1
+                ParentId = 0,
+                DateCreate = DateTime.Now,
+                DateDoc = DateTime.Now,
+                DocType = (int)obj,
+                RefStatus = 1,
+                XFrom = 1,
+                XTo = 1
             };
 
-            document.id = createDoc(document);
-            DocsTree.Add(document);
-            CurSelectedDocTree = document;
+            document.Id = createDoc(document);
+            Docs.Add(document);
+            CurSelectedDoc = document;
 
             ShowDocDetails(null);
         }
 
-        private decimal createDoc(Model.DocumentTree pDoc)
+        private decimal createDoc(Model.Document pDoc)
         {
             decimal result = 0;
 
@@ -378,13 +310,13 @@ namespace com.sbh.gui.invoices.ViewModel
                                             " VALUES (@parentId, @ref_docType, @dateCreate, @dateDoc, @ref_status, @xfrom, @xto);" +
                                             " SELECT SCOPE_IDENTITY(); ";
 
-                    command.Parameters.Add("parentId", SqlDbType.Int).Value = pDoc.perentId;
-                    command.Parameters.Add("ref_docType", SqlDbType.Int).Value = pDoc.docType;
-                    command.Parameters.Add("dateCreate", SqlDbType.DateTime).Value = pDoc.dateCreate;
-                    command.Parameters.Add("dateDoc", SqlDbType.DateTime).Value = pDoc.dateDoc;
-                    command.Parameters.Add("ref_status", SqlDbType.Int).Value = pDoc.refStatus;
-                    command.Parameters.Add("xfrom", SqlDbType.Int).Value = pDoc.xfrom;
-                    command.Parameters.Add("xto", SqlDbType.Int).Value = pDoc.xto;
+                    command.Parameters.Add("parentId", SqlDbType.Int).Value = pDoc.ParentId;
+                    command.Parameters.Add("ref_docType", SqlDbType.Int).Value = pDoc.DocType;
+                    command.Parameters.Add("dateCreate", SqlDbType.DateTime).Value = pDoc.DateCreate;
+                    command.Parameters.Add("dateDoc", SqlDbType.DateTime).Value = pDoc.DateDoc;
+                    command.Parameters.Add("ref_status", SqlDbType.Int).Value = pDoc.RefStatus;
+                    command.Parameters.Add("xfrom", SqlDbType.Int).Value = pDoc.XFrom;
+                    command.Parameters.Add("xto", SqlDbType.Int).Value = pDoc.XTo;
 
                     result = (decimal)command.ExecuteScalar();
                 }
@@ -396,31 +328,30 @@ namespace com.sbh.gui.invoices.ViewModel
         private void removeDocFromTree(decimal pDocId)
 
         {
-            foreach (Model.DocumentTree doc in DocsTree)
+            foreach (Model.Document doc in Docs)
             {
-                if (doc.id == pDocId) { DocsTree.Remove(doc); CurSelectedDocTree = null; break; }
+                if (doc.Id == pDocId) { Docs.Remove(doc); CurSelectedDoc = null; break; }
                 else removeDocFromTreeRecursion(doc, pDocId);
             }
         }
 
-        private void removeDocFromTreeRecursion(Model.DocumentTree pDoc, decimal pDocId)
+        private void removeDocFromTreeRecursion(Model.Document pDoc, decimal pDocId)
         {
-            foreach (Model.DocumentTree doc in pDoc.DocumentTreeChild)
+            foreach (Model.Document doc in pDoc.DocumentChilds)
             {
-                if (doc.id == pDocId)
+                if (doc.Id == pDocId)
                 {
-                    pDoc.DocumentTreeChild.Remove(doc);
-                    CurSelectedDocTree = pDoc;
+                    pDoc.DocumentChilds.Remove(doc);
+                    CurSelectedDoc = pDoc;
                     break;
                 }
                 else removeDocFromTreeRecursion(doc, pDocId);
             }
         }
 
-
-        private void CollectDocsByFilterTree()
+        private void CollectDocsByFilter()
         {
-            DocsTree = new ObservableCollection<Model.DocumentTree>();
+            Docs = new ObservableCollection<Model.Document>();
 
             string docTypes = string.Join(",", Filter.docTypes.Where(x => x.isSelected == true).Select(x => x.id));
 
@@ -430,19 +361,20 @@ namespace com.sbh.gui.invoices.ViewModel
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = con;
-                    command.CommandText = " SELECT	[id], " +
-                                            "		[parentId], " +
-                                            "		[ref_docType] AS docType, " +
-                                            "		[dateCreate], " +
-                                            "		[dateDoc], " +
-                                            "		[ref_status] AS refStatus, " +
-                                            "		[xfrom], " +
-                                            "		[xto], " +
+                    command.CommandText = " SELECT	[id] As Id, " +
+                                            "		[parentId] AS ParentId, " +
+                                            "		[ref_docType] AS DocType, " +
+                                            "		[dateCreate] AS DateCreate, " +
+                                            "		[dateDoc] AS DateDoc, " +
+                                            "		[ref_status] AS RefStatus, " +
+                                            "		[xfrom] AS XFrom, " +
+                                            "		[xto] AS XTo, " +
+                                            "       dbo.SelectDocumentItems_xml([id]), " +
                                             "		dbo.SelectDocumentChild_xml([id]) " +
                                             " FROM document " +
                                             " WHERE ref_status = 1 AND parentId = 0 AND dateDoc BETWEEN @dateStart AND @dateEnd " +
                                             (docTypes.Equals(string.Empty) ? string.Empty : " AND ref_docType in (" + docTypes + ")") +
-                                            " FOR XML RAW('DocumentTree'), ROOT('ArrayOfDocumentTree'), ELEMENTS ";
+                                            " FOR XML RAW('Document'), ROOT('ArrayOfDocument'), ELEMENTS ";
 
                     command.Parameters.Add("dateStart", SqlDbType.DateTime).Value = Filter.dateStart;
                     command.Parameters.Add("dateEnd", SqlDbType.DateTime).Value = Filter.dateEnd;
@@ -450,11 +382,12 @@ namespace com.sbh.gui.invoices.ViewModel
                     XmlReader reader = command.ExecuteXmlReader();
                     while (reader.Read())
                     {
-                        DocsTree = Support.XMLToObject<ObservableCollection<Model.DocumentTree>>(reader.ReadOuterXml());
+                        Docs = Support.XMLToObject<ObservableCollection<Model.Document>>(reader.ReadOuterXml());
                     }
                 }
             }
         }
+        
 
         #region INotifyPropertyChanged Members
 
