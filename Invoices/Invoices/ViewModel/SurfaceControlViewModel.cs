@@ -126,8 +126,8 @@ namespace com.sbh.gui.invoices.ViewModel
 
         private void Bgw_DoWork(object sender, DoWorkEventArgs e)
         {
-            CrystalDecisions.CrystalReports.Engine.ReportDocument doc = new CrystalDecisions.CrystalReports.Engine.ReportDocument();
-            doc.Dispose();
+            //CrystalDecisions.CrystalReports.Engine.ReportDocument doc = new CrystalDecisions.CrystalReports.Engine.ReportDocument();
+            //doc.Dispose();
         }
 
         private bool _filterVisibility;
