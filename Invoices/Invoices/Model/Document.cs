@@ -4,14 +4,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.sbh.dll.utilites.Interfaces;
 using System.Xml.Serialization;
 using com.sbh.dll.utilites.OReferences;
 using System.ComponentModel;
 
 namespace com.sbh.gui.invoices.Model
 {
-    public class Document : INotifyPropertyChanged, IDocument
+    public class Document : INotifyPropertyChanged
     {
         public decimal Id { get; set; }
         public decimal ParentId { get; set; }
@@ -35,6 +34,31 @@ namespace com.sbh.gui.invoices.Model
         public string DocTypeName
         {
             get { return RefDocType.GetInstance.refDocType.Single(x => x.id == DocType).name; }
+        }
+
+        public decimal PositionCount()
+        {
+            return DocumentPositions.Sum(x => x.xcount);
+        }
+
+        public string PositionCountNote
+        {
+            get
+            {
+                decimal docPositionCount = 0;
+
+                foreach (Document doc in DocumentChilds)
+                {
+                    docPositionCount = docPositionCount + doc.PositionCount();
+                }
+
+                return string.Format("Респределенно {0} из {1}", docPositionCount, PositionCount());
+            }
+        }
+
+        public void RefreshData()
+        {
+            OnPropertyChanged("PositionCountNote");
         }
 
         [XmlIgnore]
@@ -84,6 +108,12 @@ namespace com.sbh.gui.invoices.Model
         {
             DateCreate = DateTime.Now;
             DateDoc = DateTime.Now;
+            ParentId = 0;
+            XFrom = 1;
+            XTo = 1;
+            RefStatus = 1;
+            DocumentChilds = new ObservableCollection<Document>();
+            DocumentPositions = new ObservableCollection<Position>();
         }
 
         [XmlElement("ArrayOfDocument", typeof(ObservableCollection<Document>))]

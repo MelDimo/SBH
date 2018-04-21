@@ -32,8 +32,9 @@ namespace com.sbh.gui.invoices.View
 
             if (DataContext != null)
             {
-                ViewModel.SurfaceControlViewModel viewModel = DataContext as ViewModel.SurfaceControlViewModel;
-                viewModel.SelectObject((Model.Document)((TreeView)sender).SelectedItem);
+                ViewModel.DocumentJournalViewModel viewModel = DataContext as ViewModel.DocumentJournalViewModel;
+                viewModel.DataModel.CurDocument = (Model.Document)((TreeView)sender).SelectedItem;
+                viewModel.showDoc();
             }
         }
 
@@ -41,7 +42,7 @@ namespace com.sbh.gui.invoices.View
         {
             Model.Document doc = ((TreeView)sender).SelectedItem as Model.Document;
 
-            if (doc != null) (DataContext as ViewModel.SurfaceControlViewModel).CurSelectedDoc = doc;
+            if (doc != null) (DataContext as ViewModel.DocumentJournalViewModel).DataModel.CurDocument = doc;
         }
     }
 }
