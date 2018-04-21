@@ -15,9 +15,14 @@ using System.Xml;
 
 namespace com.sbh.gui.invoices.ViewModel
 {
-    class DocumentItemsViewModel : INotifyPropertyChanged
+    public class DocumentItemsViewModel : INotifyPropertyChanged
     {
-        public Model.Document Doc { get; set; }
+        private Model.Document _document;
+        public Model.Document Document
+        {
+            get { return _document; }
+            set { _document = value; OnPropertyChanged("Document"); }
+        }
 
         //private BackgroundWorker bgwItems;
         //private BackgroundWorker bgwItemsAvailable;
@@ -29,13 +34,6 @@ namespace com.sbh.gui.invoices.ViewModel
         //    set { _positions = value; OnPropertyChanged("Positions"); }
         //}
 
-        private ObservableCollection<Model.Position> _positions;
-        public ObservableCollection<Model.Position> Positions
-        {
-            get { return _positions; }
-            set { _positions = value; OnPropertyChanged("Positions"); }
-        }
-
         private Model.Position _curPosition;
         public Model.Position CurPosition
         {
@@ -46,7 +44,7 @@ namespace com.sbh.gui.invoices.ViewModel
         public bool IsAvailForAdding { get; set; }
         public bool IsDocContainChild { get; set; }
 
-        public DocumentItemsViewModel()
+        public DocumentItemsViewModel(DTO.DataModel pDataModel)
         {
             //Positions = Doc.DocumentPositions;
             AddItemOnClickCommand = new DelegateCommand(AddItemOnClick, AddItemOnClick_CanExecute);
@@ -66,29 +64,29 @@ namespace com.sbh.gui.invoices.ViewModel
          */
         public MSG checkData()
         {
-            StringBuilder sbPosition = new StringBuilder();
+            //StringBuilder sbPosition = new StringBuilder();
 
             MSG result = new MSG
             {
                 IsSuccess = true,
             };
 
-            foreach (Model.Position pos in Positions)
-            {
-                if (Positions.Where(x => x.itemId == pos.itemId
-                                     && x.currencyId == pos.currencyId
-                                     && x.dimensionId == pos.dimensionId
-                                     && x.xprice == pos.xprice).Count() > 1)
-                {
-                    result.IsSuccess = false;
-                    sbPosition.Append(string.Format("{0} | {1} | {2} | {3};\n", pos.itemName, pos.currencyName, pos.dimensionName, pos.xprice));
-                }
-            }
+            //foreach (Model.Position pos in Positions)
+            //{
+            //    if (Positions.Where(x => x.itemId == pos.itemId
+            //                         && x.currencyId == pos.currencyId
+            //                         && x.dimensionId == pos.dimensionId
+            //                         && x.xprice == pos.xprice).Count() > 1)
+            //    {
+            //        result.IsSuccess = false;
+            //        sbPosition.Append(string.Format("{0} | {1} | {2} | {3};\n", pos.itemName, pos.currencyName, pos.dimensionName, pos.xprice));
+            //    }
+            //}
 
-            if (!result.IsSuccess)
-            {
-                result.Message = string.Format("{0}\n\n{1}\n{2}", "Найдены следующие дублированные позиции:", sbPosition.ToString(), "Позиции будут объеденены.");
-            }
+            //if (!result.IsSuccess)
+            //{
+            //    result.Message = string.Format("{0}\n\n{1}\n{2}", "Найдены следующие дублированные позиции:", sbPosition.ToString(), "Позиции будут объеденены.");
+            //}
 
             return result;
         }
@@ -118,7 +116,7 @@ namespace com.sbh.gui.invoices.ViewModel
                         command.CommandType = CommandType.StoredProcedure;
                         command.CommandText = "Position_CorrectDublicate";
 
-                        command.Parameters.Add("pDocId", SqlDbType.Int).Value = Doc.Id;
+                        command.Parameters.Add("pDocId", SqlDbType.Int).Value = Document.Id;
 
                         command.ExecuteNonQuery();
 
@@ -161,7 +159,7 @@ namespace com.sbh.gui.invoices.ViewModel
                                             " VALUES(@xdocument, @item, @ref_dimensions, @xcount, @currency, @xprice, @ref_status ); " +
                                             " SELECT SCOPE_IDENTITY();";
 
-                    command.Parameters.Add("xdocument", SqlDbType.Int).Value = Doc.Id;
+                    command.Parameters.Add("xdocument", SqlDbType.Int).Value = Document.Id;
                     command.Parameters.Add("item", SqlDbType.Int).Value = newPositions.itemId;
                     command.Parameters.Add("ref_dimensions", SqlDbType.Int).Value = newPositions.dimensionId;
                     command.Parameters.Add("xcount", SqlDbType.Decimal).Value = newPositions.xcount;
@@ -173,7 +171,7 @@ namespace com.sbh.gui.invoices.ViewModel
 
                 }
             }
-            Positions.Add(newPositions);
+            //Positions.Add(newPositions);
             newPositions = null;
         }
         public bool AddItemOnClick_CanExecute(object obj)
@@ -197,7 +195,7 @@ namespace com.sbh.gui.invoices.ViewModel
                     command.ExecuteNonQuery();
                 }
             }
-            Positions.Remove(CurPosition);
+            //Positions.Remove(CurPosition);
             CurPosition = null;
         }
         public bool DeleteCommand_CanExecute(object obj)

@@ -22,9 +22,11 @@ namespace com.sbh.gui.invoices.View
     /// </summary>
     public partial class DocumentItemsView : UserControl
     {
+        
         public DocumentItemsView()
         {
             InitializeComponent();
+
             IsVisibleChanged += DocumentItemsView_IsVisibleChanged;
         }
 

@@ -19,7 +19,7 @@ namespace com.sbh.gui.invoices.Model
 
         public Filter()
         {
-            dateStart = DateTime.Now.AddDays(-7);
+            dateStart = DateTime.Now.AddDays(-30);
             dateEnd = DateTime.Now;
             docTypes = docTypeCollect();
         }

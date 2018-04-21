@@ -77,27 +77,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\DocAbstractFactory\Document.cs" />
-    <Compile Include="Model\DocAbstractFactory\Factory\DocType1Factory.cs" />
-    <Compile Include="Model\DocAbstractFactory\Factory\IFactory.cs" />
-    <Compile Include="Model\DocAbstractFactory\Header\DocType1Header.cs" />
-    <Compile Include="Model\DocAbstractFactory\Header\IHeader.cs" />
-    <Compile Include="Model\DocAbstractFactory\Items\DocTypeAllItems.cs" />
-    <Compile Include="Model\DocAbstractFactory\Items\IItems.cs" />
+    <Compile Include="DTO\DataModel.cs" />
     <Compile Include="Model\Document.cs" />
-    <Compile Include="Model\DocumentTree.cs" />
-    <Compile Include="Model\DocumentType1.cs" />
-    <Compile Include="Model\DocumentType2.cs" />
-    <Compile Include="Model\DocumentType5.cs" />
     <Compile Include="Model\Filter.cs" />
     <Compile Include="Model\Position.cs" />
-    <Compile Include="Report\DocumentType5.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DocumentType5.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Report\dsReport.cs">
       <DependentUpon>dsReport.xsd</DependentUpon>
     </Compile>
@@ -108,6 +91,7 @@
     </Compile>
     <Compile Include="StartUp.cs" />
     <Compile Include="ViewModel\DocumentItemsViewModel.cs" />
+    <Compile Include="ViewModel\DocumentJournalViewModel.cs" />
     <Compile Include="ViewModel\DocumentViewModel.cs" />
     <Compile Include="ViewModel\SurfaceControlViewModel.cs" />
     <Compile Include="View\DocumentItemsView.xaml.cs">
@@ -164,11 +148,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Report\DocumentType5.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>DocumentType5.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

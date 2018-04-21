@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,11 +63,14 @@ namespace com.sbh.dll.resdictionary.Controls
         private bool IsValid(string str)
         {
             decimal i;
+
             return decimal.TryParse(str, out i) && i >= MinValue && i <= MaxValue;
         }
 
         private void TextBoxNumeric_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            if (((TextBox)sender).SelectedText.Length > 0) ((TextBox)sender).Text = string.Empty;
+
             e.Handled = !IsValid(((TextBox)sender).Text + e.Text);
         }
     }

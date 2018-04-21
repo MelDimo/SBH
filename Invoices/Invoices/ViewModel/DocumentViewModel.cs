@@ -16,39 +16,44 @@ namespace com.sbh.gui.invoices.ViewModel
 {
     public class DocumentViewModel : INotifyPropertyChanged
     {
+        public delegate void DocumentStateHandler();
+        public event DocumentStateHandler JournalShow;
+
+        public DTO.DataModel DataModel { get; set; }
+
+        private Model.Position _сurPosition;
+        public Model.Position CurPosition { get; set; }
+
+        public View.DocumentItemsView ItemsView { get; set; }
+
+        public ObservableCollection<dll.utilites.OReferences.RefItem.Item> RefItems { get; set; }
+        public ObservableCollection<dll.utilites.OReferences.RefCurrency.CurrencyLite> RefCurrency { get; set; }
+        public ObservableCollection<dll.utilites.OReferences.RefDimensions.Dimension> RefDimensions { get; set; }
+        
         private dll.resdictionary.View.DialogView dialogView;
         private dll.resdictionary.View.DialogPrint dialogPrint;
         private references.counterparty.View.CounterpartyExternalView counterpartyExternalView;
         private references.orgmodel.View.UnitExternalView unitExternalView;
 
-        private View.DocumentItemsView _itemsView;
-        public View.DocumentItemsView ItemsView
+        public DocumentViewModel(DTO.DataModel pDataModel)
         {
-            get { return _itemsView; }
-            private set { _itemsView = value; OnPropertyChanged("ItemsView"); }
-        }
+            DataModel = pDataModel;
 
-        public Model.Document Doc { get; }
+            RefItems = new ObservableCollection<dll.utilites.OReferences.RefItem.Item>(dll.utilites.OReferences.RefItem.GetInstance.refItem);
+            RefCurrency = new ObservableCollection<dll.utilites.OReferences.RefCurrency.CurrencyLite>(dll.utilites.OReferences.RefCurrency.GetInstance.CurrenciesLite);
+            RefDimensions = new ObservableCollection<dll.utilites.OReferences.RefDimensions.Dimension>(dll.utilites.OReferences.RefDimensions.GetInstance.refDimension);
 
-        public DocumentViewModel(SurfaceControlViewModel.DgtGetCurrentDocument dgtGetCurrentDocument)
-        {
-            Doc = dgtGetCurrentDocument.Invoke();
-
-            ItemsView = new View.DocumentItemsView
-            {
-                DataContext = new DocumentItemsViewModel()
-                {
-                    Doc = Doc,
-                    IsAvailForAdding = Doc.ParentId == 0,
-                    IsDocContainChild = Doc.DocumentPositions.Count > 0
-                }
-            };
+            ItemsView = new View.DocumentItemsView();
+            ItemsView.DataContext = this;
 
             counterpartyExternalView = new references.counterparty.View.CounterpartyExternalView();
             unitExternalView = new references.orgmodel.View.UnitExternalView();
 
             SetCountertypeOnClickCommand = new DelegateCommand(SetCountertypeOnClick);
             SetRecipientOnClickCommand = new DelegateCommand(SetRecipientOnClick);
+
+            AddItemOnClickCommand = new DelegateCommand(AddItemOnClick);
+            DeleteItemOnClickCommand = new DelegateCommand(DeleteItemOnClick);
 
             BackOnClickCommand = new DelegateCommand(BackOnClick);
         }
@@ -59,7 +64,7 @@ namespace com.sbh.gui.invoices.ViewModel
         void SetCountertypeOnClick(object obj)
         {
             List<decimal> selectedCounterparty = new List<decimal>();
-            selectedCounterparty.Add(Doc.XFrom);
+            selectedCounterparty.Add(DataModel.CurDocument.XFrom);
 
             (counterpartyExternalView.DataContext as references.counterparty.ViewModel.CounterpartyExternalViewModel)
                 .PresetData(selectedCounterparty, false);
@@ -82,13 +87,13 @@ namespace com.sbh.gui.invoices.ViewModel
                                                 " WHERE id = @id";
 
                         command.Parameters.Add("xfrom", SqlDbType.Decimal).Value = counterparty.id;
-                        command.Parameters.Add("id", SqlDbType.Decimal).Value = Doc.Id;
+                        command.Parameters.Add("id", SqlDbType.Decimal).Value = DataModel.CurDocument.Id;
 
                         command.ExecuteNonQuery();
                     }
                 }
 
-                Doc.XFrom = counterparty.id;
+                DataModel.CurDocument.XFrom = counterparty.id;
             }
         }
 
@@ -96,7 +101,7 @@ namespace com.sbh.gui.invoices.ViewModel
         void SetRecipientOnClick(object obj)
         {
             List<decimal> selectedRecipient = new List<decimal>();
-            selectedRecipient.Add(Doc.XTo);
+            selectedRecipient.Add(DataModel.CurDocument.XTo);
 
             (unitExternalView.DataContext as references.orgmodel.ViewModel.UnitExternalViewModel)
                 .PresetData(selectedRecipient, false);
@@ -119,19 +124,20 @@ namespace com.sbh.gui.invoices.ViewModel
                                                 " WHERE id = @id";
 
                         command.Parameters.Add("xto", SqlDbType.Decimal).Value = recipient.id;
-                        command.Parameters.Add("id", SqlDbType.Decimal).Value = Doc.Id;
+                        command.Parameters.Add("id", SqlDbType.Decimal).Value = DataModel.CurDocument.Id;
 
                         command.ExecuteNonQuery();
                     }
                 }
 
-                Doc.XTo = recipient.id;
+                DataModel.CurDocument.XTo = recipient.id;
             }
         }
 
         public ICommand BackOnClickCommand { get; private set; }
         void BackOnClick(object obj)
         {
+            //OnPropertyChanged("");
             //DocumentItemsViewModel documentItemsViewModel = (ItemsView.DataContext as DocumentItemsViewModel);
 
             //MSG oMsg = documentItemsViewModel.checkData();
@@ -154,9 +160,75 @@ namespace com.sbh.gui.invoices.ViewModel
             //{
             //    Obj = documentItemsViewModel.Positions.Sum(x => x.xcount)
             //};
-
-            SurfaceControlViewModel.BackOnClickCommand.Execute(new MSG { IsSuccess = true });
+            DataModel.CurDocument.RefreshData();
+            JournalShow();
         }
+
+        public ICommand AddItemOnClickCommand { get; private set; }
+        void AddItemOnClick(object obj)
+        {
+            Model.Position newPositions;
+            using (SqlConnection con = new SqlConnection(GValues.connString))
+            {
+                con.Open();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    newPositions = new Model.Position();
+                    newPositions.itemId = 0;
+                    newPositions.xcount = 0;
+                    newPositions.currencyId = Model.Position.lastCurrency;
+                    newPositions.xprice = 0;
+                    newPositions.isAvalForEdit = true;
+
+                    command.Connection = con;
+                    command.CommandText = " INSERT INTO document_items(xdocument, item, ref_dimensions, xcount, currency, xprice, ref_status) " +
+                                            " VALUES(@xdocument, @item, @ref_dimensions, @xcount, @currency, @xprice, @ref_status ); " +
+                                            " SELECT SCOPE_IDENTITY();";
+
+                    command.Parameters.Add("xdocument", SqlDbType.Int).Value = DataModel.CurDocument.Id;
+                    command.Parameters.Add("item", SqlDbType.Int).Value = newPositions.itemId;
+                    command.Parameters.Add("ref_dimensions", SqlDbType.Int).Value = newPositions.dimensionId;
+                    command.Parameters.Add("xcount", SqlDbType.Decimal).Value = newPositions.xcount;
+                    command.Parameters.Add("currency", SqlDbType.Decimal).Value = newPositions.currencyId;
+                    command.Parameters.Add("xprice", SqlDbType.Decimal).Value = newPositions.xprice;
+                    command.Parameters.Add("ref_status", SqlDbType.Int).Value = 1;
+
+                    newPositions.id = (decimal)command.ExecuteScalar();
+
+                }
+            }
+            DataModel.CurDocument.DocumentPositions.Add(newPositions);
+            newPositions = null;
+        }
+        public bool AddItemOnClick_CanExecute(object obj)
+        {
+            return true;
+        }
+
+        public ICommand DeleteItemOnClickCommand { get; private set; }
+        void DeleteItemOnClick(object obj)
+        {
+            using (SqlConnection con = new SqlConnection(GValues.connString))
+            {
+                con.Open();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = con;
+                    command.CommandText = " DELETE FROM document_items WHERE id = @id;";
+
+                    command.Parameters.Add("id", SqlDbType.Int).Value = CurPosition.id;
+
+                    command.ExecuteNonQuery();
+                }
+            }
+            DataModel.CurDocument.DocumentPositions.Remove(CurPosition);
+            CurPosition = null;
+        }
+        public bool DeleteCommand_CanExecute(object obj)
+        {
+            return true;
+        }
+
         #endregion
 
         #region INotifyPropertyChanged Members

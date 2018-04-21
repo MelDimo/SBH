@@ -50,29 +50,24 @@
             </Button>
         </DockPanel>
         <ListView Grid.Row="1" SelectionMode="Single" FontSize="15"
-                  ItemsSource="{Binding Doc.DocumentPositions}" SelectedItem="{Binding CurPosition}">
+                  ItemsSource="{Binding DataModel.CurDocument.DocumentPositions}" SelectedItem="{Binding CurPosition}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Наименование">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center" MinWidth="250"
-                                      ItemsSource="{Binding RefItems}"
+                                      ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}},Path=DataContext.RefItems}"
                                       SelectedValue="{Binding itemId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                      DisplayMemberPath="name"
                                       SelectedValuePath="id"
                                       behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
                                       IsEditable="True">
-                                    <ComboBox.ItemTemplate>
+                                    <!--<ComboBox.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock>
-                                                <TextBlock.Text>
-                                                    <MultiBinding StringFormat="{}{0}">
-                                                        <Binding Path="name" />
-                                                    </MultiBinding>
-                                                </TextBlock.Text>
-                                            </TextBlock>
+                                            <TextBlock Text="{Binding name}"/>
                                         </DataTemplate>
-                                    </ComboBox.ItemTemplate>
+                                    </ComboBox.ItemTemplate>-->
                                 </ComboBox>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -81,7 +76,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <ComboBox Margin="3,3,3,0" TextSearch.TextPath="name" VerticalAlignment="Center" MinWidth="50"
-                                      ItemsSource="{Binding RefDimensions}"
+                                      ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}},Path=DataContext.RefDimensions}"
                                       SelectedValue="{Binding dimensionId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                       SelectedValuePath="id"
                                       behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
@@ -104,22 +99,22 @@
                     <GridViewColumn Header="Кол-во">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <controls:TextBoxNumeric Text="{Binding xcount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"
-                                                         MaxValue="{Binding maxValue}" MinValue="1"
-                                                         behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
-                                                         behaviours:HighlightTextOnFocusBehavior.HighlightTextOnFocus="True"/>
-                                <!--<TextBox Text="{Binding xcount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"
-                                         behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
-                                         behaviours:HighlightTextOnFocusBehavior.HighlightTextOnFocus="True"/>-->
+                                <controls:TextBoxNumeric Text="{Binding xcount, StringFormat=N3, ConverterCulture=RU-ru, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            VerticalAlignment="Center"
+                                            MaxValue="100" MinValue="1"
+                                            behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
+                                            behaviours:HighlightTextOnFocusBehavior.HighlightTextOnFocus="True"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Цена за ед">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding xprice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"
-                                         behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
-                                         behaviours:HighlightTextOnFocusBehavior.HighlightTextOnFocus="True"/>
+                                <controls:TextBoxNumeric Text="{Binding xprice, StringFormat=N3, ConverterCulture=RU-ru, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            VerticalAlignment="Center"
+                                            MaxValue="100" MinValue="1"
+                                            behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"
+                                            behaviours:HighlightTextOnFocusBehavior.HighlightTextOnFocus="True"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -127,7 +122,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <ComboBox Margin="3,3,3,0" TextSearch.TextPath="textName" VerticalAlignment="Center" MinWidth="250"
-                                      ItemsSource="{Binding RefCurrency}"
+                                      ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}},Path=DataContext.RefCurrency}"
                                       SelectedValue="{Binding currencyId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                       SelectedValuePath="id"
                                       behaviours:SelectListViewItemOnFocusBehaviour.SelectListViewItemOnFocus="True"

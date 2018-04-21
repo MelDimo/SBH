@@ -43,7 +43,7 @@ namespace com.sbh.gui.invoices.Model
                             command.ExecuteNonQuery();
                         }
 
-                        dimensionId = RefItems.SingleOrDefault(x => x.id == value).refDimensions;
+                        dimensionId = dll.utilites.OReferences.RefItem.GetInstance.refItem.SingleOrDefault(x => x.id == value).refDimensions;
                     }
                 _itemId = value;
                 OnPropertyChanged("itemId");
@@ -101,6 +101,8 @@ namespace com.sbh.gui.invoices.Model
                 OnPropertyChanged("xsumm");
             }
         }
+
+        public decimal xcountAval { get; set; }
 
         private decimal _currencyId;
         public decimal currencyId
@@ -164,41 +166,6 @@ namespace com.sbh.gui.invoices.Model
             get { return Math.Round(xcount * xprice, 3); }
         }
 
-        #region field for report
-
-        public string itemName { get { return itemId != 0 ? RefItems.FirstOrDefault(x => x.id == itemId).name : string.Empty; } }
-        public string currencyName { get { return currencyId != 0 ? RefCurrency.FirstOrDefault(x => x.id == currencyId).name : string.Empty; } }
-        public string dimensionName { get { return dimensionId != 0 ? RefDimensions.FirstOrDefault(x => x.id == dimensionId).name : string.Empty; } }
-
-        #endregion
-
-        public Position()
-        {
-            RefItems = new ObservableCollection<dll.utilites.OReferences.RefItem.Item>(dll.utilites.OReferences.RefItem.GetInstance.refItem);
-            RefCurrency = new ObservableCollection<dll.utilites.OReferences.RefCurrency.CurrencyLite>(dll.utilites.OReferences.RefCurrency.GetInstance.CurrenciesLite);
-            RefDimensions = new ObservableCollection<dll.utilites.OReferences.RefDimensions.Dimension> (dll.utilites.OReferences.RefDimensions.GetInstance.refDimension);
-        }
-
-        [XmlIgnore]
-        public ObservableCollection<dll.utilites.OReferences.RefItem.Item> RefItems
-        {
-            get;
-            private set;
-        }
-
-        [XmlIgnore]
-        public ObservableCollection<dll.utilites.OReferences.RefCurrency.CurrencyLite> RefCurrency
-        {
-            get;
-            private set;
-        }
-
-        [XmlIgnore]
-        public ObservableCollection<dll.utilites.OReferences.RefDimensions.Dimension> RefDimensions
-        {
-            get;
-            private set;
-        }
 
 
         #region INotifyPropertyChanged Members

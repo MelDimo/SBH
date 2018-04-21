@@ -76,7 +76,7 @@
                             <Style.Triggers>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding ElementName=treeview, Path=SelectedItem.DocumentTreeChild.Count}" Value="0"/>
+                                        <Condition Binding="{Binding ElementName=treeview, Path=SelectedItem.DocumentChilds.Count}" Value="0"/>
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="IsEnabled" Value="True"/>
                                 </MultiDataTrigger>
@@ -119,13 +119,13 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="с " VerticalAlignment="Center"/>
-                            <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding Filter.dateStart, Mode=TwoWay}"/>
+                            <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding DataModel.Filter.dateStart, Mode=TwoWay}"/>
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="по " VerticalAlignment="Center"/>
-                            <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding Filter.dateEnd, Mode=TwoWay}"/>
+                            <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding DataModel.Filter.dateEnd, Mode=TwoWay}"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Тип документа" FontSize="15" Foreground="White" Margin="3">
-                        <ItemsControl ItemsSource="{Binding Filter.docTypes}">
+                        <ItemsControl ItemsSource="{Binding DataModel.Filter.docTypes}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox Content="{Binding name}" IsChecked="{Binding isSelected, Mode=TwoWay}" Foreground="White"/>
@@ -156,14 +156,14 @@
                     <Style TargetType="{x:Type TextBlock}">
                         <Setter Property="Visibility" Value="Collapsed" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding DocsTree.Count}" Value="0">
+                            <DataTrigger Binding="{Binding DataModel.Documents.Count}" Value="0">
                                 <Setter Property="Visibility" Value="Visible" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TreeView x:Name="treeview" Grid.Row="1" ItemsSource="{Binding Docs}" FontSize="15"
+            <TreeView x:Name="treeview" Grid.Row="1" ItemsSource="{Binding DataModel.Documents}" FontSize="15"
                       SelectedItemChanged="treeview_SelectedItemChanged"
                       TreeViewItem.PreviewMouseDoubleClick="treeview_PreviewMouseDoubleClick" >
                 <TreeView.ItemTemplate>
@@ -203,9 +203,9 @@
                                 <TextBlock Grid.Row="2" Grid.Column="2" 
                                            VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
                                            Text="{Binding XToName}"/>
-                                <!--<TextBlock Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3"
+                                <TextBlock Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3"
                                            VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"
-                                           Text="{Binding Path=relationCountItem}"/>-->
+                                           Text="{Binding Path=PositionCountNote}"/>
                             </Grid>
                         </Border>
                     </HierarchicalDataTemplate>
@@ -219,7 +219,7 @@
                     <Style TargetType="{x:Type TreeView}">
                         <Setter Property="Visibility" Value="Visible"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding DocsTree.Count}" Value="0">
+                            <DataTrigger Binding="{Binding DataModel.Documents.Count}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:com.sbh.gui.invoices.View"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="450">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,22 +24,25 @@
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.Column="0" x:Name="borderBack"
                 BorderBrush="{StaticResource FilterBackGrount}" BorderThickness="0,0,0,1">
-            <Border  HorizontalAlignment="Left" Margin="7" Background="Transparent">
-                <Border.InputBindings>
-                    <MouseBinding MouseAction="LeftClick" Command="{Binding BackOnClickCommand}"/>
-                </Border.InputBindings>
                 <DockPanel LastChildFill="True">
-                    <ContentControl Content="{StaticResource imgBack}" Height="32" Width="32" DockPanel.Dock="Left"/>
-                    <TextBlock Text="Документ 'Закупка'" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="15"/>
+                    <Button Height="32" Width="32" HorizontalAlignment="Left" Margin="3"
+                            DockPanel.Dock="Left"
+                            Command="{Binding BackOnClickCommand}" ToolTip="Назад [Журнал документов]">
+                        <Button.Content>
+                            <ContentControl Content="{StaticResource imgBack}"/>
+                        </Button.Content>
+                    </Button>
+                    <TextBlock Text="{Binding DataModel.CurDocument.Id, StringFormat=Документ № {0}}"
+                               VerticalAlignment="Center" Margin="10,0,0,0" FontSize="15"/>
+                    <TextBlock Text="{Binding DataModel.CurDocument.DocTypeName, StringFormat=\'{0}\'}" 
+                               VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15"/>
                 </DockPanel>
-
-            </Border >
         </Border>
         <DockPanel Grid.Row="1" Background="{StaticResource FilterBackGrount}" LastChildFill="True">
             <!--                                        Заголовок документа                       -->
             <Grid MaxWidth="1440" Background="White" Height="140" DockPanel.Dock="Top">
                 <Grid.RowDefinitions>
-                    <RowDefinition />
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto" />
@@ -51,14 +54,14 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Margin="10,0,0,0"
-                           Text="{Binding Doc.DateCreate, ConverterCulture='ru-RU', StringFormat= Дата создания: {0}}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Margin="10,0,0,0"
+                           Text="{Binding DataModel.CurDocument.DateCreate, ConverterCulture='ru-RU', StringFormat= Дата создания: {0}}"/>
                 <TextBlock Grid.Row="1" Grid.Column="1" Text="Поставщик:" FontSize="15" VerticalAlignment="Center" Margin="0,0,10,0"/>
                 <DockPanel Grid.Row="1" Grid.Column="2" LastChildFill="True" >
                     <Button DockPanel.Dock="Right" Content="..." Width="32" Height="32"
                             Command="{Binding SetCountertypeOnClickCommand}" ToolTip="Выбрать поставщика" Margin="3,3,3,0"/>
                     <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource FilterBackGrount}">
-                        <TextBlock Text="{Binding Doc.XFromName, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="{Binding DataModel.CurDocument.XFromName, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" FontSize="15"/>
                     </Border>
                 </DockPanel>
                 <TextBlock Grid.Row="2" Grid.Column="1" Text="Получатель:" FontSize="15" VerticalAlignment="Center" Margin="0,0,10,0"/>
@@ -66,12 +69,12 @@
                     <Button DockPanel.Dock="Right" Content="..." Width="32" Height="32"
                             Command="{Binding SetRecipientOnClickCommand}" ToolTip="Выбрать получателя" Margin="3,3,3,0"/>
                     <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource FilterBackGrount}">
-                        <TextBlock Text="{Binding Doc.XToName}" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="{Binding DataModel.CurDocument.XToName}" VerticalAlignment="Center" FontSize="15"/>
                     </Border>
                 </DockPanel>
                 <TextBlock Grid.Row="3" Grid.Column="1" Text="Дата документа:" FontSize="15" 
                            VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <DatePicker Grid.Row="3" Grid.Column="2" SelectedDate="{Binding Doc.DateDoc, Mode=TwoWay }" 
+                <DatePicker Grid.Row="3" Grid.Column="2" SelectedDate="{Binding DataModel.CurDocument.DateDoc, Mode=TwoWay }" 
                             FontSize="15" Margin="0,3,3,0" Width="120" HorizontalAlignment="Left"/>
                 <Button Grid.Row="4" Grid.Column="2" Height="32" Width="32" HorizontalAlignment="Right" Margin="3"
                             DockPanel.Dock="Left"
