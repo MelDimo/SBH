@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace com.sbh.gui.unitsbrowser
+namespace com.sbh.gui.unitsbrowser.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainView : UserControl
     {
-        public MainWindow()
+        public MainView()
         {
             InitializeComponent();
         }

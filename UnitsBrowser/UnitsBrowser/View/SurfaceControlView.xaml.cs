@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UnitsBrowser.View
+namespace com.sbh.gui.unitsbrowser.View
 {
     /// <summary>
     /// Interaction logic for SurfaceControlView.xaml
