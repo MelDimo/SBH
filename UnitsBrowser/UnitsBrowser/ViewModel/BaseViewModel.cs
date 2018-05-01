@@ -10,8 +10,9 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-
-        public string CurrentViewHeader { get; set; }
+        // Заголовок текущей View
+        public string CurrentViewHeader { get; private set; }
+        public bool IsBackButtonEnable { get; private set; }
 
         private UserControl priviosView;
         private UserControl currentView;
@@ -22,6 +23,9 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
             {
                 priviosView = currentView == null ? value : currentView;
                 currentView = value;
+
+                CurrentViewHeader = ((IViewModel)currentView.DataContext).ViewHeader;
+                IsBackButtonEnable = ((IViewModel)currentView.DataContext).IsBackBtnEnable;
                 OnPropertyChanged("CurrentView");
             }
         }

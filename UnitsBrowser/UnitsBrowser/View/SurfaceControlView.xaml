@@ -32,11 +32,21 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
             <Button Height="32" Width="32" HorizontalAlignment="Left" Margin="3"
-                            DockPanel.Dock="Left"
-                            Command="{Binding BackOnClickCommand}" ToolTip="Назад">
+                    DockPanel.Dock="Left"
+                    Command="{Binding BackOnClickCommand}" ToolTip="Назад"
+                    Visibility="{Binding IsBackButtonEnable}">
                 <Button.Content>
                     <ContentControl Content="{StaticResource imgBack}"/>
                 </Button.Content>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" >
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
             </Button>
             <TextBlock Text="{Binding CurrentViewHeader}"/>
         </StackPanel>

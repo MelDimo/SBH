@@ -9,16 +9,19 @@ using System.Windows.Input;
 
 namespace com.sbh.gui.unitsbrowser.ViewModel
 {
-    public class MainViewModel : BaseViewModel
+    public class MainViewModel : IViewModel
     {
         public MainViewModel()
         {
-            Button_Click = new DelegateCommand(BackClick);
+            IsBackBtnEnable = false;
+            ViewHeader = "Основная форма.";
         }
 
-        #region Command
 
-        public ICommand Button_Click { get; private set; }
+        #region IViewModel Members
+
+        public bool IsBackBtnEnable { get; set; }
+        public string ViewHeader { get; set; }
 
         #endregion
     }
