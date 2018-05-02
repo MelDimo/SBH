@@ -34,7 +34,7 @@
             <Button Height="32" Width="32" HorizontalAlignment="Left" Margin="3"
                     DockPanel.Dock="Left"
                     Command="{Binding BackOnClickCommand}" ToolTip="Назад"
-                    Visibility="{Binding IsBackButtonEnable}">
+                    IsEnabled="{Binding IsBackButtonEnable}">
                 <Button.Content>
                     <ContentControl Content="{StaticResource imgBack}"/>
                 </Button.Content>
@@ -48,7 +48,8 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <TextBlock Text="{Binding CurrentViewHeader}"/>
+            <TextBlock FontSize="20" VerticalAlignment="Center" Margin="10,0,0,0" Height="32"
+                       Text="{Binding CurrentViewHeader}" />
         </StackPanel>
         <ContentControl Grid.Row="2" Grid.Column="0" Content="{Binding CurrentView}"/>
     </Grid>

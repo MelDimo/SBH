@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -11,8 +12,20 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
         // Заголовок текущей View
-        public string CurrentViewHeader { get; private set; }
-        public bool IsBackButtonEnable { get; private set; }
+        private string currentViewHeader;
+        public string CurrentViewHeader
+        {
+            get { return currentViewHeader; }
+            private set { currentViewHeader = value; OnPropertyChanged(); }
+        }
+
+        // Отображается ли кнопка "Назад" для загруженной View
+        private bool isBackButtonEnable;
+        public bool IsBackButtonEnable
+        {
+            get { return isBackButtonEnable; }
+            private set { isBackButtonEnable = value; OnPropertyChanged(); }
+        }
 
         private UserControl priviosView;
         private UserControl currentView;
@@ -26,20 +39,26 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
 
                 CurrentViewHeader = ((IViewModel)currentView.DataContext).ViewHeader;
                 IsBackButtonEnable = ((IViewModel)currentView.DataContext).IsBackBtnEnable;
-                OnPropertyChanged("CurrentView");
+                OnPropertyChanged();
             }
         }
 
-        public void BackClick(object obj)
+        /// <summary>
+        /// Кнопка "Назад"
+        /// </summary>
+        /// <param name="obj"></param>
+        public void OnBackClick(object obj)
         {
             CurrentView = priviosView;
         }
+
+        //public ObservableCollection<UnitEx>
 
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

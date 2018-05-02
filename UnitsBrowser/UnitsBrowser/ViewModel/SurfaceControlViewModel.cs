@@ -11,20 +11,36 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
 {
     public class SurfaceControlViewModel : BaseViewModel
     {
-        private MainViewModel maintViewModel;
+        private MainViewModel mainViewModel;
+        private UnitViewModel unitViewModel;
 
         public SurfaceControlViewModel()
         {
-            BackOnClickCommand = new DelegateCommand(BackClick);
+            BackOnClickCommand = new DelegateCommand(OnBackClick);
 
-            maintViewModel = new MainViewModel();
+            mainViewModel = new MainViewModel();
+            mainViewModel.OnUnitClick += MainViewModel_OnUnitClick;
 
-            CurrentView = new View.MainView() { DataContext = maintViewModel };
+            unitViewModel = new UnitViewModel();
+
+            CurrentView = new View.MainView() { DataContext = mainViewModel };
         }
 
+        private void MainViewModel_OnUnitClick(object obj)
+        {
+            CurrentView = new View.UnitView() { DataContext = unitViewModel };
+        }
+
+        private void ChangeCurrentView()
+        {
+
+        }
 
         #region Command
 
+        /// <summary>
+        /// Нажатие кнопки назад
+        /// </summary>
         public ICommand BackOnClickCommand { get; private set; }
 
         #endregion
