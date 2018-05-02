@@ -12,6 +12,10 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
+        public BaseViewModel() { }
+
+        public BaseViewModel(Model.UnitEx pCurrentUnitEx) { CurrentUnitEx = pCurrentUnitEx; }
+
         // Заголовок текущей View
         private string currentViewHeader;
         public string CurrentViewHeader

@@ -20,15 +20,14 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
 
             mainViewModel = new MainViewModel();
             mainViewModel.OnUnitClick += MainViewModel_OnUnitClick;
-            mainViewModel.CollectUnitExAsync();
-            
-            unitViewModel = new UnitViewModel();            
+            mainViewModel.CollectUnitExAsync();           
 
             CurrentView = new View.MainView() { DataContext = mainViewModel };
         }
 
         private void MainViewModel_OnUnitClick(object obj)
         {
+            unitViewModel = new UnitViewModel(mainViewModel.CurrentUnitEx);
             CurrentView = new View.UnitView() { DataContext = unitViewModel };
         }
 

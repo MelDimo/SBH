@@ -42,7 +42,7 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
         public ICommand UnitOnClickCommand { get; private set; }
         void UnitOnClick(object obj)
         {
-            OnUnitClick(obj);
+            OnUnitClick(CurrentUnitEx);
         }
 
 

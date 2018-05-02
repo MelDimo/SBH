@@ -11,10 +11,11 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
     public class UnitViewModel : BaseViewModel, IViewModel
     {
 
-        public UnitViewModel()
+        public UnitViewModel(Model.UnitEx pCurrentUnitEx): base (pCurrentUnitEx)
         {
             IsBackBtnEnable = true;
             ViewHeader = string.Format("Подразделение {0}", "...");
+            CurrentUnitEx.UnitName = "Опньки";
         }
 
         public void InitCollection()
