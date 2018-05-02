@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        
+        <TextBlock Text="{Binding CurrentUnitEx.UnitId}"/>
+        <TextBlock Text="{Binding CurrentUnitEx.UnitName}"/>
+        <TextBlock Text="{Binding CurrentUnitEx.BranchName}"/>
+        <TextBlock Text="{Binding CurrentUnitEx.OrgName}"/>
     </Grid>
 </UserControl>

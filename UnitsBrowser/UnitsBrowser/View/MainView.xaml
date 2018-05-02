@@ -8,6 +8,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <ListView ItemsSource="{Binding CollectionUnitEx}" SelectedItem="{Binding CurrentUnitEx}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding UnitName}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
         <Button Height="32" Width="32" Command="{Binding UnitOnClickCommand}"/>
     </Grid>
 </UserControl>

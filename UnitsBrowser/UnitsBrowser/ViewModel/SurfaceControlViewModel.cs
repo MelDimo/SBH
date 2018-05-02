@@ -20,8 +20,9 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
 
             mainViewModel = new MainViewModel();
             mainViewModel.OnUnitClick += MainViewModel_OnUnitClick;
-
-            unitViewModel = new UnitViewModel();
+            mainViewModel.CollectUnitExAsync();
+            
+            unitViewModel = new UnitViewModel();            
 
             CurrentView = new View.MainView() { DataContext = mainViewModel };
         }

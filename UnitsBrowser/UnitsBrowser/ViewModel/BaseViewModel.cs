@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -27,6 +28,8 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
             private set { isBackButtonEnable = value; OnPropertyChanged(); }
         }
 
+        #region Навигация OnBackClick
+
         private UserControl priviosView;
         private UserControl currentView;
         public UserControl CurrentView
@@ -52,7 +55,16 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
             CurrentView = priviosView;
         }
 
-        //public ObservableCollection<UnitEx>
+        #endregion
+
+        public Model.UnitEx CurrentUnitEx { get; set; }
+
+        private ObservableCollection<Model.UnitEx> collectionUnitEx;
+        public ObservableCollection<Model.UnitEx> CollectionUnitEx
+        {
+            get { return collectionUnitEx; }
+            set { collectionUnitEx = value; OnPropertyChanged(); }
+        }
 
         #region INotifyPropertyChanged Members
 
