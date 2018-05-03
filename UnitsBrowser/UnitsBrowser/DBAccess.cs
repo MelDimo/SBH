@@ -18,7 +18,7 @@ namespace com.sbh.gui.unitsbrowser
         public MSG CollectUnitEx()
         {
             oMsg = new MSG() { IsSuccess = true };
-            ObservableCollection<Model.UnitEx> result = new ObservableCollection<Model.UnitEx>();
+            ObservableCollection<Model.Unit> result = new ObservableCollection<Model.Unit>();
 
             try
             {
@@ -37,12 +37,12 @@ namespace com.sbh.gui.unitsbrowser
                                             " INNER JOIN organization o  ON o.id = b.organization " +
                                             " WHERE u.ref_status = 1 " +
                                             " ORDER BY o.name, b.name, u.name " +
-                                            " FOR XML RAW('UnitEx'), ROOT('ArrayOfUnitEx'), ELEMENTS ";
+                                            " FOR XML RAW('Unit'), ROOT('ArrayOfUnit'), ELEMENTS ";
 
                         XmlReader reader = command.ExecuteXmlReader();
                         while (reader.Read())
                         {
-                            result = Support.XMLToObject<ObservableCollection<Model.UnitEx>>(reader.ReadOuterXml());
+                            result = Support.XMLToObject<ObservableCollection<Model.Unit>>(reader.ReadOuterXml());
                         }
                         oMsg.Obj = result;
                     }

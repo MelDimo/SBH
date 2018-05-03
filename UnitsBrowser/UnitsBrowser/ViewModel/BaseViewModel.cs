@@ -10,11 +10,10 @@ using System.Windows.Controls;
 
 namespace com.sbh.gui.unitsbrowser.ViewModel
 {
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    public sealed class BaseViewModel : INotifyPropertyChanged
     {
-        public BaseViewModel() { }
-
-        public BaseViewModel(Model.UnitEx pCurrentUnitEx) { CurrentUnitEx = pCurrentUnitEx; }
+        private static readonly Lazy<BaseViewModel> lazy = new Lazy<BaseViewModel>(() => new BaseViewModel());
+        public static BaseViewModel GetInstance { get { return lazy.Value; } }
 
         // Заголовок текущей View
         private string currentViewHeader;
@@ -61,10 +60,10 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
 
         #endregion
 
-        public Model.UnitEx CurrentUnitEx { get; set; }
+        public Model.Unit CurrentUnitEx { get; set; }
 
-        private ObservableCollection<Model.UnitEx> collectionUnitEx;
-        public ObservableCollection<Model.UnitEx> CollectionUnitEx
+        private ObservableCollection<Model.Unit> collectionUnitEx;
+        public ObservableCollection<Model.Unit> CollectionUnitEx
         {
             get { return collectionUnitEx; }
             set { collectionUnitEx = value; OnPropertyChanged(); }

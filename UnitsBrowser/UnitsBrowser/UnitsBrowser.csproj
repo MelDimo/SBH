@@ -63,7 +63,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DBAccess.cs" />
-    <Compile Include="Model\UnitEx.cs" />
+    <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\Unit.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\IViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -90,6 +91,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ViewTemplate\UnitTeplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

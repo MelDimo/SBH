@@ -7,14 +7,51 @@
              xmlns:viewmodel="clr-namespace:com.sbh.gui.unitsbrowser.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ViewTemplate/UnitTeplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding CollectionUnitEx}" SelectedItem="{Binding CurrentUnitEx}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding UnitName}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Button Height="32" Width="32" Command="{Binding UnitOnClickCommand}"/>
+        <DockPanel LastChildFill="True">
+            <TextBlock FontSize="35" Text="{Binding Msg.Message}">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Visibility, ElementName=listView}" Value="Visible">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Msg.IsSuccess}" Value="false">
+                                <Setter Property="Foreground" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <ListBox Name="listView"
+                     ItemsSource="{Binding BaseViewModel.CollectionUnitEx}" SelectedItem="{Binding BaseViewModel.CurrentUnitEx}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                     ItemTemplate="{StaticResource unitTemplate}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.Style>
+                    <Style TargetType="{x:Type ListBox}" >
+                        <Style.Triggers>
+                            <DataTrigger Binding ="{Binding Msg.IsSuccess}" Value="false">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                            <DataTrigger Binding ="{Binding BaseViewModel.CollectionUnitEx.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.Style>
+            </ListBox>
+        </DockPanel>
     </Grid>
 </UserControl>
