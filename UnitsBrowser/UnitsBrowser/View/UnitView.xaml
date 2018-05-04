@@ -6,6 +6,18 @@
              xmlns:local="clr-namespace:com.sbh.gui.unitsbrowser.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation
+              Storyboard.TargetProperty="Opacity"
+              From="0.0" To="1.0" Duration="0:0:0.5"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
+
     <StackPanel Orientation="Vertical">
         <TextBlock Text="{Binding BaseViewModel.CurrentUnitEx.UnitId}"/>
         <TextBlock Text="{Binding BaseViewModel.CurrentUnitEx.UnitName}"/>
