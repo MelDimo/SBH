@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace com.sbh.dll.utilites
 {
-    public class MSG:INotifyPropertyChanged
+    public class MSG : INotifyPropertyChanged
     {
         /// <summary>
         /// Код
@@ -31,7 +31,7 @@ namespace com.sbh.dll.utilites
         private object obj;
         public object Obj { get { return obj; } set { obj = value; OnPropertyChanged(); } }
 
-        public MSG(){ }
+        public MSG() { isSuccess = false; }
 
         #region INotifyPropertyChanged Members
 

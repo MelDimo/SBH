@@ -17,7 +17,7 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
         {
             BaseViewModel = BaseViewModel.GetInstance;
             IsBackBtnEnable = true;
-            ViewHeader = string.Format("Подразделение {0}", "...");
+            ViewHeader = string.Format("{0} / {1} / {2}", BaseViewModel.CurrentUnitEx.OrgName, BaseViewModel.CurrentUnitEx.BranchName, BaseViewModel.CurrentUnitEx.UnitName);
         }
 
         public void InitCollection()

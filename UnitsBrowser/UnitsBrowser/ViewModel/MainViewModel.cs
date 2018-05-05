@@ -16,6 +16,13 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
     {
         public delegate void EventRaise(object obj);
 
+        private bool showLoader;
+        public bool ShowLoader
+        {
+            get { return showLoader; }
+            set { showLoader = value; OnPropertyChanged(); }
+        }
+
         private DBAccess dbAccess = new DBAccess();
 
         private string errorMessage;
@@ -41,6 +48,7 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
 
         public async void CollectUnitExAsync()
         {
+            ShowLoader = true;
             await Task.Run(() =>
             {
                 Msg = dbAccess.CollectUnitEx();
@@ -51,6 +59,7 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
                 }
                 else { Msg.Message = String.Format("Ошибка получения данных:\n{0}", Msg.Message); return; }
             });
+            ShowLoader = false;
         }
 
         public ICommand UnitOnClickCommand { get; private set; }
