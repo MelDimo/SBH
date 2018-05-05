@@ -36,9 +36,11 @@ namespace com.sbh.gui.unitsbrowser.View
             this.Opacity = 1;
 
             Window parentWindow = Window.GetWindow(this);
-            DoubleAnimation animation = new DoubleAnimation();
-            animation.From = this.ActualWidth;
-            animation.To = 0;
+            DoubleAnimation animation = new DoubleAnimation
+            {
+                From = this.ActualWidth,
+                To = 0
+            };
             Storyboard.SetTarget(animation, this);
             Storyboard.SetTargetProperty(animation, new PropertyPath("(UserControl.RenderTransform).(TranslateTransform.X)"));
             animation.Duration = TimeSpan.FromSeconds(0.3);

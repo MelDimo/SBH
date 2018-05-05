@@ -12,6 +12,12 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
 {
     public class UnitViewModel : IViewModel, INotifyPropertyChanged
     {
+        private string filterText;
+        public string FilterText
+        {
+            get { return filterText; }
+            set { filterText = value; OnPropertyChanged(); }
+        }
 
         public UnitViewModel()
         {

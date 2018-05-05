@@ -6,8 +6,25 @@
              xmlns:local="clr-namespace:com.sbh.gui.unitsbrowser.ViewTemplate"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResDic;component/StylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True" Margin="10">
+            <TextBox Text="{Binding FilterText}" Style="{DynamicResource WaterMarkStyle}" Tag="Поиск по наименованию..."/>
+        </DockPanel>
+        <StackPanel Grid.Row="1" Grid.Column="0">
             <TextBlock Text="{Binding BaseViewModel.CurrentUnitEx.UnitId}"/>
             <TextBlock Text="{Binding BaseViewModel.CurrentUnitEx.UnitName}"/>
             <TextBlock Text="{Binding BaseViewModel.CurrentUnitEx.BranchName}"/>

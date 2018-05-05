@@ -40,7 +40,7 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
             get { return currentView; }
             set
             {
-                priviosView = currentView == null ? value : currentView;
+                priviosView = currentView ?? value;
                 currentView = value;
 
                 CurrentViewHeader = ((IViewModel)currentView.DataContext).ViewHeader;

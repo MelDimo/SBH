@@ -10,11 +10,12 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/ResDic;component/ConverterDictionary.xaml"/>
+                <ResourceDictionary 
+                    Source="pack://application:,,,/ResDic;component/ConverterDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <TabControl>
+    <TabControl Background="Transparent">
         <TabItem Header="Текущие остатки" FontSize="15">
             <viewtemplate:CurrentItemsTemplate/>
         </TabItem>
