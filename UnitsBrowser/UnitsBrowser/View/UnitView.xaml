@@ -19,6 +19,8 @@
         <TabItem Header="Текущие остатки" FontSize="15">
             <viewtemplate:CurrentItemsTemplate/>
         </TabItem>
-        <TabItem Header="Журнал документов" FontSize="15"/>
+        <TabItem Header="Журнал документов" FontSize="15">
+            <viewtemplate:DocumentHistoryTemplate/>
+        </TabItem>
     </TabControl>
 </UserControl>

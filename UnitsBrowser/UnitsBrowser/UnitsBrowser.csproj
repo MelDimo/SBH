@@ -73,6 +73,9 @@
     <Compile Include="ViewTemplate\CurrentItemsTemplate.xaml.cs">
       <DependentUpon>CurrentItemsTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewTemplate\DocumentHistoryTemplate.xaml.cs">
+      <DependentUpon>DocumentHistoryTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -95,6 +98,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ViewTemplate\CurrentItemsTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewTemplate\DocumentHistoryTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
