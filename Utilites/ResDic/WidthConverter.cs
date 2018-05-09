@@ -13,7 +13,7 @@ namespace com.sbh.dll.resdictionary
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double width = (double)value;
-            return width - 120;
+            return width - 140;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

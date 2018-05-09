@@ -14,13 +14,13 @@ namespace com.sbh.dll
 
         public static Window MainWindow { get; set; }
 
-        public static string connString =
-            @"Data Source=HPPC\SQL2008EXPRESS;Initial Catalog=sbh;User ID=sa;Password=74563";
+        //public static string connString =
+        //    @"Data Source=HPPC\SQL2008EXPRESS;Initial Catalog=sbh;User ID=sa;Password=74563";
 
         public static bool IsUseAnimation = false;
 
-        //public static string connString =
-        //    @"Data Source=192.168.1.104\SQLMAIN_SBS;Initial Catalog=sbh;User ID=sa;Password=74563";
+        public static string connString =
+            @"Data Source=192.168.1.104\SQLMAIN_SBS;Initial Catalog=sbh;User ID=sa;Password=74563";
 
     }
 }

@@ -8,6 +8,7 @@ namespace com.sbh.gui.unitsbrowser.Model
 {
     public class Item
     {
-
+        public string Name { get; set; }
+        public decimal Xcount { get; set; }
     }
 }

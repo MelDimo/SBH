@@ -6,7 +6,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace com.sbh.gui.unitsbrowser.ViewModel
 {
@@ -60,14 +62,44 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
 
         #endregion
 
+        #region Коллеции
+        
+        /// <summary>
+        /// Текушая выбранная конечная точка
+        /// </summary>
         public Model.Unit CurrentUnitEx { get; set; }
 
+        /// <summary>
+        /// Доступные конечные точки
+        /// </summary>
         private ObservableCollection<Model.Unit> collectionUnitEx;
         public ObservableCollection<Model.Unit> CollectionUnitEx
         {
             get { return collectionUnitEx; }
             set { collectionUnitEx = value; OnPropertyChanged(); }
         }
+
+        /// <summary>
+        /// Текущая выбранная позиция балланса
+        /// </summary>
+        public Model.Item CurrentItemBalans { get; set; }
+
+        /// <summary>
+        /// Доступные позиции баланса
+        /// </summary>
+        private ObservableCollection<Model.Item> collectionItemBalans;
+        public ObservableCollection<Model.Item> CollectionItemBalans
+        {
+            get { return collectionItemBalans; }
+            set
+            {
+                collectionItemBalans = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
 
         #region INotifyPropertyChanged Members
 

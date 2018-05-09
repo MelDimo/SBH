@@ -4,12 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:com.sbh.gui.unitsbrowser.ViewTemplate"
+             xmlns:controls="clr-namespace:com.sbh.dll.resdictionary.Controls;assembly=ResDic"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/ResDic;component/StylesDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ResDic;component/ImgDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ResDic;component/ConverterDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -17,18 +20,80 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True" Margin="10">
-            <TextBox Text="{Binding FilterText}" Style="{DynamicResource WaterMarkStyle}" Tag="Поиск по наименованию..."/>
+            <Rectangle Grid.Row="0" Grid.Column="0"
+                                Height="32" Width="32" Fill="Black">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Uniform" Visual="{StaticResource imgFilter}"/>
+                </Rectangle.OpacityMask>
+            </Rectangle>
+            <TextBox Text="{Binding FilterText,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource WaterMarkStyle}" Tag="Введите наименования для фильтрации..."/>
         </DockPanel>
-        <StackPanel Grid.Row="1" Grid.Column="0">
-            <TextBlock Text="{Binding BaseViewModel.CurrentUnitEx.UnitId}"/>
-            <TextBlock Text="{Binding BaseViewModel.CurrentUnitEx.UnitName}"/>
-            <TextBlock Text="{Binding BaseViewModel.CurrentUnitEx.BranchName}"/>
-            <TextBlock Text="{Binding BaseViewModel.CurrentUnitEx.OrgName}"/>
-        </StackPanel>
+        <DockPanel Grid.Row="1" Grid.Column="0" LastChildFill="True">
+            <!--<controls:Loader HorizontalAlignment="Center" VerticalAlignment="Center" TextMessage="Получение данных..."
+                             Visibility="{Binding ShowLoader, Converter={StaticResource VisibilityConverter}}"/>-->
+            <ProgressBar Height="10" DockPanel.Dock="Top" IsIndeterminate="True" 
+                         Visibility="{Binding ShowLoader, Converter={StaticResource VisibilityConverter}}"/>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                FontSize="35" Text="{Binding Msg.Message}" TextWrapping="Wrap">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowLoader}" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                            <DataTrigger Binding ="{Binding CollectionItemBalansView.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Msg.IsSuccess}" Value="false">
+                                <Setter Property="Foreground" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <ListView ItemsSource="{Binding CollectionItemBalansView}" SelectedItem="BaseViewModel.CurrentItemBalans">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Наименование" DisplayMemberBinding="{Binding Name}"
+                                        Width="{Binding ElementName=helperField, Path=ActualWidth}"/>
+                        <GridViewColumn x:Name="col1" Header="Количество" DisplayMemberBinding="{Binding Xcount}"/>
+                    </GridView>
+                </ListView.View>
+                <ListView.Style>
+                    <Style TargetType="{x:Type ListView}" >
+                        <Style.Triggers>
+                            <DataTrigger Binding ="{Binding ShowLoader}" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                            <!--<DataTrigger Binding ="{Binding CollectionItemBalansView.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>-->
+                            <DataTrigger Binding="{Binding Msg.IsSuccess}" Value="false">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Style>
+            </ListView>
+        </DockPanel>
+        <!--Помогает расширять столбец по ширине-->
+        <Grid Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <!--Width is bound to width of the first GridViewColumn -->
+                <ColumnDefinition Width="{Binding ElementName=col1, Path=ActualWidth}"/>
+                <!--Width is set to "Fill"-->
+                <ColumnDefinition Width="*"/>
+                <!--Correction Width-->
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <!--This is the hidden helper Field which is used to bind to, using the "Fill" column of the helper grid-->
+            <Grid Grid.Column="1" x:Name="helperField"/>
+        </Grid>
     </Grid>
 </UserControl>

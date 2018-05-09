@@ -18,8 +18,10 @@
     </UserControl.Resources>
     <Grid>
         <DockPanel LastChildFill="True">
-            <controls:Loader HorizontalAlignment="Center" VerticalAlignment="Center" TextMessage="Получение данных..."
-                             Visibility="{Binding ShowLoader, Converter={StaticResource VisibilityConverter}}"/>
+            <!--<controls:Loader HorizontalAlignment="Center" VerticalAlignment="Center" TextMessage="Получение данных..."
+                             Visibility="{Binding ShowLoader, Converter={StaticResource VisibilityConverter}}"/>-->
+            <ProgressBar Height="10" DockPanel.Dock="Top" IsIndeterminate="True" 
+                         Visibility="{Binding ShowLoader, Converter={StaticResource VisibilityConverter}}"/>
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                 FontSize="35" Text="{Binding Msg.Message}" TextWrapping="Wrap">
                 <TextBlock.Style>

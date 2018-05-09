@@ -63,6 +63,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DBAccess.cs" />
+    <Compile Include="Model\Document.cs" />
     <Compile Include="Model\Item.cs" />
     <Compile Include="Model\Unit.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
