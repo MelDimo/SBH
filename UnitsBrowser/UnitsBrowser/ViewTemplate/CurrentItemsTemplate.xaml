@@ -32,14 +32,16 @@
                     <VisualBrush Stretch="Uniform" Visual="{StaticResource imgFilter}"/>
                 </Rectangle.OpacityMask>
             </Rectangle>
-            <TextBox Text="{Binding FilterText,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource WaterMarkStyle}" Tag="Введите наименования для фильтрации..."/>
+            <TextBox Text="{Binding FilterText,UpdateSourceTrigger=PropertyChanged}" 
+                     Style="{DynamicResource WaterMarkStyle}" 
+                     Tag="Введите наименования для фильтрации..." IsEnabled="{Binding Msg.IsSuccess}"/>
         </DockPanel>
         <DockPanel Grid.Row="1" Grid.Column="0" LastChildFill="True">
             <!--<controls:Loader HorizontalAlignment="Center" VerticalAlignment="Center" TextMessage="Получение данных..."
                              Visibility="{Binding ShowLoader, Converter={StaticResource VisibilityConverter}}"/>-->
             <ProgressBar Height="10" DockPanel.Dock="Top" IsIndeterminate="True" 
                          Visibility="{Binding ShowLoader, Converter={StaticResource VisibilityConverter}}"/>
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+            <TextBlock VerticalAlignment="Top"
                 FontSize="35" Text="{Binding Msg.Message}" TextWrapping="Wrap">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">
@@ -57,7 +59,8 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ListView ItemsSource="{Binding CollectionItemBalansView}" SelectedItem="BaseViewModel.CurrentItemBalans">
+            <ListView ItemsSource="{Binding CollectionItemBalansView}" 
+                      SelectedItem="BaseViewModel.CurrentItemBalans">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Наименование" DisplayMemberBinding="{Binding Name}"

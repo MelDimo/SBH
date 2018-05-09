@@ -89,10 +89,15 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
                 else { Msg.Message = String.Format("Ошибка получения данных:\n{0}", Msg.Message); return; }
             });
 
-            CollectionItemBalansView = CollectionViewSource.GetDefaultView(BaseViewModel.CollectionItemBalans);
-            CollectionItemBalansView.Filter = FilterItem;
-            
             ShowLoader = false;
+
+            if (Msg.IsSuccess)
+            {
+                CollectionItemBalansView = CollectionViewSource.GetDefaultView(BaseViewModel.CollectionItemBalans);
+                CollectionItemBalansView.Filter = FilterItem;
+            }
+
+            
         }
 
         
