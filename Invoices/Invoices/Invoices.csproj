@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B0AE8178-BBCC-4536-B295-2C6F265ED1EA}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>com.sbh.gui.invoices</RootNamespace>
     <AssemblyName>Invoices</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
