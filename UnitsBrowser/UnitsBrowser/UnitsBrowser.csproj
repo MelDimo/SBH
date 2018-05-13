@@ -36,6 +36,9 @@
     <Reference Include="GValues">
       <HintPath>..\..\GValues\GValues\bin\Debug\GValues.dll</HintPath>
     </Reference>
+    <Reference Include="Invoices">
+      <HintPath>..\..\Invoices\Invoices\bin\Debug\Invoices.dll</HintPath>
+    </Reference>
     <Reference Include="ResDic">
       <HintPath>..\..\Utilites\ResDic\bin\Debug\ResDic.dll</HintPath>
     </Reference>

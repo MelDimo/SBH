@@ -33,7 +33,7 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
         {
             unitViewModel = new UnitViewModel();
             BaseViewModel.CurrentView = new View.UnitView() { DataContext = unitViewModel };
-            unitViewModel.CollectUnitItemsBalansAsync();
+            //unitViewModel.CollectUnitItemsBalansAsync();
         }
 
         #region Command

@@ -27,8 +27,9 @@
             <RowDefinition Height="auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Background="AliceBlue">
-            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" FontSize="25" Text="SurfaceControlView" Margin="10"/>
+        <StackPanel Grid.Row="0" Grid.Column="0" Background="{StaticResource FilterBackGrount}">
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" 
+                       FontSize="25" Foreground="White" Text="Подразделения" Margin="10"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
             <Button Height="32" Width="32" HorizontalAlignment="Left" Margin="3"

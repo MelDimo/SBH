@@ -8,12 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 using com.sbh.dll.utilites;
 
 namespace com.sbh.gui.unitsbrowser.ViewModel
 {
     public class UnitViewModel : DependencyObject, IViewModel, INotifyPropertyChanged
     {
+        //private invoices.DTO.DataModel dataModel;
+
+        private invoices.ViewModel.DocumentJournalViewModel documentJournalViewModel;
+        public invoices.ViewModel.DocumentJournalViewModel DocumentJournalViewModel {
+            get { return documentJournalViewModel; }
+            set { documentJournalViewModel = value; OnPropertyChanged(); }
+        }
+
         private DBAccess dbAccess = new DBAccess();
 
         private bool showLoader;
@@ -28,6 +37,9 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
             get { return (ICollectionView)GetValue(CollectionItemBalansProperty); }
             set { SetValue(CollectionItemBalansProperty, value); }
         }
+
+
+        #region Фильтр наименования позиции
 
         public static readonly DependencyProperty CollectionItemBalansProperty =
            DependencyProperty.Register("CollectionItemBalansView", typeof(ICollectionView), typeof(UnitViewModel), new PropertyMetadata(null));
@@ -63,6 +75,8 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
             set { SetValue(FilterTextProperty, value); }
         }
 
+        #endregion
+
         public UnitViewModel()
         {
             BaseViewModel = BaseViewModel.GetInstance;
@@ -70,10 +84,32 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
             IsBackBtnEnable = true;
 
             ViewHeader = string.Format("{0} / {1} / {2}", BaseViewModel.CurrentUnitEx.OrgName, BaseViewModel.CurrentUnitEx.BranchName, BaseViewModel.CurrentUnitEx.UnitName);
-            
+
+            TabSelectedIndex = 0;
         }
 
-        public async void CollectUnitItemsBalansAsync()
+        private int tabSelectedIndex;
+        public int TabSelectedIndex
+        {
+            get { return tabSelectedIndex; }
+            set
+            {
+                tabSelectedIndex = value;
+                switch (tabSelectedIndex)
+                {
+                    case 0:
+                        CollectUnitItemsBalansAsync();
+                        break;
+                        
+                    case 1:
+                        CollectDocumentHistory();
+                        break;
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        private async void CollectUnitItemsBalansAsync()
         {
             ShowLoader = true;
 
@@ -96,11 +132,15 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
                 CollectionItemBalansView = CollectionViewSource.GetDefaultView(BaseViewModel.CollectionItemBalans);
                 CollectionItemBalansView.Filter = FilterItem;
             }
-
-            
         }
 
-        
+        private async void CollectDocumentHistory()
+        {
+            DocumentJournalViewModel = new invoices.ViewModel.DocumentJournalViewModel(new invoices.DTO.DataModel());
+
+            await Task.Delay(1000);
+        }
+
 
         #region IViewModel Members
 

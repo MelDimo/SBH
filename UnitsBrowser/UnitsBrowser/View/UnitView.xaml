@@ -15,12 +15,12 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <TabControl Background="Transparent">
-        <TabItem Header="Текущие остатки" FontSize="15">
+    <TabControl Background="Transparent" SelectedIndex="{Binding TabSelectedIndex}" >
+        <TabItem Header="Текущие остатки" FontSize="15" >
             <viewtemplate:CurrentItemsTemplate/>
         </TabItem>
         <TabItem Header="Журнал документов" FontSize="15">
-            <viewtemplate:DocumentHistoryTemplate/>
+            <viewtemplate:DocumentHistoryTemplate />
         </TabItem>
     </TabControl>
 </UserControl>
