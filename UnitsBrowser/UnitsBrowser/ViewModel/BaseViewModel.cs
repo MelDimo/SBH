@@ -100,7 +100,6 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
 
         #endregion
 
-
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
