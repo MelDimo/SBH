@@ -9,7 +9,7 @@
         Title="MainWindow" Height="450" Width="525">
     <Grid>
         <ContentControl>
-            <surface:SurfaceControlView/>
+            <surface:SurfaceControlView ShowHeader="True"/>
         </ContentControl>
     </Grid>
 </Window>

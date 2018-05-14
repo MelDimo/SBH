@@ -20,9 +20,19 @@ namespace com.sbh.gui.invoices.View
     /// </summary>
     public partial class SurfaceControlView : UserControl
     {
+        public static readonly DependencyProperty ShowHeaderProperty =
+            DependencyProperty.Register("ShowHeader", typeof(bool), typeof(SurfaceControlView), new PropertyMetadata(null));
+
+        public bool ShowHeader
+        {
+            get { return (bool)GetValue(ShowHeaderProperty); }
+            set { SetValue(ShowHeaderProperty, value); }
+        }
+
         public SurfaceControlView()
         {
             InitializeComponent();
+            Header.Visibility = ShowHeader ? Visibility.Collapsed : Visibility.Collapsed;
         }
     }
 }

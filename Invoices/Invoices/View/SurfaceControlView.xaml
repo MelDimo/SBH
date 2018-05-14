@@ -23,7 +23,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="{StaticResource FilterBackGrount}">
+        <Border x:Name="Header" Grid.Row="0" Background="{StaticResource FilterBackGrount}">
             <TextBlock  Text="Журнал документов" Margin="0,7,0,7"
                    FontSize="20" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Border>

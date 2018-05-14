@@ -45,7 +45,7 @@ namespace com.sbh.gui.invoices.View
         private void DocumentItemsView_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Insert)
-                (this.DataContext as ViewModel.DocumentItemsViewModel).AddItemOnClickCommand.Execute(null);
+                (this.DataContext as com.sbh.gui.invoices.ViewModel.DocumentViewModel).AddItemOnClickCommand.Execute(null);
         }
     }
 }

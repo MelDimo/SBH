@@ -8,6 +8,6 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <invoices:DocumentJournalView DataContext="{Binding DocumentJournalViewModel}"/>
+        <invoices:SurfaceControlView ShowHeader="False" DataContext="{Binding SurfaceControlViewModel}"/>
     </Grid>
 </UserControl>

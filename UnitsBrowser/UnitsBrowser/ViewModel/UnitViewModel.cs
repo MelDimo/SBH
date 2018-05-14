@@ -17,10 +17,11 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
     {
         //private invoices.DTO.DataModel dataModel;
 
-        private invoices.ViewModel.DocumentJournalViewModel documentJournalViewModel;
-        public invoices.ViewModel.DocumentJournalViewModel DocumentJournalViewModel {
-            get { return documentJournalViewModel; }
-            set { documentJournalViewModel = value; OnPropertyChanged(); }
+        private invoices.ViewModel.SurfaceControlViewModel surfaceControlViewModel;
+        public invoices.ViewModel.SurfaceControlViewModel SurfaceControlViewModel
+        {
+            get { return surfaceControlViewModel; }
+            set { surfaceControlViewModel = value; OnPropertyChanged(); }
         }
 
         private DBAccess dbAccess = new DBAccess();
@@ -50,8 +51,7 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
 
         private static void FilterText_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var current = d as UnitViewModel;
-            if (current != null)
+            if (d is UnitViewModel current)
             {
                 current.CollectionItemBalansView.Filter = null;
                 current.CollectionItemBalansView.Filter = current.FilterItem;
@@ -136,7 +136,7 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
 
         private async void CollectDocumentHistory()
         {
-            DocumentJournalViewModel = new invoices.ViewModel.DocumentJournalViewModel(new invoices.DTO.DataModel());
+            SurfaceControlViewModel = new invoices.ViewModel.SurfaceControlViewModel();
 
             await Task.Delay(1000);
         }

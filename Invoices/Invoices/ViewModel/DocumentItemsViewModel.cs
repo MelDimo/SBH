@@ -47,7 +47,6 @@ namespace com.sbh.gui.invoices.ViewModel
         public DocumentItemsViewModel(DTO.DataModel pDataModel)
         {
             //Positions = Doc.DocumentPositions;
-            AddItemOnClickCommand = new DelegateCommand(AddItemOnClick, AddItemOnClick_CanExecute);
             DeleteItemOnClickCommand = new DelegateCommand(DeleteItemOnClick, DeleteCommand_CanExecute);
         }
 
@@ -137,47 +136,6 @@ namespace com.sbh.gui.invoices.ViewModel
         #endregion
 
         #region Command
-
-        public ICommand AddItemOnClickCommand { get; private set; }
-        void AddItemOnClick(object obj)
-        {
-            Model.Position newPositions;
-            using (SqlConnection con = new SqlConnection(GValues.connString))
-            {
-                con.Open();
-                using (SqlCommand command = new SqlCommand())
-                {
-                    newPositions = new Model.Position();
-                    newPositions.itemId = 0;
-                    newPositions.xcount = 0;
-                    newPositions.currencyId = Model.Position.lastCurrency;
-                    newPositions.xprice = 0;
-                    newPositions.isAvalForEdit = true;
-
-                    command.Connection = con;
-                    command.CommandText = " INSERT INTO document_items(xdocument, item, ref_dimensions, xcount, currency, xprice, ref_status) " +
-                                            " VALUES(@xdocument, @item, @ref_dimensions, @xcount, @currency, @xprice, @ref_status ); " +
-                                            " SELECT SCOPE_IDENTITY();";
-
-                    command.Parameters.Add("xdocument", SqlDbType.Int).Value = Document.Id;
-                    command.Parameters.Add("item", SqlDbType.Int).Value = newPositions.itemId;
-                    command.Parameters.Add("ref_dimensions", SqlDbType.Int).Value = newPositions.dimensionId;
-                    command.Parameters.Add("xcount", SqlDbType.Decimal).Value = newPositions.xcount;
-                    command.Parameters.Add("currency", SqlDbType.Decimal).Value = newPositions.currencyId;
-                    command.Parameters.Add("xprice", SqlDbType.Decimal).Value = newPositions.xprice;
-                    command.Parameters.Add("ref_status", SqlDbType.Int).Value = 1;
-
-                    newPositions.id = (decimal)command.ExecuteScalar();
-
-                }
-            }
-            //Positions.Add(newPositions);
-            newPositions = null;
-        }
-        public bool AddItemOnClick_CanExecute(object obj)
-        {
-            return IsAvailForAdding;
-        }
 
         public ICommand DeleteItemOnClickCommand { get; private set; }
         void DeleteItemOnClick(object obj)
