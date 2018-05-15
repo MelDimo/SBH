@@ -137,8 +137,7 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
         private async void CollectDocumentHistory()
         {
             SurfaceControlViewModel = new invoices.ViewModel.SurfaceControlViewModel();
-
-            await Task.Delay(1000);
+            await Task.Delay(1);
         }
 
 
