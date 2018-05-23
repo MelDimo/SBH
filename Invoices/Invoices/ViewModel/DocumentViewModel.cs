@@ -1,5 +1,6 @@
 ﻿using com.sbh.dll;
 using com.sbh.dll.utilites;
+using com.sbh.dll.utilites.OReferences;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -208,6 +209,14 @@ namespace com.sbh.gui.invoices.ViewModel
         public ICommand DeleteItemOnClickCommand { get; private set; }
         void DeleteItemOnClick(object obj)
         {
+            if (MessageBox.Show(string.Format("Вы действительно хотите удалить '{0}'? ",
+                RefItem.GetInstance.refItem.SingleOrDefault(x => x.id == CurPosition.itemId).name),
+                GValues.AppNameFull, MessageBoxButton.YesNo, MessageBoxImage.Question)
+                != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
             using (SqlConnection con = new SqlConnection(GValues.connString))
             {
                 con.Open();

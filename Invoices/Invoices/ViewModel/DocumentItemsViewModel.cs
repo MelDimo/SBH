@@ -45,17 +45,6 @@ namespace com.sbh.gui.invoices.ViewModel
         public bool IsAvailForAdding { get; set; }
         public bool IsDocContainChild { get; set; }
 
-        public DocumentItemsViewModel(DTO.DataModel pDataModel)
-        {
-            //Positions = Doc.DocumentPositions;
-            DeleteItemOnClickCommand = new DelegateCommand(DeleteItemOnClick, DeleteCommand_CanExecute);
-        }
-
-        private void getAvailablePositionCount()
-        {
-
-        }
-
 
         #region Checking Data
 
@@ -132,42 +121,6 @@ namespace com.sbh.gui.invoices.ViewModel
             }
 
             return result;
-        }
-
-        #endregion
-
-        #region Command
-
-        public ICommand DeleteItemOnClickCommand { get; private set; }
-        void DeleteItemOnClick(object obj)
-        {
-            if (MessageBox.Show(string.Format("Вы действительно хотите удалить '{0}'? ",
-                RefItem.GetInstance.refItem.SingleOrDefault(x => x.id == CurPosition.itemId).name), 
-                GValues.AppNameFull, MessageBoxButton.YesNo, MessageBoxImage.Question)
-                != MessageBoxResult.Yes)
-            {
-                return;
-            }
-
-            using (SqlConnection con = new SqlConnection(GValues.connString))
-            {
-                con.Open();
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = con;
-                    command.CommandText = " DELETE FROM document_items WHERE id = @id;";
-
-                    command.Parameters.Add("id", SqlDbType.Int).Value = CurPosition.id;
-
-                    command.ExecuteNonQuery();
-                }
-            }
-            //Positions.Remove(CurPosition);
-            CurPosition = null;
-        }
-        public bool DeleteCommand_CanExecute(object obj)
-        {
-            return CurPosition != null && !IsDocContainChild;
         }
 
         #endregion
