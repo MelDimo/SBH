@@ -39,7 +39,6 @@ namespace com.sbh.gui.unitsbrowser.ViewModel
             set { SetValue(CollectionItemBalansProperty, value); }
         }
 
-
         #region Фильтр наименования позиции
 
         public static readonly DependencyProperty CollectionItemBalansProperty =
